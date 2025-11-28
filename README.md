@@ -1,4 +1,4 @@
-# Quantitative Data Manager with Python Stadistics 📈🤓
+# Quantitative Data Manager with Python Statistics 📈🤓
 
 Welcome to Quantitative Data Manager with Python Stadistic!
 
