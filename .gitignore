@@ -1,0 +1,40 @@
+#
+# Alex default .gitignore, any manual change will be overwritten.
+#
+
+# General untracked
+__pycache__/
+backup/
+*venv*
+
+# Environment variable files
+.env
+.env.*
+
+# Log files
+logs/
+*.log
+
+# Sensitive data
+*secret*
+*vault*
+
+# Output files
+output/
+
+# IDEs config files
+.vscode/
+.idea/
+
+# Other files
+test.py
+
+# LaTex
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.toc
+*.out
+*Zone.Identifier

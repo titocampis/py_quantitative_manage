@@ -32,7 +32,7 @@ export_groups_csv = False
 export_groups_csv_vars = ['Stat', 'Pre-D', 'Post-D']
 
 # Regression
-make_regression = True
+make_regression = False
 step_by_step_regression = False
 
 # First figure

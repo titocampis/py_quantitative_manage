@@ -173,7 +173,7 @@ def plot_double_boxplot(axis_x, groups, group_var, var_1, var_2, df, full_stats_
     green_patch = mpatches.Patch(color='lightgreen', alpha=0.5, label=var_2)
     plt.legend(handles=[red_patch, green_patch, mean_plot_var_1, mean_plot_var_2])
 
-def plot_superboxplot(group_var, df, full_stats_df, start_fig):
+def plot_superboxplot(group_var, df, start_fig):
     # Fig 1
     plt.figure(start_fig)
 
@@ -203,27 +203,48 @@ def plot_superboxplot(group_var, df, full_stats_df, start_fig):
         medianprops=dict(color='green')
     )
 
-    # Plot means
-    mean_plot, = plt.plot(
-        pos_pre,
-        list(full_stats_df[(full_stats_df["Stat"] == "mean")][groups_means]
-            .iloc[0].tolist()),
+    # Plot full means
+    pre_mean_plot, = plt.plot(
+        pos_post,
+        df[groups_means].mean().values,
         marker='x',
         color='red',
-        linestyle='',
-        label='Mitjana Pre mostra completa'
+        linestyle='--',
+        label='Mitjana Pre mostra completa',
+        linewidth=0.5
+    )
+    # Plot means post no mar
+    no_mar_mean_plot, = plt.plot(
+        pos_post,
+        df[df[group_var] == 0][groups].mean(),
+        marker='x',
+        color='blue',
+        linestyle='--',
+        label='Mitjana Post Activitats Mar = 0',
+        linewidth=0.5
+    )
+
+    # Plot means post mar
+    mar_mean_plot, = plt.plot(
+        pos_post,
+        df[df[group_var] == 1][groups].mean(),
+        marker='x',
+        color='green',
+        linestyle='--',
+        label='Mitjana Post Activitats Mar = 1',
+        linewidth=0.5
     )
 
     plt.xticks(pos_pre + 0.075, groups)
     plt.ylabel("Valor")
-    plt.xlabel("Variables")
+    plt.xlabel("Variables dependents")
     plt.title(f"Boxplots No Mar / Mar")
     plt.grid(True)
-    # plt.yticks(np.arange(6, 21, 1))
-    blue_patch = mpatches.Patch(color='lightblue', alpha=0.5, label='No Mar')
-    green_patch = mpatches.Patch(color='lightgreen', alpha=0.5, label='Mar')
+    plt.yticks(np.arange(2, 20, 1))
+    blue_patch = mpatches.Patch(color='lightblue', alpha=0.5, label='Post Activitats Mar = 0')
+    green_patch = mpatches.Patch(color='lightgreen', alpha=0.5, label='Post Activitats Mar = 1')
 
-    plt.legend(handles=[blue_patch, green_patch, mean_plot])
+    plt.legend(handles=[blue_patch, green_patch, pre_mean_plot, no_mar_mean_plot, mar_mean_plot])
 
 
 #########################################################################################
