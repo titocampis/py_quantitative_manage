@@ -17,18 +17,33 @@ def parse_arguments():
     Parse command line arguments
     """
 
-    # 1. Crete the parser
-    parser = argparse.ArgumentParser(description="Parse command line arguments for the TFM project")
+    # 1. Crear el parser
+    parser = argparse.ArgumentParser(
+        description="Parse command line arguments for the TFM project"
+    )
 
-    # 2. Add -v argument for verbosity
-    # action="store_true" hace que si el flag existe, valga True, y si no, False
-    parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbosity")
+    # 2. Argumento -v para verbosity
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="Enable verbosity"
+    )
 
-    # 3. Parseamos los argumentos
+    # 3. Argumento -p para recibir una lista de valores
+    parser.add_argument(
+        "-p",
+        "--plots",
+        type=lambda s: [int(x) for x in s.split(",")],
+        default=[],  # si no se pasa -p, devuelve lista vacía
+        help="Lista de valores separados por comas, ejemplo: -p 1,2,3,4"
+    )
+
+    # 4. Parsear argumentos
     args = parser.parse_args()
 
-    # 4. Asignamos a tu variable
-    return args.verbose
+    # 5. Devolver lo que necesites
+    return args.verbose, args.plots
 
 def plot_descriptive_hists(df:pd.DataFrame, var:str, title:str, xlabel:str, ylabel:str, sort:list=None):
     """

@@ -16,10 +16,10 @@ import tfm_methods as tmt
 #
 #########################################################################################
 # Create statistics df from csv
-csv_name = "forms-habits-lectura-compartit.csv"
+csv_name = "forms-habits-lectura-compartit-bak-20260428.csv"
 
 # Verbosity
-verbose = tmt.parse_arguments()
+verbose, plots = tmt.parse_arguments()
 
 #########################################################################################
 #
@@ -121,8 +121,8 @@ df_lectura["p5_6_pagines_num"] = df_lectura["p5_6_pagines_num"].fillna(0)
 # 4. Discretize composed variable into categories
 # =======================================================================================
 # Categorize
-bins = [-1, 0, 500, 1500, 3000, 6000, float("inf")]
-labels = ["0", "1-500", "501-1500", "1501-3000", "3001-6000", ">6000"]
+bins = [-1, 0, 500, 1000, 3000, 4000, float("inf")]
+labels = ["0", "1-500", "501-1000", "1001-3000", "3001-4000", ">4000"]
 
 # df_lectura["p5_6_pagines"] = df_lectura["p5_6_pagines_num"].apply(tmt.categorize_pags)
 df_lectura["p5_6_pagines"] = pd.cut(
@@ -195,29 +195,32 @@ print(resultats_df)
 
 freq = resultats_df["puntuacio_total"]
 
-# Opcional: partir textos llargs si uses noms més llargs després
-freq.index = [textwrap.fill(label, 15) for label in freq.index]
+if len(plots) > 0 and 1 in plots:
+    plt.figure(1)
 
-ax = freq.plot(kind="bar")
+    # Opcional: partir textos llargs si uses noms més llargs després
+    freq.index = [textwrap.fill(label, 15) for label in freq.index]
 
-# Mostrar valors damunt de cada barra
-total = freq.sum()
+    ax = freq.plot(kind="bar")
 
-for i, v in enumerate(freq):
-    ax.text(
-        i,
-        v,
-        f"{int(v)} punts",
-        ha="center",
-        va="bottom"
-    )
+    # Mostrar valors damunt de cada barra
+    total = freq.sum()
 
-# Editar text
-plt.title("Distribució de preferències dels gèneres literaris")
-plt.ylabel("Puntuació ponderada")
-plt.xlabel("Gèneres literaris")
-plt.xticks(rotation=45, ha="center")
-plt.show()
+    for i, v in enumerate(freq):
+        ax.text(
+            i,
+            v,
+            f"{int(v)} punts",
+            ha="center",
+            va="bottom"
+        )
+
+    # Editar text
+    plt.title("Distribució de preferències dels gèneres literaris")
+    plt.ylabel("Puntuació ponderada")
+    plt.xlabel("Gèneres literaris")
+    plt.xticks(rotation=45, ha="center")
+    plt.show()
 
 # =======================================================================================
 # 6. Estatistics
@@ -232,107 +235,126 @@ print(df_lectura["p5_6_pagines_num"].describe())
 # =======================================================================================
 # p4_temps_lectura
 # ==========================================
-plt.figure(1)
-sort = [
-    "0 minuts.",
-    "Menys de 30 minuts a la setmana.",
-    "Entre 30 minuts i 1 hora a la setmana.",
-    "Entre 1 i 2 hores a la setmana.",
-    "Entre 2 i 3 hores a la setmana.",
-    "3 hores o més a la setmana."
-]
+if len(plots) > 0 and 2 in plots:
+    plt.figure(2)
+    sort = [
+        "0 minuts.",
+        "Menys de 30 minuts a la setmana.",
+        "Entre 30 minuts i 1 hora a la setmana.",
+        "Entre 1 i 2 hores a la setmana.",
+        "Entre 2 i 3 hores a la setmana.",
+        "3 hores o més a la setmana."
+    ]
 
-tmt.plot_descriptive_hists(
-    df=df_lectura,
-    var="p4_temps_lectura",
-    title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana",
-    xlabel="",
-    ylabel="Freqüència",
-    sort=sort
-)
+    tmt.plot_descriptive_hists(
+        df=df_lectura,
+        var="p4_temps_lectura",
+        title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana",
+        xlabel="",
+        ylabel="Freqüència",
+        sort=sort
+    )
+
+# p5_llibres
+# ==========================================
+if len(plots) > 0 and 3 in plots:
+    plt.figure(3)
+
+    tmt.plot_descriptive_hists(
+        df=df_lectura,
+        var="p5_llibres",
+        title="Distribució nombre de llibres o còmics llegits per oci en l'últim any",
+        xlabel="Nombre de llibres o còmics llegits per oci en l'últim any",
+        ylabel="Freqüència"
+    )
 
 # p5_6_pagines
 # ==========================================
-plt.figure(2)
+if len(plots) > 0 and 4 in plots:
+    plt.figure(4)
 
-tmt.plot_descriptive_hists(
-    df=df_lectura,
-    var="p5_6_pagines",
-    title="Distribució nombre de pàgines estimades llegides aquest any (llibre o còmic) per oci",
-    xlabel="Pàgines estimades llegides anualment",
-    ylabel="Freqüència"
-)
+    tmt.plot_descriptive_hists(
+        df=df_lectura,
+        var="p5_6_pagines",
+        title="Distribució nombre de pàgines estimades llegides aquest any (llibre o còmic) per oci",
+        xlabel="Pàgines estimades llegides anualment",
+        ylabel="Freqüència"
+    )
 
 # p7_lectura_actual
 # ==========================================
-plt.figure(3)
-tmt.plot_descriptive_hists(
-    df=df_lectura,
-    var="p7_lectura_actual",
-    title="Distribució alumnes que estan llegint actualment un llibre o còmic per oci",
-    xlabel="",
-    ylabel="Freqüència"
-)
+if 5 in plots: 
+    plt.figure(5)
+    tmt.plot_descriptive_hists(
+        df=df_lectura,
+        var="p7_lectura_actual",
+        title="Distribució alumnes que estan llegint actualment un llibre o còmic per oci",
+        xlabel="",
+        ylabel="Freqüència"
+    )
 
 # p16_lectura_obligatoria
 # ==========================================
-plt.figure(4)
-sort = [
-    "No en llegeixo cap.",
-    "En llegeixo poques o molt poques.",
-    "En llegeixo aproximadament la meitat.",
-    "Les llegeixo gairebé totes.",
+if len(plots) > 0 and 6 in plots:
+    plt.figure(6)
+    sort = [
+        "No en llegeixo cap.",
+        "En llegeixo poques o molt poques.",
+        "En llegeixo aproximadament la meitat.",
+        "Les llegeixo gairebé totes.",
     "Les llegeixo totes."
-]
+    ]
 
-tmt.plot_descriptive_hists(
-    df=df_lectura,
-    var="p16_lectura_obligatoria",
-    title="Distribució alumnes que llegeixen les lectures obligatòries de l’escola",
-    xlabel="",
-    ylabel="Freqüència",
-    sort=sort
-)
+    tmt.plot_descriptive_hists(
+        df=df_lectura,
+        var="p16_lectura_obligatoria",
+        title="Distribució alumnes que llegeixen les lectures obligatòries de l’escola",
+        xlabel="",
+        ylabel="Freqüència",
+        sort=sort
+    )
 
 # p10_visites_biblioteca
 # ==========================================
-plt.figure(5)
-sort = [
-    "0 cops.",
-    "1-2 cops.",
-    "3-5 cops.",
-    "6-10 cops.",
-    "Més de 10 cops."
-]
+if len(plots) > 0 and 7 in plots:
+    plt.figure(7)
+    sort = [
+        "0 cops.",
+        "1-2 cops.",
+        "3-5 cops.",
+        "6-10 cops.",
+        "Més de 10 cops."
+    ]
 
-tmt.plot_descriptive_hists(
-    df=df_lectura,
-    var="p10_visites_biblioteca",
-    title="Distribució nombre de visites a la biblioteca per llegir o agafar llibres o còmics en préstec en l'últim any per oci",
-    xlabel="",
-    ylabel="Freqüència",
-    sort=sort
-)
+    tmt.plot_descriptive_hists(
+        df=df_lectura,
+        var="p10_visites_biblioteca",
+        title="Distribució nombre de visites a la biblioteca per llegir o agafar llibres o còmics en préstec en l'últim any per oci",
+        xlabel="",
+        ylabel="Freqüència",
+        sort=sort
+    )
 
 
 # ==========================================
-# # Crear histograma y capturar datos
-# plt.figure(6)
-# counts, bins, patches = plt.hist(df_lectura["p5_6_pagines_num"], bins=6)
+# Crear histograma y capturar datos
+if len(plots) > 0 and 8 in plots:
+    plt.figure(8)
+    counts, bins, patches = plt.hist(df_lectura["p5_6_pagines_num"], bins=12)
 
-# plt.title("Histograma del nombre de pàgines estimades llegides anualment (llibre o còmic) per oci")
-# plt.xlabel("Pàgines estimades llegides anualment")
-# plt.ylabel("Freqüència")
+    plt.title("Histograma del nombre de pàgines estimades llegides anualment (llibre o còmic) per oci")
+    plt.xlabel("Pàgines estimades llegides anualment")
+    plt.ylabel("Freqüència")
 
-# # Añadir valores encima de cada barra
-# for count, patch in zip(counts, patches):
-#     plt.text(
-#         patch.get_x() + patch.get_width() / 2,
-#         count,
-#         int(count),
-#         ha='center',
-#         va='bottom'
-#     )
+    # Añadir valores encima de cada barra
+    for count, patch in zip(counts, patches):
+    plt.text(
+        patch.get_x() + patch.get_width() / 2,
+        count,
+        int(count),
+        ha='center',
+        va='bottom'
+    )
 
 plt.show()
 
