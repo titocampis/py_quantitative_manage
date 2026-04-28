@@ -16,7 +16,7 @@ import tfm_methods as tmt
 #
 #########################################################################################
 # Create statistics df from csv
-csv_name = "forms-habits-lectura-compartit-bak-20260428.csv"
+csv_name = "forms-habits-lectura-compartit.csv"
 
 # Verbosity
 verbose, plots = tmt.parse_arguments()
@@ -348,13 +348,13 @@ if len(plots) > 0 and 8 in plots:
 
     # Añadir valores encima de cada barra
     for count, patch in zip(counts, patches):
-    plt.text(
-        patch.get_x() + patch.get_width() / 2,
-        count,
-        int(count),
-        ha='center',
-        va='bottom'
-    )
+        plt.text(
+            patch.get_x() + patch.get_width() / 2,
+            count,
+            int(count),
+            ha='center',
+            va='bottom'
+        )
 
 plt.show()
 
