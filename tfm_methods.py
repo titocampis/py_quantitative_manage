@@ -30,22 +30,22 @@ def parse_arguments():
         help="Enable verbosity"
     )
 
-    # 3. Argumento -p para recibir una lista de valores
+    # 3. Argumento -t para recibir una lista de valores
     parser.add_argument(
-        "-p",
-        "--plots",
+        "-t",
+        "--tags",
         type=lambda s: [int(x) for x in s.split(",")],
-        default=[],  # si no se pasa -p, devuelve lista vacía
-        help="Lista de valores separados por comas, ejemplo: -p 1,2,3,4"
+        default=[],  # si no se pasa -t, devuelve lista vacía
+        help="Lista de valores separados por comas, ejemplo: -t 1,2,3,4"
     )
 
     # 4. Parsear argumentos
     args = parser.parse_args()
 
     # 5. Devolver lo que necesites
-    return args.verbose, args.plots
+    return args.verbose, args.tags
 
-def plot_descriptive_hists(df:pd.DataFrame, var:str, title:str, xlabel:str, ylabel:str, sort:list=None):
+def plot_descriptive_hists(df:pd.DataFrame, var:str, title:str, xlabel:str, ylabel:str, color:str=None, sort:list=None):
     """
     Plot descriptive histograms for the TFM project
     """
@@ -57,17 +57,23 @@ def plot_descriptive_hists(df:pd.DataFrame, var:str, title:str, xlabel:str, ylab
         )
 
     # Plot frequency of categories
-    freq = df[var].value_counts().sort_index()
-    freq.index = [textwrap.fill(label, 15) for label in freq.index]
-    ax = freq.plot(kind="bar")
+    freq_raw = df[var].value_counts().sort_index()
+    freq_pct = df[var].value_counts(normalize=True).sort_index() * 100
+    freq_raw.index = [textwrap.fill(label, 15) for label in freq_raw.index]
+    freq_pct.index = [textwrap.fill(label, 15) for label in freq_pct.index]
+    ax = freq_pct.plot(kind="bar")
+
+    # print(freq_raw)
+    # print(freq_pct)
 
     # Show freq values
-    total = freq.sum()
-    for i, v in enumerate(freq):
-        ax.text(i, v, f"{v} alumnes | {(v/total)*100:.1f}%", ha="center", va="bottom")
-        # ax.text(i, v, f"{(v/total)*100:.1f}%", ha="center", va="bottom")
+    total = freq_raw.sum()
+    for i, v in enumerate(freq_pct):
+        ax.text(i, v, f"{v:.1f}% (n={int((v/100)*total)})", ha="center", va="bottom")
 
     # Edit text
+    if color: 
+        ax = freq_pct.plot(kind="bar", color=color)
     plt.title(title)
     plt.ylabel(ylabel)
     plt.xticks(rotation=45, ha="center")
@@ -75,6 +81,115 @@ def plot_descriptive_hists(df:pd.DataFrame, var:str, title:str, xlabel:str, ylab
 
     # plt.show()
 
+def plot_descriptive_combined_hists2(df_1:pd.DataFrame, df_2:pd.DataFrame, var:str, groups:list, title:str, xlabel:str, ylabel:str, colors:list=None, sort:list=None):
+    """
+    Plot 2 descriptive histograms in the same plot for the TFM project
+    """
+    if sort is not None:
+        df_1[var] = pd.Categorical(
+            df_1[var],
+            categories=sort,
+            ordered=True
+        )
+        df_2[var] = pd.Categorical(
+            df_2[var],
+            categories=sort,
+            ordered=True
+        )
+
+    # Plot frequency of categories
+    freq = pd.concat({
+        groups[0]: df_1[var].value_counts(normalize=True).sort_index() * 100,
+        groups[1]: df_2[var].value_counts(normalize=True).sort_index() * 100
+    }, axis=1).fillna(0)
+
+    freq.index = [textwrap.fill(label, 15) for label in freq.index]
+
+    ax = freq.plot(kind="bar", color=colors)
+
+    # Show freq values
+    for i in range(len(freq.index)):
+        for j, col in enumerate(freq.columns):
+            v = freq.iloc[i, j]
+
+            if v > 0:
+                total_group = freq[col].sum()  # 👈 clave
+
+                ax.text(
+                    i + j*0.25 - 0.125,
+                    v,
+                    f"{v:.1f}",
+                    ha="center",
+                    va="bottom"
+                )
+
+    # Edit text
+    plt.title(title)
+    plt.ylabel(ylabel)
+    plt.xlabel(xlabel)
+    plt.xticks(rotation=45, ha="center")
+
+     # plt.show()
+
+
+def plot_descriptive_combined_hists4(df_1:pd.DataFrame, df_2:pd.DataFrame, df_3:pd.DataFrame, df_4:pd.DataFrame, var:str, groups:list, title:str, xlabel:str, ylabel:str, colors:list=None, sort:list=None):
+    """
+    Plot 4 descriptive histograms in the same plot for the TFM project
+    """
+    # -----------------------------
+    # Ordenar categorías si existe sort
+    # -----------------------------
+    if sort is not None:
+        for df in [df_1, df_2, df_3, df_4]:
+            df[var] = pd.Categorical(
+                df[var],
+                categories=sort,
+                ordered=True
+            )
+
+    # -----------------------------
+    # Frecuencias normalizadas (%)
+    # -----------------------------
+    freq = pd.concat({
+        groups[0]: df_1[var].value_counts(normalize=True).sort_index() * 100,
+        groups[1]: df_2[var].value_counts(normalize=True).sort_index() * 100,
+        groups[2]: df_3[var].value_counts(normalize=True).sort_index() * 100,
+        groups[3]: df_4[var].value_counts(normalize=True).sort_index() * 100
+    }, axis=1).fillna(0)
+
+    # -----------------------------
+    # Formato eje X
+    # -----------------------------
+    freq.index = [textwrap.fill(str(label), 15) for label in freq.index]
+
+    # -----------------------------
+    # Plot
+    # -----------------------------
+    ax = freq.plot(kind="bar", color=colors)
+
+    # -----------------------------
+    # Etiquetas centradas (FIX IMPORTANTE)
+    # -----------------------------
+    for p in ax.patches:
+        height = p.get_height()
+
+        if height > 0:
+            ax.text(
+                p.get_x() + p.get_width() / 2,
+                height,
+                f"{height:.1f}",
+                ha="center",
+                va="bottom",
+                fontsize=9
+            )
+
+    # -----------------------------
+    # Estética final
+    # -----------------------------
+    plt.title(title)
+    plt.ylabel(ylabel)
+    plt.xlabel(xlabel)
+    plt.xticks(rotation=45, ha="center")
 
 #########################################################################################
 #

@@ -6,7 +6,6 @@ from scipy.stats import linregress
 import sys
 
 import methods as mt
-import seaborn as sns
 import textwrap
 import tfm_methods as tmt
 
@@ -41,8 +40,9 @@ plot_it = 0
 # =======================================================================================
 # Import df from csv
 df = pd.read_csv(csv_name)
+
 if verbose:
-    print("[Check]: Income Dataframe Info")
+    print("\n=======================================================================================\nIncome Dataframe Info\n=======================================================================================")
     print(f"Dataframe dimensions (rows, cols): {df.shape}")
     print(f"First 5 lines of the dataframe: \n{df.head()}")
     # print(f"\nCheck no null values:")
@@ -80,8 +80,6 @@ df_3e = df[df["Curs"] == "3r d'ESO."].copy()
 df_4e = df[df["Curs"] == "4t d'ESO."].copy()
 df_1b = df[df["Curs"] == "1r de Batxillerat."].copy()
 df_2b = df[df["Curs"] == "2n de Batxillerat."].copy()
-df_soc = df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències Socials."].copy()
-df_ct = df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències i Tecnologia."].copy()
 
 
 # =======================================================================================
@@ -269,7 +267,6 @@ if len(tags) > 0 and 1 in tags:
 # 2. p4_temps_lectura
 # =======================================================================================
 if len(tags) > 0 and 2 in tags:
-    print(plot_it)
     print("\n=======================================================================================\nReading Time \n=======================================================================================")
     sort = [
         "0 minuts.",
@@ -289,68 +286,102 @@ if len(tags) > 0 and 2 in tags:
         var="p4_temps_lectura",
         title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana",
         xlabel="",
-        ylabel="Percentatge d'alumnes",
-        sort=sort
-    )
-    
-    # Boys vs girls
-    # =======================================================
-    # plot_it += 1
-    plt.figure(plot_it)
-    tmt.plot_descriptive_combined_hists2(
-        df_1=df_fem,
-        df_2=df_mas,
-        groups=["Noies", "Nois"],
-        var="p4_temps_lectura",
-        title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana per genere",
-        xlabel="",
-        ylabel="Percentatge d'alumnes (%)",
-        colors=["purple", "orange"],
+        ylabel="Freqüència",
         sort=sort
     )
 
-    # Groups
+    # Femení
     # =======================================================
-    # plot_it += 1
+    plot_it += 1
     plt.figure(plot_it)
-    tmt.plot_descriptive_combined_hists4(
-        df_1=df_3e,
-        df_2=df_4e,
-        df_3=df_1b,
-        df_4=df_2b,
-        groups=["3r d'ESO", "4t d'ESO", "1r de Batxillerat", "2n de Batxillerat"],
+    tmt.plot_descriptive_hists(
+        df=df_fem,
         var="p4_temps_lectura",
-        title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana per curs",
+        title="Distribució del temps promig dedicat per les noies a la lectura de llibres o còmics per oci a la setmana",
         xlabel="",
-        ylabel="Percentatge d'alumnes (%)",
-        colors=["blue", "orange", "green", "red"],
+        ylabel="Freqüència",
+        color="purple",
         sort=sort
     )
 
-    # Ciencies Socials vs Tecnologia i Ciencia
+
+    # Masculí
     # =======================================================
-    # plot_it += 1
+    plot_it += 1
     plt.figure(plot_it)
-    tmt.plot_descriptive_combined_hists2(
-        df_1=df_soc,
-        df_2=df_ct,
-        groups=["Ciències Socials", "Ciències i Tecnologia"],
+    tmt.plot_descriptive_hists(
+        df=df_mas,
         var="p4_temps_lectura",
-        title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana per itinerari",
+        title="Distribució del temps promig dedicat pels nois a la lectura de llibres o còmics per oci a la setmana",
         xlabel="",
-        ylabel="Percentatge d'alumnes (%)",
-        colors=["red", "green"],
+        ylabel="Freqüència",
+        color="orange",
         sort=sort
     )
+
+    # 3e
+    # =======================================================
+    plot_it += 1
+    plt.figure(plot_it)
+    tmt.plot_descriptive_hists(
+        df=df_3e,
+        var="p4_temps_lectura",
+        title="Distribució del temps promig dedicat pels alumnes de 3r d'ESO a la lectura de llibres o còmics per oci a la setmana",
+        xlabel="",
+        ylabel="Freqüència",
+        color="green",
+        sort=sort
+    )
+
+    # 4e
+    # =======================================================
+    plot_it += 1
+    plt.figure(plot_it)
+    tmt.plot_descriptive_hists(
+        df=df_4e,
+        var="p4_temps_lectura",
+        title="Distribució del temps promig dedicat pels alumnes de 4t d'ESO a la lectura de llibres o còmics per oci a la setmana",
+        xlabel="",
+        ylabel="Freqüència",
+        color="orange",
+        sort=sort
+    )
+
+    # 1b
+    # =======================================================
+    plot_it += 1
+    plt.figure(plot_it)
+    tmt.plot_descriptive_hists(
+        df=df_1b,
+        var="p4_temps_lectura",
+        title="Distribució del temps promig dedicat pels alumnes de 1r de Batxillerat a la lectura de llibres o còmics per oci a la setmana",
+        xlabel="",
+        ylabel="Freqüència",
+        color="blue",
+        sort=sort
+    )
+
+    # 2b
+    # =======================================================
+    plot_it += 1
+    plt.figure(plot_it)
+    tmt.plot_descriptive_hists(
+        df=df_2b,
+        var="p4_temps_lectura",
+        title="Distribució del temps promig dedicat pels alumnes de 2n de Batxillerat a la lectura de llibres o còmics per oci a la setmana",
+        xlabel="",
+        ylabel="Freqüència",
+        color="red",
+        sort=sort
+    )
+
 
 # =======================================================================================
 # 3. Composed variables books * pages --> pages / year (p5_6_pagines)
 # =======================================================================================
 if len(tags) > 0 and 3 in tags:
     print("\n=======================================================================================\nPages per year\n=======================================================================================")
-
     # Recode P5 to mean number of books
-    # =======================================================
     map_llibres = {
         "0 llibres o còmics.": 0,
         "1-2 llibres o còmics.": 1.5,
@@ -385,11 +416,12 @@ if len(tags) > 0 and 3 in tags:
     # Replace Nan for 0
     df["p5_6_pagines_num"] = df["p5_6_pagines_num"].fillna(0)
 
+
     # Discretize composed variable into categories
-    # =======================================================
+    ######################################################################################
     # Categorize
-    bins = [-1, 0, 300, 800, 2000, 4000, float("inf")]
-    labels = ["0", "1-300", "301-800", "801-2000", "2001-4000", ">4000"]
+    bins = [-1, 0, 500, 1000, 3000, 4000, float("inf")]
+    labels = ["0", "1-500", "501-1000", "1001-3000", "3001-4000", ">4000"]
 
     # df["p5_6_pagines"] = df["p5_6_pagines_num"].apply(tmt.categorize_pags)
     df["p5_6_pagines"] = pd.cut(
@@ -400,7 +432,7 @@ if len(tags) > 0 and 3 in tags:
 
     # Check result
     if verbose:
-        print("[Check]: p5_6_pagines")
+        print("\n=======================================================================================\nComposed Variable\n=======================================================================================")
         print("Check first 20 rows:")
         print(
             df[
@@ -414,23 +446,10 @@ if len(tags) > 0 and 3 in tags:
                 ]
             ].head(20)
         )
-        # print(df["p5_6_pagines_num"].to_string())
 
-    print("\n------------ Estatistics from p5_6_pagines -------------")
-    print("General ---")
+    # Print estatistics
+    print(f'\n=======================================================================================\nEstatistics from p5_6_pagines_num variable:\n=======================================================================================')
     print(df["p5_6_pagines_num"].describe())
-    print("Femení ---")
-    print(df[df["Gènere"] == "Femení."]["p5_6_pagines_num"].describe())
-    print("Masculí ---")
-    print(df[df["Gènere"] == "Masculí."]["p5_6_pagines_num"].describe())
-    print("3r d'ESO ---")
-    print(df[df["Curs"] == "3r d'ESO."]["p5_6_pagines_num"].describe())
-    print("4t d'ESO ---")
-    print(df[df["Curs"] == "4t d'ESO."]["p5_6_pagines_num"].describe())
-    print("1r de Batxillerat ---")
-    print(df[df["Curs"] == "1r de Batxillerat."]["p5_6_pagines_num"].describe())
-    print("2n de Batxillerat ---")
-    print(df[df["Curs"] == "2n de Batxillerat."]["p5_6_pagines_num"].describe())
 
     # Plot
     plot_it += 1
@@ -441,35 +460,156 @@ if len(tags) > 0 and 3 in tags:
         var="p5_6_pagines",
         title="Distribució nombre de pàgines estimades llegides aquest any (llibre o còmic) per oci",
         xlabel="Pàgines estimades llegides anualment",
-        ylabel="Percentatge d'alumnes",
+        ylabel="Freqüència"
     )
+
+    # # Crear histograma y capturar datos
+    # plot_it += 1
+    # plt.figure(plot_it)
+    # counts, bins, patches = plt.hist(df["p5_6_pagines_num"], bins=12)
+
+    # plt.title("Histograma del nombre de pàgines estimades llegides anualment (llibre o còmic) per oci")
+    # plt.xlabel("Pàgines estimades llegides anualment")
+    # plt.ylabel("Freqüència")
+
+    # # Añadir valores encima de cada barra
+    # for count, patch in zip(counts, patches):
+    #     plt.text(
+    #         patch.get_x() + patch.get_width() / 2,
+    #         count,
+    #         int(count),
+    #         ha='center',
+    #         va='bottom'
+    #     )
+
+
+# =======================================================================================
+# 4. p7_lectura_actual
+# =======================================================================================
+if len(tags) > 0 and 4 in tags: 
+    plot_it += 1
+    plt.figure(plot_it)
+    tmt.plot_descriptive_hists(
+        df=df,
+        var="p7_lectura_actual",
+        title="Distribució alumnes que estan llegint actualment un llibre o còmic per oci",
+        xlabel="",
+        ylabel="Freqüència"
+    )
+
+# =======================================================================================
+# 5. p16_lectura_obligatoria
+# =======================================================================================
+# Grau de lectura
+if len(tags) > 0 and 5 in tags:
+    plot_it += 1
+    plt.figure(plot_it)
+    sort = [
+        "No en llegeixo cap.",
+        "En llegeixo poques o molt poques.",
+        "En llegeixo aproximadament la meitat.",
+        "Les llegeixo gairebé totes.",
+    "Les llegeixo totes."
+    ]
+
+    tmt.plot_descriptive_hists(
+        df=df,
+        var="p16_lectura_obligatoria",
+        title="Distribució alumnes que llegeixen les lectures obligatòries de l’escola",
+        xlabel="",
+        ylabel="Freqüència",
+        sort=sort
+    )
+
+# =======================================================================================
+# 6. p10_visites_biblioteca
+# =======================================================================================
+if len(tags) > 0 and 6 in tags:
+    plot_it += 1
+    plt.figure(plot_it)
+    sort = [
+        "0 cops.",
+        "1-2 cops.",
+        "3-5 cops.",
+        "6-10 cops.",
+        "Més de 10 cops."
+    ]
+
+    tmt.plot_descriptive_hists(
+        df=df,
+        var="p10_visites_biblioteca",
+        title="Distribució nombre de visites a la biblioteca per llegir o agafar llibres o còmics en préstec en l'últim any per oci",
+        xlabel="",
+        ylabel="Freqüència",
+        sort=sort
+    )
+
+
+# =======================================================================================
+# 7. Format de lectura
+# =======================================================================================
+if len(tags) > 0 and 7 in tags:
+    # Clean df_lectors
+    valores_excluir = [
+        "digital (xarxes socials)",
+        "en paper i en digital",
+        "wattpad,webtoon"
+    ]
+
+    col = "Quin format de lectura utilitzes més habitualment per a la lectura de llibres o còmics per oci? "
+
+    df_lectors = df_lectors[
+        ~df_lectors[col].isin(valores_excluir)
+    ]
 
     plot_it += 1
     plt.figure(plot_it)
-    df["p5_6_pagines_num"].plot(kind="box", showmeans=True)
 
-    plt.title("Boxplot de la distribució del nombre de pàgines estimades llegides anualment")
-    # plt.ylabel("Numero de pàgines estimades")
-    plt.xlabel("")
+    tmt.plot_descriptive_hists(
+        df=df_lectors,
+        var="Quin format de lectura utilitzes més habitualment per a la lectura de llibres o còmics per oci? ",
+        title="Format de lectura més habitual per a la lectura de llibres o còmics per oci",
+        xlabel="",
+        ylabel="Freqüència"
+    )
 
-    # plot_it += 1
-    plt.figure(plot_it)
-    df_filtrat = df[df["Gènere"] != "Prefereixo no respondre."]
-    df_filtrat.boxplot(column="p5_6_pagines_num", by="Gènere", showmeans=True)
 
-    plt.title("Distribució de pàgines llegides anualment per gènere")
-    plt.suptitle("")  # elimina el título automático de pandas
-    plt.xlabel("")
+# =======================================================================================
+# Pending tasks --> crossed analysis plots and basic statistics
+# =======================================================================================
+# Genero
+# =======================================
+# Tiempo de lectura ocio por genero histogram
+# Stat Chicas que no leen nada vs chicos que no leen nada
+# Stat Chicas que leen mas de 3 horas vs chicos que leen mas de 3 horas
+# Numero de pàginas ocio por genero --> Boxplots
+# Lectura obligatoria por genero
+# Narrativa social de la lectura chicos vs chicas
 
-   # plot_it += 1
-    plt.figure(plot_it)
-    orden = ["3r d'ESO.", "4t d'ESO.", "1r de Batxillerat.", "2n de Batxillerat."]
-    df["Curs"] = pd.Categorical(df["Curs"], categories=orden, ordered=True)
-    df.boxplot(column="p5_6_pagines_num", by="Curs", showmeans=True)
+# Curso
+# =======================================
+# Tiempo de lectura ocio por curso
+# Stat personas que no leen nada por curso
+# Stat personas que leen mas de 3 horas a la semana por curso
+# Numero de pàginas ocio por curso --> Boxplots
+# Lectura obligatoria por genero
+# Narrativa social de la lectura por curso
 
-    plt.title("Distribució de pàgines llegides anualment per curs")
-    plt.suptitle("")  # elimina el título automático de pandas
-    plt.xlabel("")
+# Itinerario academico
+# =======================================
+# Tiempo de lectura ocio por itinerario academico
+# Stat personas que no leen nada social vs cient / tec
+# Stat personas que leen mas de 3 horas a la semana social vs cient / tec
+# Numero de pàginas ocio por curso --> Boxplots
+# Lectura obligatoria por genero
+# Narrativa social de la lectura segun el itinerario academico
+
+# Lectores vs no lectores (categorias lectoras)
+# =======================================
+# Narrativa social de la lectura lectores vs no lectores
+# Us de xarxes socials lectors vs no lectors
+# Lectura obligatoria lectores vs no lectores
+
 
 plt.show()
 #########################################################################################
