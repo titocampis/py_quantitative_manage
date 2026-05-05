@@ -449,7 +449,8 @@ if len(tags) > 0 and 3 in tags:
     df["p5_6_pagines_num"].plot(kind="box", showmeans=True)
 
     plt.title("Boxplot de la distribució del nombre de pàgines estimades llegides anualment")
-    # plt.ylabel("Numero de pàgines estimades")
+    plt.suptitle("")  # elimina el título automático de pandas
+    plt.ylabel("Pàgines")
     plt.xlabel("")
 
     # plot_it += 1
@@ -459,6 +460,7 @@ if len(tags) > 0 and 3 in tags:
 
     plt.title("Distribució de pàgines llegides anualment per gènere")
     plt.suptitle("")  # elimina el título automático de pandas
+    plt.ylabel("Pàgines")
     plt.xlabel("")
 
    # plot_it += 1
@@ -469,6 +471,7 @@ if len(tags) > 0 and 3 in tags:
 
     plt.title("Distribució de pàgines llegides anualment per curs")
     plt.suptitle("")  # elimina el título automático de pandas
+    plt.ylabel("Pàgines")
     plt.xlabel("")
 
 plt.show()
