@@ -43,10 +43,10 @@ if verbose:
     print("\n=======================================================================================\nIncome Dataframe Info\n=======================================================================================")
     print(f"Dataframe dimensions (rows, cols): {df.shape}")
     print(f"First 5 lines of the dataframe: \n{df.head()}")
-    print(f"\nCheck no null values:")
-    print(df.info())
-    print(f"\nCheck no nulls values per column:")
-    print(df.isnull().sum())
+    # print(f"\nCheck no null values:")
+    # print(df.info())
+    # print(f"\nCheck no nulls values per column:")
+    # print(df.isnull().sum())
 
 # =======================================================================================
 # 2. Rename columns
@@ -58,25 +58,8 @@ df = df.rename(columns={
     "En cas que la resposta hagi estat diferent de 0 llibres o còmics, quantes pàgines, de mitjana, tenien aproximadament aquests llibres o còmics?": "p6_pag",
     "Actualment estàs llegint algun llibre o còmic per oci?": "p7_lectura_actual",
     "Quants cops aproximadament has visitat una biblioteca per llegir o agafar llibres en préstec en els últims 12 mesos per oci?": "p10_visites_biblioteca",
-    "En quin grau llegeixes les lectures obligatòries de l’escola?": "p16_lectura_obligatoria",
+    "En quin grau llegeixes les lectures obligatòries de l’escola?": "p16_lectura_obligatoria", 
 })
-
-# Ahora creamos un df más limpio solo con esas variables
-df_lectura = df[
-    [
-        "p4_temps_lectura",
-        "p5_llibres",
-        "p6_pag",
-        "p7_lectura_actual",
-        "p10_visites_biblioteca",
-        "p16_lectura_obligatoria",
-    ]
-].copy()
-
-if verbose:
-    print("\n=======================================================================================\nReduced Dataframe\n=======================================================================================")
-    print(f"Dataframe dimensions (rows, cols): {df_lectura.shape}")
-    print(f"First 5 lines of the dataframe: \n{df_lectura.head()}")
 
 # =======================================================================================
 # 3. Composed variables books * pages --> pages / year
@@ -91,7 +74,7 @@ map_llibres = {
     "Més de 15 llibres o còmics": 18
 }
 
-df_lectura["p5_num"] = df_lectura["p5_llibres"].map(map_llibres)
+df["p5_num"] = df["p5_llibres"].map(map_llibres)
 
 # Recode P6 to mean number of pages
 map_pagines = {
@@ -101,20 +84,20 @@ map_pagines = {
     "Més de 600 pàgines": 700
 }
 
-df_lectura["p6_num"] = df_lectura["p6_pag"].map(map_pagines)
+df["p6_num"] = df["p6_pag"].map(map_pagines)
 
 # Create Composed variable p5 * p6 = total aproximado de páginas leídas al año
-df_lectura["p5_6_pagines_num"] = (
-    df_lectura["p5_num"] * df_lectura["p6_num"]
+df["p5_6_pagines_num"] = (
+    df["p5_num"] * df["p6_num"]
 )
 # If p5 = 0 books -> p5_6 = 0
-df_lectura.loc[
-    df_lectura["p5_num"] == 0,
+df.loc[
+    df["p5_num"] == 0,
     "p5_6_pagines_num"
 ] = 0
 
 # Replace Nan for 0
-df_lectura["p5_6_pagines_num"] = df_lectura["p5_6_pagines_num"].fillna(0)
+df["p5_6_pagines_num"] = df["p5_6_pagines_num"].fillna(0)
 
 
 # =======================================================================================
@@ -124,9 +107,9 @@ df_lectura["p5_6_pagines_num"] = df_lectura["p5_6_pagines_num"].fillna(0)
 bins = [-1, 0, 500, 1000, 3000, 4000, float("inf")]
 labels = ["0", "1-500", "501-1000", "1001-3000", "3001-4000", ">4000"]
 
-# df_lectura["p5_6_pagines"] = df_lectura["p5_6_pagines_num"].apply(tmt.categorize_pags)
-df_lectura["p5_6_pagines"] = pd.cut(
-    df_lectura["p5_6_pagines_num"],
+# df["p5_6_pagines"] = df["p5_6_pagines_num"].apply(tmt.categorize_pags)
+df["p5_6_pagines"] = pd.cut(
+    df["p5_6_pagines_num"],
     bins=bins,
     labels=labels
 )
@@ -136,7 +119,7 @@ if verbose:
     print("\n=======================================================================================\nComposed Variable\n=======================================================================================")
     print("Check first 20 rows:")
     print(
-        df_lectura[
+        df[
             [
                 "p5_llibres",
                 "p6_pag",
@@ -152,6 +135,7 @@ if verbose:
 # 5. Thematic
 # =======================================================================================
 # Remap thematic
+print("\n=======================================================================================\nThematic\n=======================================================================================")
 map_thematic = {
     1: 3,
     2: 2,
@@ -159,17 +143,17 @@ map_thematic = {
 }
 
 columnes_generes = {
-    "fantastica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la fantàstica.]",
-    "romantica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la romàntica.]",
-    "terror": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la de terror.]",
-    "negra": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la negra.]",
-    "historica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la històrica.]",
-    "ciencia_ficcio": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Ciència ficció.]",
-    "comic": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Còmic.]",
-    "classics": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Clàssics.]",
-    "poesia": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Poesia.]",
-    "assaig": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Assaig (Filosofia, divulgació científica, etc.)]",
-    "teatre": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Teatre.]"
+    "Novel·la fantàstica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la fantàstica.]",
+    "Novel·la romàntica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la romàntica.]",
+    "Novel·la de terror": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la de terror.]",
+    "Novel·la negra": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la negra.]",
+    "Novel·la històrica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la històrica.]",
+    "Ciència ficció": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Ciència ficció.]",
+    "Còmic": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Còmic.]",
+    "Clàssics": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Clàssics.]",
+    "Poesia": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Poesia.]",
+    "Assaig": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Assaig (Filosofia, divulgació científica, etc.)]",
+    "Teatre": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Teatre.]"
 }
 
 resultats = {}
@@ -220,18 +204,23 @@ if len(plots) > 0 and 1 in plots:
     plt.ylabel("Puntuació ponderada")
     plt.xlabel("Gèneres literaris")
     plt.xticks(rotation=45, ha="center")
-    plt.show()
 
 # =======================================================================================
-# 6. Estatistics
+# 6. Estatistics from p5_6_pagines_num 
 # =======================================================================================
 # p5_6_pagines_num
 # ==========================================
 print(f'\n=======================================================================================\nEstatistics from p5_6_pagines_num variable:\n=======================================================================================')
-print(df_lectura["p5_6_pagines_num"].describe())
+print(df["p5_6_pagines_num"].describe())
 
 # =======================================================================================
-# 6. Plot descriptive histograms
+# 7. Create subdf of readers
+# =======================================================================================
+df_lectors_llibres = df[df["p5_llibres"] != "0 llibres o còmics."]
+df_lectors_hores = df[df["p4_temps_lectura"] != "0 minuts."]
+
+# =======================================================================================
+# 8. Plot descriptive histograms
 # =======================================================================================
 # p4_temps_lectura
 # ==========================================
@@ -247,7 +236,7 @@ if len(plots) > 0 and 2 in plots:
     ]
 
     tmt.plot_descriptive_hists(
-        df=df_lectura,
+        df=df,
         var="p4_temps_lectura",
         title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana",
         xlabel="",
@@ -261,7 +250,7 @@ if len(plots) > 0 and 3 in plots:
     plt.figure(3)
 
     tmt.plot_descriptive_hists(
-        df=df_lectura,
+        df=df,
         var="p5_llibres",
         title="Distribució nombre de llibres o còmics llegits per oci en l'últim any",
         xlabel="Nombre de llibres o còmics llegits per oci en l'últim any",
@@ -274,7 +263,7 @@ if len(plots) > 0 and 4 in plots:
     plt.figure(4)
 
     tmt.plot_descriptive_hists(
-        df=df_lectura,
+        df=df,
         var="p5_6_pagines",
         title="Distribució nombre de pàgines estimades llegides aquest any (llibre o còmic) per oci",
         xlabel="Pàgines estimades llegides anualment",
@@ -286,7 +275,7 @@ if len(plots) > 0 and 4 in plots:
 if 5 in plots: 
     plt.figure(5)
     tmt.plot_descriptive_hists(
-        df=df_lectura,
+        df=df,
         var="p7_lectura_actual",
         title="Distribució alumnes que estan llegint actualment un llibre o còmic per oci",
         xlabel="",
@@ -306,7 +295,7 @@ if len(plots) > 0 and 6 in plots:
     ]
 
     tmt.plot_descriptive_hists(
-        df=df_lectura,
+        df=df,
         var="p16_lectura_obligatoria",
         title="Distribució alumnes que llegeixen les lectures obligatòries de l’escola",
         xlabel="",
@@ -327,7 +316,7 @@ if len(plots) > 0 and 7 in plots:
     ]
 
     tmt.plot_descriptive_hists(
-        df=df_lectura,
+        df=df,
         var="p10_visites_biblioteca",
         title="Distribució nombre de visites a la biblioteca per llegir o agafar llibres o còmics en préstec en l'últim any per oci",
         xlabel="",
@@ -340,7 +329,7 @@ if len(plots) > 0 and 7 in plots:
 # Crear histograma y capturar datos
 if len(plots) > 0 and 8 in plots:
     plt.figure(8)
-    counts, bins, patches = plt.hist(df_lectura["p5_6_pagines_num"], bins=12)
+    counts, bins, patches = plt.hist(df["p5_6_pagines_num"], bins=12)
 
     plt.title("Histograma del nombre de pàgines estimades llegides anualment (llibre o còmic) per oci")
     plt.xlabel("Pàgines estimades llegides anualment")
@@ -355,6 +344,35 @@ if len(plots) > 0 and 8 in plots:
             ha='center',
             va='bottom'
         )
+
+# print(df["Quin format de lectura utilitzes més habitualment per a la lectura de llibres o còmics per oci? " ])
+
+# p4_temps_lectura
+# ==========================================
+# Clean df
+valores_excluir = [
+    "digital (xarxes socials)",
+    "en paper i en digital",
+    "wattpad,webtoon"
+]
+
+col = "Quin format de lectura utilitzes més habitualment per a la lectura de llibres o còmics per oci? "
+
+df_lectors_hores = df_lectors_hores[
+    ~df_lectors_hores[col].isin(valores_excluir)
+]
+
+if len(plots) > 0 and 9 in plots:
+    plt.figure(9)
+
+    tmt.plot_descriptive_hists(
+        df=df_lectors_hores,
+        var="Quin format de lectura utilitzes més habitualment per a la lectura de llibres o còmics per oci? ",
+        title="Format de lectura més habitual per a la lectura de llibres o còmics per oci (alumnes lectors)",
+        xlabel="",
+        ylabel="Freqüència"
+    )
+
 
 plt.show()
 
