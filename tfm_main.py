@@ -533,7 +533,7 @@ map_temps = {
 }
 
 map_pagines = {
-    "=0": 0,
+    "0": 0,
     "1-300": 1,
     "301-800": 2,
     "801-2000": 3,
@@ -549,6 +549,7 @@ if len(tags) > 0 and 4 in tags:
     print("\n=======================================================================================\nReading Time \n=======================================================================================")
     corr = df["p4_temps_lectura_sp"].corr(df["p5_6_pagines_sp"], method="spearman")
     print(f"Correlación (Spearman) p4_temps_lectura_sp vs p5_6_pagines_sp: {corr:.3f}")
+    print(df[["p5_6_pagines", "p5_6_pagines_sp", "p4_temps_lectura", "p4_temps_lectura_sp"]].head(30))
     # Se observa una correlación positiva fuerte entre el tiempo de lectura y el número de páginas leídas (ρ = 0.714), lo que indica coherencia entre ambas dimensiones del hábito lector. Esta relación justifica la construcción de una variable compuesta que integre frecuencia e intensidad de lectura.
     # Add column clasificació_lectora
     # =======================================================
