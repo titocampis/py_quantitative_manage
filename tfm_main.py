@@ -183,6 +183,7 @@ if len(tags) > 0 and 1 in tags:
 # =======================================================================================
 if len(tags) > 0 and 2 in tags:
     print("\n=======================================================================================\nReading Time \n=======================================================================================")
+    print(df["p4_temps_lectura"].head(20))
     sort = [
         "0 minuts.",
         "Menys de 30 minuts a la setmana.",
@@ -206,8 +207,8 @@ if len(tags) > 0 and 2 in tags:
     # Boys vs girls
     # =======================================================
     tmt.plot_descriptive_combined_hists2(
-        df_1=df["Gènere"] == "Femení.",
-        df_2=df["Gènere"] == "Masculí.",
+        df_1=df[df["Gènere"] == "Femení."],
+        df_2=df[df["Gènere"] == "Masculí."],
         groups=["Noies", "Nois"],
         var="p4_temps_lectura",
         title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana per genere",
@@ -541,28 +542,32 @@ if len(tags) > 0 and 4 in tags:
 # =======================================================================================
 if len(tags) > 0 and 5 in tags:
     print("\n=======================================================================================\nReading format \n=======================================================================================")
+    df_to_use = df_readers.copy()
+    
     # Clean df_readers
     valores_excluir = [
         "digital (xarxes socials)",
         "en paper i en digital",
+        "No llegeixo per oci.",
+        "no llegeixo pero oci",
     ]
 
     col = "format"
-    mask = df[col] == "wattpad,webtoon"
+    mask = df_to_use[col] == "wattpad,webtoon"
     # print(mask.sum())  # número de coincidencias
 
-    df_readers.loc[mask, col] = "Digital (llibre Web o PDF en dispositiu electrònic)."
+    df_to_use.loc[mask, col] = "Digital (llibre Web o PDF en dispositiu electrònic)."
 
-    df_readers = df_readers[
-        ~df_readers[col].isin(valores_excluir)
+    df_to_use = df_to_use[
+        ~df_to_use[col].isin(valores_excluir)
     ]
 
     tmt.plot_descriptive_hists(
-        df=df_readers,
+        df=df_to_use,
         var="format",
-        title="format de lectura més habitual per a la lectura de llibres o còmics per oci",
+        title="Format de lectura més habitual per a la lectura de llibres o còmics per oci (Readers)",
         xlabel="",
-        ylabel="Percentatge d'alumnes (%)",
+        ylabel="Percentatge d'alumnes",
     )
 
 # =======================================================================================
