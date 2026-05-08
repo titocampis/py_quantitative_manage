@@ -97,21 +97,14 @@ readers_mask = (
 )
 
 df_readers = df[readers_mask].copy()
-df_fem = df[df["Gènere"] == "Femení."].copy()
-df_mas = df[df["Gènere"] == "Masculí."].copy()
+# df_fem = df[df["Gènere"] == "Femení."].copy()
+# df_mas = df[df["Gènere"] == "Masculí."].copy()
 
 if verbose:
     show_list = ["id", "Gènere", "Curs", "p4_temps_lectura", "p5_llibres", "format", "sessions"]
-    print("\n========================================================================================\nSubdataframes\n========================================================================================")
-    print("Readers dataframe ------------------------------------------------------------------------------------- ")
+    print("\n========================================================================================\nReaders DF\n========================================================================================")
     print(f"Dataframe dimensions (rows, cols): {df_readers.shape}")
     print(f"First 5 lines of the dataframe: \n{df_readers[show_list].head(12)}")
-    print("\nGirls dataframe ------------------------------------------------------------------------------------- ")
-    print(f"Dataframe dimensions (rows, cols): {df_fem.shape}")
-    print(f"First 5 lines of the dataframe: \n{df_fem[show_list].head(4)}")
-    print("\nBoys dataframe ------------------------------------------------------------------------------------- ")
-    print(f"Dataframe dimensions (rows, cols): {df_mas.shape}")
-    print(f"First 5 lines of the dataframe: \n{df_mas[show_list].head(4)}")
 
 # =======================================================================================
 # 1. Thematic
@@ -164,6 +157,7 @@ if len(tags) > 0 and 1 in tags:
         print("\nThematics results for READERS GIRLS ------------------------------------------------------")
         print(readers_resultats_girls)
         print("\nThematics results for READERS BOYS ------------------------------------------------------")
+        print(readers_resultats_boys)
 
     # Plots
     # =======================================================
@@ -183,7 +177,7 @@ if len(tags) > 0 and 1 in tags:
 # =======================================================================================
 if len(tags) > 0 and 2 in tags:
     print("\n=======================================================================================\nReading Time \n=======================================================================================")
-    print(df["p4_temps_lectura"].head(20))
+    # print(df["p4_temps_lectura"].head(20))
     sort = [
         "0 minuts.",
         "Menys de 30 minuts a la setmana.",
@@ -301,9 +295,11 @@ df["p5_6_pagines"] = pd.cut(
 )
 
 # Check result
+if len(tags) > 0 and 3 in tags:
+    print("\n=======================================================================================\nPages per year: Estatistics\n=======================================================================================")
+
 if verbose:
-    print("\n========================================================================================\nCheck p5_6_pagines\n========================================================================================")
-    print("Check first 20 rows:")
+    print("Check first 20 rows of number of pages per year:")
     print(
         df[
             [
@@ -317,11 +313,8 @@ if verbose:
             ]
         ].head(20)
     )
-    # print(df["p5_6_pagines_num"].to_string())
-
 if len(tags) > 0 and 3 in tags:
-    print("\n=======================================================================================\nPages per year: Estatistics\n=======================================================================================")
-    print("========================== General ===========================")
+    print("\n========================== General ===========================")
     print(df["p5_6_pagines_num"].describe())
     print("\n============================ Sexe ============================")
     print("------------- Femení -------------")
