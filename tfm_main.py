@@ -452,6 +452,12 @@ map_pagines = {
     ">4000": 5
 }
 
+map_class =  {
+    "No lector / Lector molt ocasional": 0,
+    "Lector ocasional": 1,
+    "Lector habitual": 2
+}
+
 # Aplicar mapas
 df["p4_temps_lectura_sp"] = df["p4_temps_lectura"].map(map_temps)
 df["p5_6_pagines_sp"] = df["p5_6_pagines"].map(map_pagines)
@@ -459,10 +465,12 @@ df["p5_6_pagines_sp"] = df["p5_6_pagines"].map(map_pagines)
 if len(tags) > 0 and 4 in tags:
     print("\n=======================================================================================\nReading Classification \n=======================================================================================")
     corr = df["p4_temps_lectura_sp"].corr(df["p5_6_pagines_sp"], method="spearman")
-    print(f"Correlación (Spearman) p4_temps_lectura_sp vs p5_6_pagines_sp: {corr:.3f}")
+    print(f"Correlación (Spearman) p4_temps_lectura_sp vs p5_6_pagines_sp: {corr:.5f}")
+    print("---------------------------------------------------------------------------------------")
     if verbose:
         print(df[["p5_6_pagines", "p5_6_pagines_sp", "p4_temps_lectura", "p4_temps_lectura_sp"]].head(30))
     # Se observa una correlación positiva fuerte entre el tiempo de lectura y el número de páginas leídas (ρ = 0.714), lo que indica coherencia entre ambas dimensiones del hábito lector. Esta relación justifica la construcción de una variable compuesta que integre frecuencia e intensidad de lectura.
+    
     # Add column clasificació_lectora
     # =======================================================
     df = tmt.classify_reader(df)
@@ -471,6 +479,17 @@ if len(tags) > 0 and 4 in tags:
         "Lector ocasional",
         "Lector habitual"
     ]
+
+    # Calculate new correlation with classificació_lectora
+    df["p5_6_pagines_sp"] = df["p5_6_pagines"].map(map_pagines)
+    df["sp_classificacio_lectora"] = df["classificacio_lectora"].map(map_class)
+    corr_p4_class = df["p4_temps_lectura_sp"].corr(df["sp_classificacio_lectora"], method="spearman")
+    corr_p5_6_class = df["p5_6_pagines_sp"].corr(df["sp_classificacio_lectora"], method="spearman")
+
+    print("---------------------------------------------------------------------------------------")
+    print(f"Correlación (Spearman) p4_temps_lectura_sp vs classificacio_lectora: {corr_p4_class:.5f}")
+    print(f"Correlación (Spearman) p5_6_pagines_sp vs classificacio_lectora: {corr_p5_6_class:.5f}")
+    print("---------------------------------------------------------------------------------------")
 
     # General
     # =======================================================
