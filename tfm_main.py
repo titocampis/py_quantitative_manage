@@ -37,8 +37,13 @@ verbose, tags = tmt.parse_arguments()
 # =======================================================================================
 # Import df from csv
 df = pd.read_csv(csv_name)
+
+# Ad id column
+df["id"] = range(1, len(df) + 1)
+
+# Print df data
 if verbose:
-    print("[Check]: Income Dataframe Info")
+    print("========================================================================================\nCheck Dataset\n========================================================================================")
     print(f"Dataframe dimensions (rows, cols): {df.shape}")
     print(f"First 5 lines of the dataframe: \n{df.head()}")
     # print(f"\nCheck no null values:")
@@ -49,7 +54,6 @@ if verbose:
 # =======================================================================================
 # Rename some important columns
 # =======================================================================================
-# Primero renombramos columnas
 df = df.rename(columns={
     "Quant temps a la setmana dediques, de mitjana, a la lectura de llibres o còmics per oci? (Ja sigui en format físic o digital).": "p4_temps_lectura",
     "Quants llibres o còmics t’has llegit aproximadament en els últims 12 mesos per oci? (Ja sigui en format físic o digital)": "p5_llibres",
@@ -57,7 +61,25 @@ df = df.rename(columns={
     "Actualment estàs llegint algun llibre o còmic per oci?": "p7_lectura_actual",
     "Quants cops aproximadament has visitat una biblioteca per llegir o agafar llibres en préstec en els últims 12 mesos per oci?": "p10_visites_biblioteca",
     "En quin grau llegeixes les lectures obligatòries de l’escola?": "p16_lectura_obligatoria", 
+    "Quin format de lectura utilitzes més habitualment per a la lectura de llibres o còmics per oci? ": "format",
+    "Quan llegeixes, com acostumen a ser les teves sessions de lectura?" : "sessions",
+    "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la fantàstica.]": "Novel·la fantàstica",
+    "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la romàntica.]": "Novel·la romàntica",
+    "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la de terror.]": "Novel·la de terror",
+    "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la negra.]": "Novel·la negra",
+    "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la històrica.]": "Novel·la històrica",
+    "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Ciència ficció.]": "Ciència ficció",
+    "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Còmic.]": "Còmic",
+    "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Clàssics.]": "Clàssics",
+    "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Poesia.]": "Poesia",
+    "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Assaig (Filosofia, divulgació científica, etc.)]": "Assaig",
+    "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Teatre.]": "Teatre"
 })
+
+# =======================================================================================
+# Save poltergeists
+# =======================================================================================
+df = tmt.save_poltergeists(df, verbose=verbose)
 
 # =======================================================================================
 # Clean dataset and ensure consistency
@@ -67,201 +89,84 @@ df = tmt.clean_reading_dataset_and_consistency(df, verbose=verbose)
 # =======================================================================================
 # Create subdataframes of readers, gender, curs
 # =======================================================================================
-df_lectors = df[
+readers_mask = (
     (df["p5_llibres"] != "0 llibres o còmics.") &
     (df["p4_temps_lectura"] != "0 minuts.") &
-    (df["Quan llegeixes, com acostumen a ser les teves sessions de lectura?"] != "No llegeixo per oci.") &
-    (df["Quin format de lectura utilitzes més habitualment per a la lectura de llibres o còmics per oci? "] != "No llegeixo per oci.")
-]
+    (df["sessions"] != "No llegeixo per oci.") &
+    (df["format"] != "No llegeixo per oci.")
+)
 
+df_readers = df[readers_mask].copy()
 df_fem = df[df["Gènere"] == "Femení."].copy()
 df_mas = df[df["Gènere"] == "Masculí."].copy()
 
-df_3e = df[df["Curs"] == "3r d'ESO."].copy()
-df_4e = df[df["Curs"] == "4t d'ESO."].copy()
-df_1b = df[df["Curs"] == "1r de Batxillerat."].copy()
-df_2b = df[df["Curs"] == "2n de Batxillerat."].copy()
-df_soc = df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències Socials."].copy()
-df_ct = df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències i Tecnologia."].copy()
-
+if verbose:
+    show_list = ["id", "Gènere", "Curs", "p4_temps_lectura", "p5_llibres", "format", "sessions"]
+    print("\n========================================================================================\nSubdataframes\n========================================================================================")
+    print("Readers dataframe ------------------------------------------------------------------------------------- ")
+    print(f"Dataframe dimensions (rows, cols): {df_readers.shape}")
+    print(f"First 5 lines of the dataframe: \n{df_readers[show_list].head(12)}")
+    print("\nGirls dataframe ------------------------------------------------------------------------------------- ")
+    print(f"Dataframe dimensions (rows, cols): {df_fem.shape}")
+    print(f"First 5 lines of the dataframe: \n{df_fem[show_list].head(4)}")
+    print("\nBoys dataframe ------------------------------------------------------------------------------------- ")
+    print(f"Dataframe dimensions (rows, cols): {df_mas.shape}")
+    print(f"First 5 lines of the dataframe: \n{df_mas[show_list].head(4)}")
 
 # =======================================================================================
 # 1. Thematic
 # =======================================================================================
 if len(tags) > 0 and 1 in tags:
     print("\n=======================================================================================\nThematic\n=======================================================================================")
-    # Remap thematic
+    # Select df
+    df_thematic = df.copy()
+    
+    # Remap thematic and calculate scores for all, girls and boys
+    # =======================================================
     map_thematic = {
         1: 3,
         2: 2,
         3: 1
     }
 
-    columnes_generes = {
-        "Novel·la fantàstica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la fantàstica.]",
-        "Novel·la romàntica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la romàntica.]",
-        "Novel·la de terror": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la de terror.]",
-        "Novel·la negra": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la negra.]",
-        "Novel·la històrica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la històrica.]",
-        "Ciència ficció": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Ciència ficció.]",
-        "Còmic": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Còmic.]",
-        "Clàssics": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Clàssics.]",
-        "Poesia": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Poesia.]",
-        "Assaig": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Assaig (Filosofia, divulgació científica, etc.)]",
-        "Teatre": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Teatre.]"
-    }
+    # print(list(df))
 
-    # Generics
+    columnes_generes = [
+        "Novel·la fantàstica",
+        "Novel·la romàntica",
+        "Novel·la de terror",
+        "Novel·la negra",
+        "Novel·la històrica",
+        "Ciència ficció",
+        "Còmic",
+        "Clàssics",
+        "Poesia",
+        "Assaig",
+        "Teatre"
+    ]
+
+    readers_resultats_all = tmt.compute_thematic_scores(df_readers, columnes_generes, map_thematic)
+    readers_resultats_girls = tmt.compute_thematic_scores(df_readers[df_readers["Gènere"] == "Femení."], columnes_generes, map_thematic)
+    readers_resultats_boys = tmt.compute_thematic_scores(df_readers[df_readers["Gènere"] == "Masculí."], columnes_generes, map_thematic)
+    all_resultats_all = tmt.compute_thematic_scores(df, columnes_generes, map_thematic)
+    all_resultats_girls = tmt.compute_thematic_scores(df[df["Gènere"] == "Femení."], columnes_generes, map_thematic)
+    all_resultats_boys = tmt.compute_thematic_scores(df[df["Gènere"] == "Masculí."], columnes_generes, map_thematic)
+
+    print("Thematics results for ALL ------------------------------------------------------")
+    print(all_resultats_all)
+    print("\nThematics results for GIRLS ------------------------------------------------------")
+    print(all_resultats_girls)
+    print("\nThematics results for BOYS ------------------------------------------------------")
+    print(all_resultats_boys)
+
+    # Plots
     # =======================================================
-    resultats = {}
-
-    for nom, columna in columnes_generes.items():
-        nova_col = f"{nom}_score"
-        
-        df[nova_col] = (
-            pd.to_numeric(df[columna], errors="coerce")
-            .map(map_thematic)
-            .fillna(0)
-        )
-        
-        resultats[nom] = df[nova_col].sum()
-
-    resultats_df = pd.DataFrame.from_dict(
-        resultats,
-        orient="index",
-        columns=["puntuacio_total"]
-    ).sort_values("puntuacio_total", ascending=False)
-
-    # print(resultats_df)
-
-    freq = resultats_df["puntuacio_total"]
-
-    # Plot
-    plt.figure()
-
-    # Opcional: partir textos llargs si uses noms més llargs després
-    freq.index = [textwrap.fill(label, 15) for label in freq.index]
-
-    ax = freq.plot(kind="bar")
-
-    # Mostrar valors damunt de cada barra
-    total = freq.sum()
-
-    for i, v in enumerate(freq):
-        ax.text(
-            i,
-            v,
-            f"{int(v)} punts",
-            ha="center",
-            va="bottom"
-        )
-
-    # Editar text
-    plt.title("Distribució de preferències dels gèneres literaris")
-    plt.ylabel("Puntuació ponderada")
-    plt.xlabel("Gèneres literaris")
-    plt.xticks(rotation=45, ha="center")
-
-    # Femení
-    # =======================================================
-    resultats_fem = {}
-
-    for nom, columna in columnes_generes.items():
-        nova_col = f"{nom}_score"
-        
-        df_fem[nova_col] = (
-            pd.to_numeric(df_fem[columna], errors="coerce")
-            .map(map_thematic)
-            .fillna(0)
-        )
-        
-        resultats_fem[nom] = df_fem[nova_col].sum()
-
-    resultats_df_fem = pd.DataFrame.from_dict(
-        resultats_fem,
-        orient="index",
-        columns=["puntuacio_total"]
-    ).sort_values("puntuacio_total", ascending=False)
-
-    freq = resultats_df_fem["puntuacio_total"]
-
-    # Plot
-    plt.figure()
-
-    # Opcional: partir textos llargs si uses noms més llargs després
-    freq.index = [textwrap.fill(label, 15) for label in freq.index]
-
-    ax = freq.plot(kind="bar")
-
-    # Mostrar valors damunt de cada barra
-    total = freq.sum()
-
-    for i, v in enumerate(freq):
-        ax.text(
-            i,
-            v,
-            f"{int(v)} punts",
-            ha="center",
-            va="bottom"
-        )
-
-    # Editar text
-    ax = freq.plot(kind="bar", color="purple")
-    plt.title("Distribució de preferències dels gèneres literaris per les noies")
-    plt.ylabel("Puntuació ponderada")
-    plt.xlabel("Gèneres literaris")
-    plt.xticks(rotation=45, ha="center")
-
-    # Masculí
-    # =======================================================
-    resultats_mas = {}
-
-    for nom, columna in columnes_generes.items():
-        nova_col = f"{nom}_score"
-        
-        df_mas[nova_col] = (
-            pd.to_numeric(df_mas[columna], errors="coerce")
-            .map(map_thematic)
-            .fillna(0)
-        )
-        
-        resultats_mas[nom] = df_mas[nova_col].sum()
-
-    resultats_df_mas = pd.DataFrame.from_dict(
-        resultats_mas,
-        orient="index",
-        columns=["puntuacio_total"]
-    ).sort_values("puntuacio_total", ascending=False)
-
-    freq = resultats_df_mas["puntuacio_total"]
-
-    # Plot
-    plt.figure()
-
-    # Opcional: partir textos llargs si uses noms més llargs després
-    freq.index = [textwrap.fill(label, 15) for label in freq.index]
-
-    ax = freq.plot(kind="bar")
-
-    # Mostrar valors damunt de cada barra
-    total = freq.sum()
-
-    for i, v in enumerate(freq):
-        ax.text(
-            i,
-            v,
-            f"{int(v)} punts",
-            ha="center",
-            va="bottom"
-        )
-
-    # Editar text
-    # colores = ["red", "blue", "green", "orange", "purple"]
-    ax = freq.plot(kind="bar", color="orange")
-    plt.title("Distribució de preferències dels gèneres literaris pels nois")
-    plt.ylabel("Puntuació ponderada")
-    plt.xlabel("Gèneres literaris")
-    plt.xticks(rotation=45, ha="center")
+    tmt.plot_thematic_resultats(all_resultats_all, "Distribució de preferències dels gèneres literaris")
+    tmt.plot_thematic_resultats(all_resultats_girls, "Distribució de preferències dels gèneres literaris - Noies")
+    tmt.plot_thematic_resultats(all_resultats_boys, "Distribució de preferències dels gèneres literaris - Nois")
+    tmt.plot_thematic_resultats(readers_resultats_all, "Distribució de preferències dels gèneres literaris - Lectors")
+    tmt.plot_thematic_resultats(readers_resultats_girls, "Distribució de preferències dels gèneres literaris - Lectoras")
+    tmt.plot_thematic_resultats(readers_resultats_boys, "Distribució de preferències dels gèneres literaris - Lectors masculins")
 
 # =======================================================================================
 # 2. p4_temps_lectura
@@ -291,8 +196,8 @@ if len(tags) > 0 and 2 in tags:
     # Boys vs girls
     # =======================================================
     tmt.plot_descriptive_combined_hists2(
-        df_1=df_fem,
-        df_2=df_mas,
+        df_1=df["Gènere"] == "Femení.",
+        df_2=df["Gènere"] == "Masculí.",
         groups=["Noies", "Nois"],
         var="p4_temps_lectura",
         title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana per genere",
@@ -305,10 +210,10 @@ if len(tags) > 0 and 2 in tags:
     # Groups
     # =======================================================
     tmt.plot_descriptive_combined_hists4(
-        df_1=df_3e,
-        df_2=df_4e,
-        df_3=df_1b,
-        df_4=df_2b,
+        df_1=df[df["Curs"] == "3r d'ESO."],
+        df_2=df[df["Curs"] == "4t d'ESO."],
+        df_3=df[df["Curs"] == "1r de Batxillerat."],
+        df_4=df[df["Curs"] == "2n de Batxillerat."],
         groups=["3r d'ESO", "4t d'ESO", "1r de Batxillerat", "2n de Batxillerat"],
         var="p4_temps_lectura",
         title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana per curs",
@@ -321,8 +226,8 @@ if len(tags) > 0 and 2 in tags:
     # Ciencies Socials vs Tecnologia i Ciencia
     # =======================================================
     tmt.plot_descriptive_combined_hists2(
-        df_1=df_soc,
-        df_2=df_ct,
+        df_1=df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències Socials."],
+        df_2=df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències i Tecnologia."],
         groups=["Ciències Socials", "Ciències i Tecnologia"],
         var="p4_temps_lectura",
         title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana per itinerari",
@@ -386,11 +291,12 @@ df["p5_6_pagines"] = pd.cut(
 
 # Check result
 if verbose:
-    print("[Check]: p5_6_pagines")
+    print("\n========================================================================================\nCheck p5_6_pagines\n========================================================================================")
     print("Check first 20 rows:")
     print(
         df[
             [
+                "id",
                 "p5_llibres",
                 "p6_pag",
                 "p5_num",
@@ -403,21 +309,22 @@ if verbose:
     # print(df["p5_6_pagines_num"].to_string())
 
 if len(tags) > 0 and 3 in tags:
-    print("\n=======================================================================================\nPages per year\n=======================================================================================")
-    print("\n------------ Estatistics from p5_6_pagines -------------")
-    print("---General ---")
+    print("\n=======================================================================================\nPages per year: Estatistics\n=======================================================================================")
+    print("========================== General ===========================")
     print(df["p5_6_pagines_num"].describe())
-    print("---Femení ---")
+    print("\n============================ Sexe ============================")
+    print("------------- Femení -------------")
     print(df[df["Gènere"] == "Femení."]["p5_6_pagines_num"].describe())
-    print("---Masculí ---")
+    print("------------- Masculí -------------")
     print(df[df["Gènere"] == "Masculí."]["p5_6_pagines_num"].describe())
-    print("---3r d'ESO ---")
+    print("\n============================ Curs ============================")
+    print("------------- 3r d'ESO -------------")
     print(df[df["Curs"] == "3r d'ESO."]["p5_6_pagines_num"].describe())
-    print("---4t d'ESO ---")
+    print("------------- 4t d'ESO -------------")
     print(df[df["Curs"] == "4t d'ESO."]["p5_6_pagines_num"].describe())
-    print("---1r de Batxillerat ---")
+    print("------------- 1r de Batxillerat -------------")
     print(df[df["Curs"] == "1r de Batxillerat."]["p5_6_pagines_num"].describe())
-    print("---2n de Batxillerat ---")
+    print("------------- 2n de Batxillerat -------------")
     print(df[df["Curs"] == "2n de Batxillerat."]["p5_6_pagines_num"].describe())
 
     # Plot
@@ -546,10 +453,11 @@ df["p4_temps_lectura_sp"] = df["p4_temps_lectura"].map(map_temps)
 df["p5_6_pagines_sp"] = df["p5_6_pagines"].map(map_pagines)
 
 if len(tags) > 0 and 4 in tags:
-    print("\n=======================================================================================\nReading Time \n=======================================================================================")
+    print("\n=======================================================================================\nReading Classification \n=======================================================================================")
     corr = df["p4_temps_lectura_sp"].corr(df["p5_6_pagines_sp"], method="spearman")
     print(f"Correlación (Spearman) p4_temps_lectura_sp vs p5_6_pagines_sp: {corr:.3f}")
-    print(df[["p5_6_pagines", "p5_6_pagines_sp", "p4_temps_lectura", "p4_temps_lectura_sp"]].head(30))
+    if verbose:
+        print(df[["p5_6_pagines", "p5_6_pagines_sp", "p4_temps_lectura", "p4_temps_lectura_sp"]].head(30))
     # Se observa una correlación positiva fuerte entre el tiempo de lectura y el número de páginas leídas (ρ = 0.714), lo que indica coherencia entre ambas dimensiones del hábito lector. Esta relación justifica la construcción de una variable compuesta que integre frecuencia e intensidad de lectura.
     # Add column clasificació_lectora
     # =======================================================
@@ -619,26 +527,30 @@ if len(tags) > 0 and 4 in tags:
     # )
 
 # =======================================================================================
-# 5. Format de lectura
+# 5. format de lectura
 # =======================================================================================
 if len(tags) > 0 and 5 in tags:
-    # Clean df_lectors
+    print("\n=======================================================================================\nReading format \n=======================================================================================")
+    # Clean df_readers
     valores_excluir = [
         "digital (xarxes socials)",
         "en paper i en digital",
-        "wattpad,webtoon"
     ]
 
-    col = "Quin format de lectura utilitzes més habitualment per a la lectura de llibres o còmics per oci? "
+    col = "format"
+    mask = df[col] == "wattpad,webtoon"
+    # print(mask.sum())  # número de coincidencias
 
-    df_lectors = df_lectors[
-        ~df_lectors[col].isin(valores_excluir)
+    df_readers.loc[mask, col] = "Digital (llibre Web o PDF en dispositiu electrònic)."
+
+    df_readers = df_readers[
+        ~df_readers[col].isin(valores_excluir)
     ]
 
     tmt.plot_descriptive_hists(
-        df=df_lectors,
-        var="Quin format de lectura utilitzes més habitualment per a la lectura de llibres o còmics per oci? ",
-        title="Format de lectura més habitual per a la lectura de llibres o còmics per oci",
+        df=df_readers,
+        var="format",
+        title="format de lectura més habitual per a la lectura de llibres o còmics per oci",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
     )

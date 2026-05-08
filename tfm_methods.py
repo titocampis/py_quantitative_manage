@@ -45,30 +45,227 @@ def parse_arguments():
     # 5. Devolver lo que necesites
     return args.verbose, args.tags
 
-def clean_reading_dataset_and_consistency(df: pd.DataFrame, verbose: bool = False) -> pd.DataFrame:
+def save_poltergeists(df: pd.DataFrame, verbose: bool = False) -> pd.DataFrame:
     """
-    Clean the reading dataset from noise
+    Save poltergeists in the dataset for later analysis
     """
 
     df = df.copy()
 
     if verbose:
-        print(df[(df["Quan llegeixes, com acostumen a ser les teves sessions de lectura?"] == "No llegeixo per oci.") & (df["Quin format de lectura utilitzes més habitualment per a la lectura de llibres o còmics per oci? "] == "No llegeixo per oci.")][["p4_temps_lectura", "p5_llibres", "p6_pag"]].to_string(index=False))
+        print("\n========================================================================================\nPoltergeists Saved\n========================================================================================")
+        show_list = [
+            "id",
+            "p4_temps_lectura", 
+            "p5_llibres", 
+            "p6_pag", 
+            "sessions", 
+            "format"
+        ]
+        print("------------ Saved Poltergeist 1 (id=160)----------------\n > Incongruencia entre tiempo de lectura y número de libros leídos")
+        print(df[df["id"] == 160][show_list].to_string(index=False)) # 2026/04/28 12:52:16 p. m. EEST
 
-    mask_p4 = (
-        # (df["p5_llibres"] == "0 llibres o còmics.") |
-        (df["Quan llegeixes, com acostumen a ser les teves sessions de lectura?"] == "No llegeixo per oci.") &
-        (df["Quin format de lectura utilitzes més habitualment per a la lectura de llibres o còmics per oci? "] == "No llegeixo per oci.")
-    )
+    # Poltergeist 1: Incongruencia entre tiempo de lectura y número de libros leídos
+    df.loc[df["id"] == 160, "p4_temps_lectura"] = "Entre 30 minuts i 1 hora a la setmana."
+    df.loc[df["id"] == 160, "p5_llibres"] = "3-5 llibres o còmics."
+    df.loc[df["id"] == 160, "p6_pag"] = "100-299 pàgines."
+
+    if verbose:
+        print(df[df["id"] == 160][show_list].to_string(index=False))
+
+    # Poltergeist 2: Incongruencia entre tiempo de lectura y número de libros leídos
+    if verbose:
+        print("\n------------ Saved Poltergeist 2 (id=104)----------------\n > Incongruencia entre tiempo de lectura y número de libros leídos")
+        print(df[df["id"] == 104][show_list].to_string(index=False)) # 2026/04/27 11:38:51 a. m. EEST
+    df.loc[df["id"] == 104, "p4_temps_lectura"] = "0 minuts."
+    df.loc[df["id"] == 104, "p5_llibres"] = "0 llibres o còmics."
+
+    if verbose:
+        print(df[df["id"] == 104][show_list].to_string(index=False))
+
+    # Poltergeist 3: Se ha olvidado poner las páginas leidas
+    if verbose:
+        print("\n------------ Saved Poltergeist 3 (id=138)----------------\n > Se ha olvidado poner las páginas leidas")
+        print(df[df["id"] == 138][show_list].to_string(index=False)) # 2026/04/27 11:38:51 a. m. EEST
+    df.loc[df["id"] == 138, "p6_pag"] = "100-299 pàgines."
+
+    if verbose:
+        print(df[df["id"] == 138][show_list].to_string(index=False)) # 2026/04/28 9:23:35 a. m. EEST
+
+    # Poltergeist 4: Incongruencia entre tiempo de lectura y número de libros leídos
+    if verbose:
+        print("\n------------ Saved Poltergeist 4 (id=10)----------------\n > Incongruencia entre tiempo de lectura y número de libros leídos")
+        print(df[df["id"] == 10][show_list].to_string(index=False)) # 2026/04/27 11:38:51 a. m. EEST
+    df.loc[df["id"] == 10, "p6_pag"] = "1-99 pàgines."
+    df.loc[df["id"] == 10, "p4_temps_lectura"] = "Menys de 30 minuts a la setmana."
+
+    # Poltergeist 5: Incongruencia entre paginas y libros leidos + incongruencia tematica + tiempo y libros leidos
+    if verbose:
+        print("\n------------ Saved Poltergeist 5 (id=213)----------------\n > Incongruencia entre tiempo de lectura y número de libros leídos")
+        print(df[df["id"] == 213][show_list].to_string(index=False))
+    df.loc[df["id"] == 213, "p4_temps_lectura"] = "0 minuts."
+
+    # # Poltergeist X: Incongruencia entre tiempo de lectura y número de libros leídos (NO APLICADA, NO ES FILTRA)
+    # if verbose:
+    #     print("\n------------ Poltergeist 5 (id=105)----------------\n > Incongruencia entre tiempo de lectura y número de libros leídos")
+    #     print(df[df["id"] == 105][show_list].to_string(index=False)) # 2026/04/27 11:38:51 a. m. EEST
+    # df.loc[df["id"] == 105, "p4_temps_lectura"] = "Entre 30 minuts i 1 hora a la setmana."
+
+    if verbose:
+        print(df[df["id"] == 105][show_list].to_string(index=False)) # 2026/04/28 9:23:35 a. m. EEST
     
-    mask_p5 = (
-        # (df["p4_temps_lectura"] == "0 minuts.") |
-        (df["Quan llegeixes, com acostumen a ser les teves sessions de lectura?"] == "No llegeixo per oci.") &
-        (df["Quin format de lectura utilitzes més habitualment per a la lectura de llibres o còmics per oci? "] == "No llegeixo per oci.")
+    # Poltergeists perdidos:
+    # - 191 - "2026/04/29 12:51:31 p. m. EEST"
+    # - 263 - "2026/04/30 2:55:27 p. m. EEST"
+    # - 252 - "2026/04/30 2:51:15 p. m. EEST"
+    # - 52
+    # - 58
+    # - 74
+    # - 6
+    # - 29
+    # - 103
+    # - 143
+
+    return df
+
+def clean_reading_dataset_and_consistency(
+    df: pd.DataFrame,
+    verbose: bool = False
+) -> pd.DataFrame:
+    """
+    Clean reading dataset and fix inconsistent answers.
+    """
+
+    df = df.copy()
+
+    show_list = [
+        "id",
+        "p4_temps_lectura",
+        "p5_llibres",
+        "p6_pag",
+        "sessions",
+        "format"
+    ]
+
+    # =========================================================
+    # BASE MASKS
+    # =========================================================
+
+    mask_no_lectura_oci = (
+        (df["sessions"] == "No llegeixo per oci.") |
+        (df["format"] == "No llegeixo per oci.")
     )
 
-    df.loc[mask_p4, "p4_temps_lectura"] = "0 minuts."
-    df.loc[mask_p5, "p5_llibres"] = "0 llibres o còmics."
+    temps_alts = [
+        "Entre 30 minuts i 1 hora a la setmana.",
+        "Entre 1 i 2 hores a la setmana.",
+        "Entre 2 i 3 hores a la setmana.",
+        "3 hores o més a la setmana."
+    ]
+
+    # NO APLICATS -> Pot ser que llegeixi poc una setaman habitual perque llegeix a l'estiu
+    temps_baixos = [
+        "0 minuts.",
+        "Menys de 30 minuts a la setmana."
+    ]
+    
+    llibres_alts = [
+        "11-15 llibres o còmics.",
+        "Més de 15 llibres o còmics."
+    ]
+    # -------------------------------------------------------------------------------------
+
+    llibres_baixos = [
+        "0 llibres o còmics.",
+        "1-2 llibres o còmics."
+    ]
+
+    mask_incongruencia_temps_alts_llibres_baixos = (
+        df["p4_temps_lectura"].isin(temps_alts) &
+        df["p5_llibres"].isin(llibres_baixos)
+    )
+
+    # NO APLICADA -> Pot ser que llegeixi poc una setaman habitual perque llegeix a l'estiu
+    mask_incongruencia_temps_baixos_llibres_alts = (
+        df["p4_temps_lectura"].isin(temps_baixos) &
+        df["p5_llibres"].isin(llibres_alts)
+    )
+    # -------------------------------------------------------------------------------------º
+
+    # =========================================================
+    # VERBOSE OUTPUT
+    # =========================================================
+
+    if verbose:
+
+        print("\n========================================================================================")
+        print("Filters to clean Dataset")
+        print("========================================================================================")
+
+        debug_filters = {
+            "No lectura per oci però temps de lectura setmanal > 0": (
+                mask_no_lectura_oci &
+                (df["p4_temps_lectura"] != "0 minuts.")
+            ),
+
+            "No lectura per oci però llibres anuals > 0": (
+                mask_no_lectura_oci &
+                (df["p5_llibres"] != "0 llibres o còmics.")
+            ),
+
+            "Incongruencia temps alts i llibres baixos": (
+                mask_incongruencia_temps_alts_llibres_baixos
+            ), # NO APLICADA!!!
+            "NO APLICAT!! --> Incongruencia temps baixos i llibres alts": (
+                mask_incongruencia_temps_baixos_llibres_alts
+            )
+        }
+
+        already_shown = pd.Series(False, index=df.index)
+
+        for title, current_mask in debug_filters.items():
+
+            # evitar duplicados entre bloques
+            current_mask = current_mask & ~already_shown
+
+            current_df = df[current_mask]
+
+            print(f"\n{title} [{len(current_df)}] -----------------------------")
+
+            if len(current_df) > 0:
+                print(current_df[show_list].to_string(index=False))
+
+            already_shown |= current_mask
+
+    # =========================================================
+    # CLEANING
+    # =========================================================
+
+    df.loc[mask_no_lectura_oci, "p4_temps_lectura"] = "0 minuts."
+    df.loc[mask_no_lectura_oci, "p5_llibres"] = "0 llibres o còmics."
+
+    df.loc[mask_incongruencia_temps_alts_llibres_baixos, "p4_temps_lectura"] = "0 minuts."
+    # NO APLICAT -> Pot ser que llegeixi poc una setaman habitual perque llegeix a l'estiu
+    # df.loc[mask_incongruencia_temps_baixos_llibres_alts, "p4_temps_lectura"] = "0 minuts.
+    # -------------------------------------------------------------------------------------
+
+    if verbose:
+        print("\n========================================================================================")
+        print("Unfiltered Inconsistencies")
+        print("========================================================================================")
+        print("\n------------ Numero de pag NaN pero no 0 minuts ----------------")
+        print(df[(df["p6_pag"].isna()) & (df["p4_temps_lectura"] != "0 minuts.")][show_list].to_string(index=False))
+        print("\n------------ Numero de pag NaN pero no 0 llibres ----------------")
+        print(df[(df["p6_pag"].isna()) & (df["p5_llibres"] != "0 llibres o còmics.")][show_list].to_string(index=False))
+        print("\n------------ Menys de 30 minuts i 0 llibres ----------------")
+        print(df[(df["p4_temps_lectura"] == "Menys de 30 minuts a la setmana.") & (df["p5_llibres"] == "0 llibres o còmics.")][show_list].to_string(index=False))
+        print("\n------------ Entre 30 minuts i 1 hora a la setmana i 0 llibres. ----------------")
+        print(df[(df["p4_temps_lectura"] == "Entre 30 minuts i 1 hora a la setmana.") & (df["p5_llibres"] == "0 llibres o còmics.")][show_list].to_string(index=False))
+        print("\n------------ Entre 1 i 2 hores a la setmana i 0 llibres. ----------------")
+        print(df[(df["p4_temps_lectura"] == "Entre 1 i 2 hores a la setmana.") & (df["p5_llibres"] == "0 llibres o còmics.")][show_list].to_string(index=False))
+        print("\n------------ Incongruencies llibres alts i temps baixos ----------------")
+        print("* Beneficio de la duda, pot ser que llegeixi poc durant setmanes habituals perque llegeix a l'estiu")
+        print(df[mask_incongruencia_temps_baixos_llibres_alts][show_list].to_string(index=False))
 
     return df
 
@@ -77,7 +274,7 @@ def classify_reader(df: pd.DataFrame) -> pd.DataFrame:
 
     temps_baix = [
         "0 minuts.",
-        # "Menys de 30 minuts a la setmana."
+        "Menys de 30 minuts a la setmana."
     ]
 
     temps_alt = [
@@ -103,11 +300,66 @@ def classify_reader(df: pd.DataFrame) -> pd.DataFrame:
 
     df["classificacio_lectora"] = np.select(
         [cond_no, cond_habitual, cond_ocasional],
-        ["No lector / Lector molt ocasional", "Lector habitual", "Lector ocasional"]
+        [
+            "No lector / Lector molt ocasional",
+            "Lector habitual",
+            "Lector ocasional"
+        ],
+        default="Sense classificar"
     )
 
     return df
 
+def compute_thematic_scores(df, columnes_generes, map_thematic):
+
+    resultats = {}
+
+    for col in columnes_generes:
+
+        puntuacio = (
+            pd.to_numeric(df[col], errors="coerce")
+            .map(map_thematic)
+            .fillna(0)
+            .sum()
+        )
+
+        resultats[col] = puntuacio
+
+    resultats_df = (
+        pd.DataFrame.from_dict(
+            resultats,
+            orient="index",
+            columns=["puntuacio_total"]
+        )
+        .sort_values("puntuacio_total", ascending=False)
+    )
+
+    return resultats_df
+
+def plot_thematic_resultats(df, title):
+
+    freq = df["puntuacio_total"].copy()
+
+    plt.figure()
+
+    freq.index = [textwrap.fill(label, 15) for label in freq.index]
+
+    ax = freq.plot(kind="bar")
+
+    for i, v in enumerate(freq):
+        ax.text(
+            i,
+            v,
+            f"{int(v)}",
+            ha="center",
+            va="bottom"
+        )
+
+    plt.title(title)
+    plt.ylabel("Puntuació ponderada")
+    plt.xlabel("Gèneres literaris")
+    plt.xticks(rotation=45, ha="center")
+    plt.tight_layout()
 
 def plot_descriptive_hists(df: pd.DataFrame, var: str, title: str, xlabel: str, ylabel: str, color: str = None, sort: list = None):
     """
@@ -207,7 +459,7 @@ def plot_descriptive_combined_hists4(
     }, axis=1).fillna(0)
 
     # -----------------------------
-    # Formato eje X
+    # formato eje X
     # -----------------------------
     freq.index = [textwrap.fill(str(label), 15) for label in freq.index]
 
