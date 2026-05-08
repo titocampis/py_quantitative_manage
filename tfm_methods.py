@@ -336,30 +336,40 @@ def compute_thematic_scores(df, columnes_generes, map_thematic):
 
     return resultats_df
 
-def plot_thematic_resultats(df, title):
+def plot_thematic_grid(results_dict):
 
-    freq = df["puntuacio_total"].copy()
+    fig, axes = plt.subplots(2, 3, figsize=(18, 10))
+    axes = axes.flatten()
 
-    plt.figure()
+    colors = {
+        "Noies": "purple",
+        "Lectoras": "purple",
+        "Nois": "orange",
+        "Lectors masculins": "orange"
+    }
 
-    freq.index = [textwrap.fill(label, 15) for label in freq.index]
+    default_color = "steelblue"
 
-    ax = freq.plot(kind="bar")
+    for ax, (title, df) in zip(axes, results_dict.items()):
 
-    for i, v in enumerate(freq):
-        ax.text(
-            i,
-            v,
-            f"{int(v)}",
-            ha="center",
-            va="bottom"
-        )
+        freq = df["puntuacio_total"].copy()
 
-    plt.title(title)
-    plt.ylabel("Puntuació ponderada")
-    plt.xlabel("Gèneres literaris")
-    plt.xticks(rotation=45, ha="center")
+        freq.index = [textwrap.fill(label, 15) for label in freq.index]
+
+        color = colors.get(title, default_color)
+
+        freq.plot(kind="bar", ax=ax, color=color)
+
+        for i, v in enumerate(freq):
+            ax.text(i, v, f"{int(v)}", ha="center", va="bottom")
+
+        ax.set_title(title)
+        ax.set_ylabel("Puntuació ponderada")
+        ax.set_xlabel("Gèneres literaris")
+        ax.tick_params(axis="x", rotation=45)
+
     plt.tight_layout()
+    # plt.show()
 
 def plot_descriptive_hists(df: pd.DataFrame, var: str, title: str, xlabel: str, ylabel: str, color: str = None, sort: list = None):
     """

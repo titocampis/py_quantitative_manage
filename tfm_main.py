@@ -152,21 +152,31 @@ if len(tags) > 0 and 1 in tags:
     all_resultats_girls = tmt.compute_thematic_scores(df[df["Gènere"] == "Femení."], columnes_generes, map_thematic)
     all_resultats_boys = tmt.compute_thematic_scores(df[df["Gènere"] == "Masculí."], columnes_generes, map_thematic)
 
-    print("Thematics results for ALL ------------------------------------------------------")
-    print(all_resultats_all)
-    print("\nThematics results for GIRLS ------------------------------------------------------")
-    print(all_resultats_girls)
-    print("\nThematics results for BOYS ------------------------------------------------------")
-    print(all_resultats_boys)
+    if verbose:
+        print("Thematics results for ALL ------------------------------------------------------")
+        print(all_resultats_all)
+        print("\nThematics results for ALL GIRLS ------------------------------------------------------")
+        print(all_resultats_girls)
+        print("\nThematics results for ALL BOYS ------------------------------------------------------")
+        print(all_resultats_boys)
+        print("\nThematics results for READERS ------------------------------------------------------")
+        print(readers_resultats_all)
+        print("\nThematics results for READERS GIRLS ------------------------------------------------------")
+        print(readers_resultats_girls)
+        print("\nThematics results for READERS BOYS ------------------------------------------------------")
 
     # Plots
     # =======================================================
-    tmt.plot_thematic_resultats(all_resultats_all, "Distribució de preferències dels gèneres literaris")
-    tmt.plot_thematic_resultats(all_resultats_girls, "Distribució de preferències dels gèneres literaris - Noies")
-    tmt.plot_thematic_resultats(all_resultats_boys, "Distribució de preferències dels gèneres literaris - Nois")
-    tmt.plot_thematic_resultats(readers_resultats_all, "Distribució de preferències dels gèneres literaris - Lectors")
-    tmt.plot_thematic_resultats(readers_resultats_girls, "Distribució de preferències dels gèneres literaris - Lectoras")
-    tmt.plot_thematic_resultats(readers_resultats_boys, "Distribució de preferències dels gèneres literaris - Lectors masculins")
+    results = {
+        "Tots": all_resultats_all,
+        "Noies": all_resultats_girls,
+        "Nois": all_resultats_boys,
+        "Lectors": readers_resultats_all,
+        "Lectoras": readers_resultats_girls,
+        "Lectors masculins": readers_resultats_boys
+    }
+
+    tmt.plot_thematic_grid(results)
 
 # =======================================================================================
 # 2. p4_temps_lectura
