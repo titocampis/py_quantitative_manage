@@ -429,6 +429,7 @@ def plot_descriptive_combined_hists(
     colors: list = None,
     sort: list = None,
     text: str = None,
+    ax=None,
     figsize=(10, 5)
 ):
     """
@@ -503,7 +504,8 @@ def plot_descriptive_combined_hists(
     # -----------------------------
     # Plot
     # -----------------------------
-    fig, ax = plt.subplots(figsize=figsize)
+    if ax is None:
+        fig, ax = plt.subplots(figsize=figsize)
 
     freq.plot(
         kind="bar",
