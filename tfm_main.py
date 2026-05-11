@@ -87,7 +87,7 @@ df = tmt.save_poltergeists(df, verbose=verbose)
 df = tmt.clean_reading_dataset_and_consistency(df, verbose=verbose)
 
 # =======================================================================================
-# Create subdataframes of readers, gender, curs
+# Create subdataframes of readers, no readers, gender, curs
 # =======================================================================================
 readers_mask = (
     (df["p5_llibres"] != "0 llibres o còmics.") &
@@ -97,6 +97,8 @@ readers_mask = (
 )
 
 df_readers = df[readers_mask].copy()
+df_no_readers = df[~readers_mask].copy()
+
 # df_fem = df[df["Gènere"] == "Femení."].copy()
 # df_mas = df[df["Gènere"] == "Masculí."].copy()
 
@@ -105,6 +107,9 @@ if verbose:
     print("\n========================================================================================\nReaders DF\n========================================================================================")
     print(f"Dataframe dimensions (rows, cols): {df_readers.shape}")
     print(f"First 5 lines of the dataframe: \n{df_readers[show_list].head(12)}")
+    print("\n========================================================================================\nNo Readers DF\n========================================================================================")
+    print(f"Dataframe dimensions (rows, cols): {df_no_readers.shape}")
+    print(f"First 5 lines of the dataframe: \n{df_no_readers[show_list].head(12)}")
 
 # =======================================================================================
 # 1. Thematic
@@ -200,9 +205,9 @@ if len(tags) > 0 and 2 in tags:
     
     # Boys vs girls
     # =======================================================
-    tmt.plot_descriptive_combined_hists2(
-        df_1=df[df["Gènere"] == "Femení."],
-        df_2=df[df["Gènere"] == "Masculí."],
+    tmt.plot_descriptive_combined_hists(
+        df[df["Gènere"] == "Femení."],
+        df[df["Gènere"] == "Masculí."],
         groups=["Noies", "Nois"],
         var="p4_temps_lectura",
         title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana per genere",
@@ -214,11 +219,11 @@ if len(tags) > 0 and 2 in tags:
 
     # Groups
     # =======================================================
-    tmt.plot_descriptive_combined_hists4(
-        df_1=df[df["Curs"] == "3r d'ESO."],
-        df_2=df[df["Curs"] == "4t d'ESO."],
-        df_3=df[df["Curs"] == "1r de Batxillerat."],
-        df_4=df[df["Curs"] == "2n de Batxillerat."],
+    tmt.plot_descriptive_combined_hists(
+        df[df["Curs"] == "3r d'ESO."],
+        df[df["Curs"] == "4t d'ESO."],
+        df[df["Curs"] == "1r de Batxillerat."],
+        df[df["Curs"] == "2n de Batxillerat."],
         groups=["3r d'ESO", "4t d'ESO", "1r de Batxillerat", "2n de Batxillerat"],
         var="p4_temps_lectura",
         title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana per curs",
@@ -230,9 +235,9 @@ if len(tags) > 0 and 2 in tags:
 
     # Ciencies Socials vs Tecnologia i Ciencia
     # =======================================================
-    tmt.plot_descriptive_combined_hists2(
-        df_1=df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències Socials."],
-        df_2=df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències i Tecnologia."],
+    tmt.plot_descriptive_combined_hists(
+        df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències Socials."],
+        df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències i Tecnologia."],
         groups=["Ciències Socials", "Ciències i Tecnologia"],
         var="p4_temps_lectura",
         title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana per itinerari",
@@ -341,9 +346,9 @@ if len(tags) > 0 and 3 in tags:
     )
     
     # Plot
-    tmt.plot_descriptive_combined_hists2(
-        df_1=df[df["Gènere"] == "Masculí."].copy(),
-        df_2=df[df["Gènere"] == "Femení."].copy(),
+    tmt.plot_descriptive_combined_hists(
+        df[df["Gènere"] == "Masculí."].copy(),
+        df[df["Gènere"] == "Femení."].copy(),
         sort=["0", "1-300", "301-800", "801-2000", "2001-4000", ">4000"],
         groups=["Nois", "Noies"],
         var="p5_6_pagines",
@@ -354,11 +359,11 @@ if len(tags) > 0 and 3 in tags:
     )
 
     # Plot
-    tmt.plot_descriptive_combined_hists4(
-        df_1=df[df["Curs"] == "3r d'ESO."].copy(),
-        df_2=df[df["Curs"] == "4t d'ESO."].copy(),
-        df_3=df[df["Curs"] == "1r de Batxillerat."].copy(),
-        df_4=df[df["Curs"] == "2n de Batxillerat."].copy(),
+    tmt.plot_descriptive_combined_hists(
+        df[df["Curs"] == "3r d'ESO."].copy(),
+        df[df["Curs"] == "4t d'ESO."].copy(),
+        df[df["Curs"] == "1r de Batxillerat."].copy(),
+        df[df["Curs"] == "2n de Batxillerat."].copy(),
         sort=["0", "1-300", "301-800", "801-2000", "2001-4000", ">4000"],
         groups=["3r d'ESO", "4t d'ESO", "1r de Batxillerat", "2n de Batxillerat"],
         var="p5_6_pagines",
@@ -452,6 +457,15 @@ map_pagines = {
     ">4000": 5
 }
 
+map_llibres_sp = {
+    "0 llibres o còmics.": 0,
+    "1-2 llibres o còmics.": 1,
+    "3-5 llibres o còmics.": 2,
+    "6-10 llibres o còmics.": 3,
+    "11-15 llibres o còmics.": 4,
+    "Més de 15 llibres o còmics": 5
+}
+
 map_class =  {
     "No lector / Lector molt ocasional": 0,
     "Lector ocasional": 1,
@@ -461,33 +475,39 @@ map_class =  {
 # Aplicar mapas
 df["p4_temps_lectura_sp"] = df["p4_temps_lectura"].map(map_temps)
 df["p5_6_pagines_sp"] = df["p5_6_pagines"].map(map_pagines)
+df["p5_llibres_sp"] = df["p5_llibres"].map(map_llibres_sp)
+
+# Add column clasificació_lectora
+# =======================================================
+df = tmt.classify_reader(df)
+
+
+# Calculate new correlation with classificació_lectora
+df["p5_6_pagines_sp"] = df["p5_6_pagines"].map(map_pagines)
+df["classificacio_lectora_sp"] = df["classificacio_lectora"].map(map_class)
+corr_p4_class = df["p4_temps_lectura_sp"].corr(df["classificacio_lectora_sp"], method="spearman")
+corr_p5_6_class = df["p5_6_pagines_sp"].corr(df["classificacio_lectora_sp"], method="spearman")
 
 if len(tags) > 0 and 4 in tags:
     print("\n=======================================================================================\nReading Classification \n=======================================================================================")
     corr = df["p4_temps_lectura_sp"].corr(df["p5_6_pagines_sp"], method="spearman")
     print(f"Correlación (Spearman) p4_temps_lectura_sp vs p5_6_pagines_sp: {corr:.5f}")
+    corr = df["p4_temps_lectura_sp"].corr(df["p5_llibres_sp"], method="spearman")
+    print(f"Correlación (Spearman) p4_temps_lectura_sp vs p5_llibres_sp: {corr:.5f}")
     print("---------------------------------------------------------------------------------------")
     if verbose:
-        print(df[["p5_6_pagines", "p5_6_pagines_sp", "p4_temps_lectura", "p4_temps_lectura_sp"]].head(30))
+        print(df[["p5_6_pagines", "p5_6_pagines_sp", "p4_temps_lectura", "p4_temps_lectura_sp", "p5_llibres", "p5_llibres_sp"]].head(30))
     # Se observa una correlación positiva fuerte entre el tiempo de lectura y el número de páginas leídas (ρ = 0.714), lo que indica coherencia entre ambas dimensiones del hábito lector. Esta relación justifica la construcción de una variable compuesta que integre frecuencia e intensidad de lectura.
     
-    # Add column clasificació_lectora
-    # =======================================================
-    df = tmt.classify_reader(df)
     sort = [
         "No lector / Lector molt ocasional",
         "Lector ocasional",
         "Lector habitual"
     ]
 
-    # Calculate new correlation with classificació_lectora
-    df["p5_6_pagines_sp"] = df["p5_6_pagines"].map(map_pagines)
-    df["sp_classificacio_lectora"] = df["classificacio_lectora"].map(map_class)
-    corr_p4_class = df["p4_temps_lectura_sp"].corr(df["sp_classificacio_lectora"], method="spearman")
-    corr_p5_6_class = df["p5_6_pagines_sp"].corr(df["sp_classificacio_lectora"], method="spearman")
-
     print("---------------------------------------------------------------------------------------")
     print(f"Correlación (Spearman) p4_temps_lectura_sp vs classificacio_lectora: {corr_p4_class:.5f}")
+    #
     print(f"Correlación (Spearman) p5_6_pagines_sp vs classificacio_lectora: {corr_p5_6_class:.5f}")
     print("---------------------------------------------------------------------------------------")
 
@@ -507,9 +527,9 @@ if len(tags) > 0 and 4 in tags:
     
     # Boys vs girls
     # =======================================================
-    tmt.plot_descriptive_combined_hists2(
-        df_1=df[df["Gènere"] == "Femení."].copy(),
-        df_2=df[df["Gènere"] == "Masculí."].copy(),
+    tmt.plot_descriptive_combined_hists(
+        df[df["Gènere"] == "Femení."].copy(),
+        df[df["Gènere"] == "Masculí."].copy(),
         groups=["Noies", "Nois"],
         var="classificacio_lectora",
         title="Distribució de l'alumnat segons el seu hàbit lector per oci per gènere",
@@ -521,11 +541,11 @@ if len(tags) > 0 and 4 in tags:
 
     # Groups
     # =======================================================
-    tmt.plot_descriptive_combined_hists4(
-        df_1=df[df["Curs"] == "3r d'ESO."].copy(),
-        df_2=df[df["Curs"] == "4t d'ESO."].copy(),
-        df_3=df[df["Curs"] == "1r de Batxillerat."].copy(),
-        df_4=df[df["Curs"] == "2n de Batxillerat."].copy(),
+    tmt.plot_descriptive_combined_hists(
+        df[df["Curs"] == "3r d'ESO."].copy(),
+        df[df["Curs"] == "4t d'ESO."].copy(),
+        df[df["Curs"] == "1r de Batxillerat."].copy(),
+        df[df["Curs"] == "2n de Batxillerat."].copy(),
         groups=["3r d'ESO", "4t d'ESO", "1r de Batxillerat", "2n de Batxillerat"],
         var="classificacio_lectora",
         title="Distribució de l'alumnat segons el seu hàbit lector per oci per curs",
@@ -537,9 +557,9 @@ if len(tags) > 0 and 4 in tags:
 
     # # Ciencies Socials vs Tecnologia i Ciencia
     # # =======================================================
-    # tmt.plot_descriptive_combined_hists2(
-    #     df_1=df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències Socials."].copy(),
-    #     df_2=df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències i Tecnologia."].copy(),
+    # tmt.plot_descriptive_combined_hists(
+    #     df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències Socials."].copy(),
+    #     df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències i Tecnologia."].copy(),
     #     groups=["Ciències Socials", "Ciències i Tecnologia"],
     #     var="classificacio_lectora",
     #     title="Distribució de l'alumnat segons el seu hàbit lector per oci per itinerari",
@@ -577,7 +597,7 @@ if len(tags) > 0 and 5 in tags:
     tmt.plot_descriptive_hists(
         df=df_to_use,
         var="format",
-        title="Format de lectura més habitual per a la lectura de llibres o còmics per oci (Readers)",
+        title="Format de lectura més habitual per a la lectura de llibres o còmics per oci",
         xlabel="",
         ylabel="Percentatge d'alumnes",
     )
@@ -586,6 +606,7 @@ if len(tags) > 0 and 5 in tags:
 # 6. p10_visites_biblioteca
 # =======================================================================================
 if len(tags) > 0 and 6 in tags:
+    print("\n=======================================================================================\nVisites Biblioteca \n=======================================================================================")
     sort = [
         "0 cops.",
         "1-2 cops.",
@@ -607,7 +628,64 @@ if len(tags) > 0 and 6 in tags:
 # 7. p16_lectura_obligatoria
 # =======================================================================================
 # Grau de lectura
+map_lectura_obligatoria = {
+    "No en llegeixo cap.": 0,
+    "En llegeixo poques o molt poques.": 1,
+    "En llegeixo aproximadament la meitat.": 2,
+    "Les llegeixo gairebé totes.": 3,
+    "Les llegeixo totes.": 4    
+}
+
+map_gust = {
+    "Gens.": 0,
+    "Poc.": 1,
+    "Regular.": 2,
+    "Bastant.": 3,
+    "Molt.": 4    
+}
+
+map_acords = {
+    "Molt en desacord.": 0,
+    "Poc d'acord,": 1,
+    "Parcialment d'acord.": 2,
+    "Bastant d'acord.": 3,
+    "Molt d'acord.": 4
+}
+
+df["p16_lectura_obligatoria_sp"] = df["p16_lectura_obligatoria"].map(map_lectura_obligatoria)
+df["gust_lectura_obligatoria_sp"] = df["T’agraden les lectures obligatòries de l’escola? "].map(map_gust)
+df["llegiria_mes_lectura_obligatoria_sp"] = df["Fins a quin punt estàs d'acord amb la següent afirmació: llegiria més lectures obligatòries de l'escola si s'adaptessin més als meus gustos."].map(map_acords)
+
+sort_acords = [
+    "Molt en desacord.",
+    "Poc d'acord,",
+    "Parcialment d'acord.",
+    "Bastant d'acord.",
+    "Molt d'acord."
+]
+
 if len(tags) > 0 and 7 in tags:
+    print("\n=======================================================================================\nLectures Obligatòries\n=======================================================================================")
+    corr_gust_lectura_obligatoria_lectura_obligatoria = df["gust_lectura_obligatoria_sp"].corr(df["p16_lectura_obligatoria_sp"], method="spearman")
+
+    corr_lectura_obligatoria_llibres = df["p16_lectura_obligatoria_sp"].corr(df["p5_llibres_sp"], method="spearman")
+    corr_gust_lectura_obligatoria_llibres = df["gust_lectura_obligatoria_sp"].corr(df["p5_llibres_sp"], method="spearman")
+    corr_llegiria_mes_lectura_obligatoria_llibres = df["llegiria_mes_lectura_obligatoria_sp"].corr(df["p5_llibres_sp"], method="spearman")
+
+    corr_lectura_obligatoria_temps = df["p16_lectura_obligatoria_sp"].corr(df["p4_temps_lectura_sp"], method="spearman")
+    corr_gust_lectura_obligatoria_temps = df["gust_lectura_obligatoria_sp"].corr(df["p4_temps_lectura_sp"], method="spearman")
+    corr_llegiria_mes_lectura_obligatoria_temps = df["llegiria_mes_lectura_obligatoria_sp"].corr(df["p4_temps_lectura_sp"], method="spearman")
+
+    print(f"Correlación (Spearman) grau de lectura obligatoria i gust per les lectures obligatòries: {corr_gust_lectura_obligatoria_lectura_obligatoria:.5f}")
+    print("---------------------------------------------------------------------------------------")
+    print(f"Correlación (Spearman) llibres llegits per oci i grau de lectura obligatòria: {corr_lectura_obligatoria_llibres:.5f}")
+    print(f"Correlación (Spearman) llibres llegits per oci i gust per les lectures obligatòries: {corr_gust_lectura_obligatoria_llibres:.5f}")
+    print(f"Correlación (Spearman) llibres llegits per oci i percepció de llegir més lectures obligatòries si s'adaptessin més als seus gustos: {corr_llegiria_mes_lectura_obligatoria_llibres:.5f}")
+    print("---------------------------------------------------------------------------------------")
+    print(f"Correlación (Spearman) temps de lectura per oci i grau de lectura obligatòria: {corr_lectura_obligatoria_temps:.5f}")
+    print(f"Correlación (Spearman) temps de lectura per oci i gust per les lectures obligatòries: {corr_gust_lectura_obligatoria_temps:.5f}")
+    print(f"Correlación (Spearman) temps de lectura per oci i percepció de llegir més lectures obligatòries si s'adaptessin més als seus gustos: {corr_llegiria_mes_lectura_obligatoria_temps:.5f}")
+    print("---------------------------------------------------------------------------------------")
 
     sort = [
         "No en llegeixo cap.",
@@ -615,6 +693,22 @@ if len(tags) > 0 and 7 in tags:
         "En llegeixo aproximadament la meitat.",
         "Les llegeixo gairebé totes.",
         "Les llegeixo totes."
+    ]
+
+    sort_gust = [
+        "Gens.",
+        "Poc.",
+        "Regular.",
+        "Bastant.",
+        "Molt."
+    ]
+
+    sort_freq = [
+        "Mai.",
+        "Gairebé mai.",
+        "Algunes vegades.",
+        "Sovint.",
+        "Molt sovint."
     ]
 
     tmt.plot_descriptive_hists(
@@ -626,7 +720,133 @@ if len(tags) > 0 and 7 in tags:
         sort=sort
     )
 
-plt.show()
+    tmt.plot_descriptive_hists(
+        df=df,
+        var="T’agraden les lectures obligatòries de l’escola? ",
+        title="Distribució d'alumnes que els hi agraden les lectures obligatòries de l’escola",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        sort=sort_gust
+    )
+
+    tmt.plot_descriptive_hists(
+        df=df,
+        var="Fins a quin punt estàs d'acord amb la següent afirmació: des que utilitzo eines d’IA generativa (ChatGPT, Gemini, Copilot, Claude, etc.), he reduït la lectura de les lectures obligatòries de l’escola. ",
+        title="Distribució d'alumnes que han reduït la lectura de les lectures obligatòries de l’escola després d'utilitzar eines d’IA generativa",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        sort=sort_acords
+    )
+
+    tmt.plot_descriptive_hists(
+        df=df,
+        var="Amb quina freqüència utilitzes resums d’internet o eines digitals (com IA generativa) per consultar el contingut de les lectures obligatòries de l’escola?",
+        title="Distribució d'alumnes que utilitzen resums d’internet o eines digitals (com IA generativa) per consultar el contingut de les lectures obligatòries de l’escola",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        sort=sort_freq
+    )
+
+    tmt.plot_descriptive_hists(
+        df=df,
+        var="Fins a quin punt estàs d'acord amb la següent afirmació: llegiria més lectures obligatòries de l'escola si s'adaptessin més als meus gustos.",
+        title="Distribució d'alumnes que llegirien més les lectures obligatòries de l'escola si s'adaptessin més als seus gustos",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        sort=sort_acords
+    )
+
+    tmt.plot_descriptive_combined_hists(
+        df[df["classificacio_lectora"] == "No lector / Lector molt ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector habitual"].copy(),
+        var="T’agraden les lectures obligatòries de l’escola? ",
+        groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
+        title="Distribució d'alumnes que els hi agraden les lectures obligatòries de l’escola per classificació lectora",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        colors=["purple", "orange", "green"],
+        sort=sort_gust
+    )
+
+    tmt.plot_descriptive_combined_hists(
+        df[df["classificacio_lectora"] == "No lector / Lector molt ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector habitual"].copy(),
+        var="p16_lectura_obligatoria",
+        groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
+        title="Distribució d'alumnes que llegeixen les lectures obligatòries de l’escola per classificació lectora",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        colors=["purple", "orange", "green"],
+        sort=sort
+    )
+
+    tmt.plot_descriptive_combined_hists(
+        df[df["classificacio_lectora"] == "No lector / Lector molt ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector habitual"].copy(),
+        var="Fins a quin punt estàs d'acord amb la següent afirmació: llegiria més lectures obligatòries de l'escola si s'adaptessin més als meus gustos.",
+        groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
+        title="Distribució d'alumnes que llegirien més les lectures obligatòries de l'escola si s'adaptessin més als seus gustos per classificació lectora",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        colors=["purple", "orange", "green"],
+        sort=sort_acords
+    )
+    
+# =======================================================================================
+# 8. Narrativa social adolescent sobre la lectura
+# =======================================================================================
+# Grau de lectura
+if len(tags) > 0 and 8 in tags:
+    print("\n=======================================================================================\nNarrativa Social\n=======================================================================================")
+
+    sort_afirmacio = [
+        "La lectura no m'agrada gens o em sembla avorrida.",
+        "No m’agrada gaire la lectura o no em resulta interessant.",
+        "La lectura m’és indiferent.",
+        "La lectura em sembla interessant i una activitat agradable.",
+        "La lectura em sembla molt interessant i una activitat molt positiva."
+    ]
+
+    sort_com_es_veu = [
+        "Una activitat avorrida o poc interessant.",
+        "Una activitat normal, sense cap etiqueta especial.",
+        "Una activitat positiva o interessant."
+    ]
+
+    # fig, axs = plt.subplots(2, 1, figsize=(18, 12))
+    # axs = axs.flatten()
+    tmt.plot_descriptive_hists(
+    df=df,
+    var='Amb quina de les següents afirmacions t’identifiques més?',
+    title="Distribució d'alumnes segons la seva identificació amb diferents afirmacions sobre la lectura",
+    xlabel="",
+    ylabel="Percentatge d'alumnes",
+    sort=sort_afirmacio
+    )   
+
+    tmt.plot_descriptive_hists(
+    df=df,
+    var='En general, creus que llegir per oci entre els nois i noies de la teva edat és vist com:',
+    title="Distribució d'alumnes segons la seva percepció de com es veu la lectura per oci entre els nois i noies de la seva edat",
+    xlabel="",
+    ylabel="Percentatge d'alumnes",
+    sort=sort_com_es_veu
+    ) 
+
+    tmt.plot_descriptive_hists(
+    df=df,
+    var="Fins a quin punt estàs d'acord amb la següent afirmació: si els meus amics o companys de classe llegissin habitualment i parlessin sovint de llibres o còmics, jo també llegiria més.",
+    title="Distribució d'alumnes segons la seva percepció de que llegirian més si els seus amics o companys de classe llegissin habitualment i parlessin sovint de llibres o còmics",
+    xlabel="",
+    ylabel="Percentatge d'alumnes",
+    sort=sort_acords
+    )
+
+if tmt.ask_to_plot() == "y":
+    plt.show()
 #########################################################################################
 #
 # / Main Operations

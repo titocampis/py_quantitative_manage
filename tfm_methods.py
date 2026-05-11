@@ -45,6 +45,9 @@ def parse_arguments():
     # 5. Devolver lo que necesites
     return args.verbose, args.tags
 
+def ask_to_plot():
+    return input("¿Quieres ver los gráficos? (Y/n): ").lower()
+
 def save_poltergeists(df: pd.DataFrame, verbose: bool = False) -> pd.DataFrame:
     """
     Save poltergeists in the dataset for later analysis
@@ -101,18 +104,21 @@ def save_poltergeists(df: pd.DataFrame, verbose: bool = False) -> pd.DataFrame:
 
     # Poltergeist 5: Incongruencia entre paginas y libros leidos + incongruencia tematica + tiempo y libros leidos
     if verbose:
-        print("\n------------ Saved Poltergeist 5 (id=213)----------------\n > Incongruencia entre tiempo de lectura y número de libros leídos")
+        print("\n------------ Saved Poltergeist 5 (id=213)----------------\n > Incongruencia entre paginas y libros leidos + incongruencia tematica + tiempo y libros leidos")
         print(df[df["id"] == 213][show_list].to_string(index=False))
     df.loc[df["id"] == 213, "p4_temps_lectura"] = "0 minuts."
+
+    # Poltergeist 6: Incongruencia entre tiempo de lectura y libros leidos
+    if verbose:
+        print("\n------------ Saved Poltergeist 6 (id=300)----------------\n > Incongruencia entre tiempo de lectura y número de libros leídos")
+        print(df[df["id"] == 300][show_list].to_string(index=False))
+    df.loc[df["id"] == 300, "p5_llibres"] = "3-5 llibres o còmics."
 
     # # Poltergeist X: Incongruencia entre tiempo de lectura y número de libros leídos (NO APLICADA, NO ES FILTRA)
     # if verbose:
     #     print("\n------------ Poltergeist 5 (id=105)----------------\n > Incongruencia entre tiempo de lectura y número de libros leídos")
     #     print(df[df["id"] == 105][show_list].to_string(index=False)) # 2026/04/27 11:38:51 a. m. EEST
     # df.loc[df["id"] == 105, "p4_temps_lectura"] = "Entre 30 minuts i 1 hora a la setmana."
-
-    if verbose:
-        print(df[df["id"] == 105][show_list].to_string(index=False)) # 2026/04/28 9:23:35 a. m. EEST
     
     # Poltergeists perdidos:
     # - 191 - "2026/04/29 12:51:31 p. m. EEST"
@@ -125,6 +131,7 @@ def save_poltergeists(df: pd.DataFrame, verbose: bool = False) -> pd.DataFrame:
     # - 29
     # - 103
     # - 143
+    # - 298
 
     return df
 
@@ -371,7 +378,7 @@ def plot_thematic_grid(results_dict):
     plt.tight_layout()
     # plt.show()
 
-def plot_descriptive_hists(df: pd.DataFrame, var: str, title: str, xlabel: str, ylabel: str, color: str = None, sort: list = None):
+def plot_descriptive_hists(df: pd.DataFrame, var: str, title: str, xlabel: str, ylabel: str, color: str = None, sort: list = None, ax=None):
     """
     Plot descriptive histograms for the TFM project (one figure per plot)
     """
@@ -383,15 +390,25 @@ def plot_descriptive_hists(df: pd.DataFrame, var: str, title: str, xlabel: str, 
 
     freq.index = [textwrap.fill(label, 15) for label in freq.index]
 
-    # Nueva figura independiente
-    fig, ax = plt.subplots()
+    # Nueva figura independiente solo si no le paso ax
+    if ax is None:
+        fig, ax = plt.subplots()
 
     freq.plot(kind="bar", ax=ax, color=color)
 
     n_total = len(df[var].dropna())
 
     for i, v in enumerate(freq):
-        ax.text(i, v, f"{v:.1f}% (n={int(v * n_total / 100)})", ha="center", va="bottom")
+
+        if pd.notna(v):
+
+            ax.text(
+                i,
+                v,
+                f"{v:.1f}% (n={int(v * n_total / 100)})",
+                ha="center",
+                va="bottom"
+            )
 
     ax.set_title(title)
     ax.set_ylabel(ylabel)
@@ -402,110 +419,133 @@ def plot_descriptive_hists(df: pd.DataFrame, var: str, title: str, xlabel: str, 
     # plt.show()
 
 
-def plot_descriptive_combined_hists2(df_1, df_2, var, groups, title, xlabel, ylabel, colors=None, sort=None):
-
-    if sort is not None:
-        df_1[var] = pd.Categorical(df_1[var], categories=sort, ordered=True)
-        df_2[var] = pd.Categorical(df_2[var], categories=sort, ordered=True)
-
-    freq_1 = df_1[var].value_counts(normalize=True).reindex(sort, fill_value=0) * 100
-    freq_2 = df_2[var].value_counts(normalize=True).reindex(sort, fill_value=0) * 100
-
-    freq = pd.concat({groups[0]: freq_1, groups[1]: freq_2}, axis=1).fillna(0)
-
-    freq.index = [textwrap.fill(str(label), 15) for label in freq.index]
-
-    # Independent figure
-    fig, ax = plt.subplots()
-
-    freq.plot(kind="bar", ax=ax, color=colors)
-
-    for p in ax.patches:
-        h = p.get_height()
-        if h > 0:
-            ax.text(p.get_x() + p.get_width()/2, h, f"{h:.1f}", ha="center")
-
-    ax.set_title(title)
-    ax.set_ylabel(ylabel)
-    ax.set_xlabel(xlabel)
-    ax.tick_params(axis='x', rotation=45)
-
-    plt.tight_layout()
-    # plt.show()
-
-
-def plot_descriptive_combined_hists4(
-    df_1: pd.DataFrame,
-    df_2: pd.DataFrame,
-    df_3: pd.DataFrame,
-    df_4: pd.DataFrame,
+def plot_descriptive_combined_hists(
+    *dfs,
     var: str,
     groups: list,
     title: str,
     xlabel: str,
     ylabel: str,
     colors: list = None,
-    sort: list = None
+    sort: list = None,
+    text: str = None,
+    figsize=(10, 5)
 ):
     """
-    Plot 4 descriptive histograms in the same plot for the TFM project (one figure)
+    Plot combined descriptive histograms for multiple groups.
+
+    Parameters
+    ----------
+    *dfs : pd.DataFrame
+        DataFrames to compare.
+    var : str
+        Variable to plot.
+    groups : list
+        Names of each group.
     """
 
     # -----------------------------
-    # Ordenar categorías si existe sort
+    # Validación
+    # -----------------------------
+    if len(dfs) != len(groups):
+        raise ValueError("len(dfs) must match len(groups)")
+
+    # -----------------------------
+    # Orden categorías
     # -----------------------------
     if sort is not None:
-        for df in [df_1, df_2, df_3, df_4]:
-            df[var] = pd.Categorical(df[var], categories=sort, ordered=True)
+        dfs = [
+            df.assign(
+                **{
+                    var: pd.Categorical(
+                        df[var],
+                        categories=sort,
+                        ordered=True
+                    )
+                }
+            )
+            for df in dfs
+        ]
 
     # -----------------------------
-    # Frecuencias normalizadas (%)
+    # Frecuencias (%)
     # -----------------------------
-    freq = pd.concat({
-        groups[0]: df_1[var].value_counts(normalize=True).reindex(sort).fillna(0) * 100,
-        groups[1]: df_2[var].value_counts(normalize=True).reindex(sort).fillna(0) * 100,
-        groups[2]: df_3[var].value_counts(normalize=True).reindex(sort).fillna(0) * 100,
-        groups[3]: df_4[var].value_counts(normalize=True).reindex(sort).fillna(0) * 100
-    }, axis=1).fillna(0)
+    freq_dict = {}
+
+    for df, group in zip(dfs, groups):
+
+        if sort is not None:
+            freq = (
+                df[var]
+                .value_counts(normalize=True)
+                .reindex(sort, fill_value=0)
+                * 100
+            )
+        else:
+            freq = (
+                df[var]
+                .value_counts(normalize=True)
+                * 100
+            )
+
+        freq_dict[group] = freq
+
+    freq = pd.concat(freq_dict, axis=1).fillna(0)
 
     # -----------------------------
-    # formato eje X
+    # Wrap labels
     # -----------------------------
-    freq.index = [textwrap.fill(str(label), 15) for label in freq.index]
+    freq.index = [
+        textwrap.fill(str(label), 15)
+        for label in freq.index
+    ]
 
     # -----------------------------
-    # FIGURA NUEVA (clave)
+    # Plot
     # -----------------------------
-    fig, ax = plt.subplots(figsize=(10, 5))
+    fig, ax = plt.subplots(figsize=figsize)
 
-    freq.plot(kind="bar", ax=ax, color=colors)
+    freq.plot(
+        kind="bar",
+        ax=ax,
+        color=colors
+    )
 
     # -----------------------------
-    # Etiquetas centradas
+    # Labels
     # -----------------------------
     for p in ax.patches:
-        height = p.get_height()
 
-        if height > 0:
+        h = p.get_height()
+
+        if h > 0:
             ax.text(
                 p.get_x() + p.get_width() / 2,
-                height,
-                f"{height:.1f}",
+                h,
+                f"{h:.1f}",
                 ha="center",
                 va="bottom",
                 fontsize=9
             )
 
     # -----------------------------
-    # Estética final
+    # Estética
     # -----------------------------
     ax.set_title(title)
     ax.set_ylabel(ylabel)
     ax.set_xlabel(xlabel)
-    ax.tick_params(axis='x', rotation=45)
+    ax.tick_params(axis="x", rotation=45)
+    
+    if text is not None:
+        ax.text(
+            0.05,
+            0.95,
+            f"{text}",
+            transform=ax.transAxes,
+            verticalalignment='top'
+    )
 
     plt.tight_layout()
-    # plt.show()
 
 #########################################################################################
 #
