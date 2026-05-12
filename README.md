@@ -44,15 +44,13 @@ You just have to import your data into a csv in the file: [dades.csv](dades.csv)
 
 ### Cramér’s V (effect size for χ²)
 
-\[
-V = \sqrt{\frac{\chi^2}{n \cdot (k - 1)}}
-\]
+```
+V = sqrt(chi2 / (n * (k - 1)))
+```
 
 - **χ²** → chi-square statistic  
 - **n** → total sample size  
-- **k** → \[
-k = \min(\text{rows}, \text{columns})
-\]
+- **k** → k = min(number of rows, number of columns)
 
 | Range of V | Interpretation |
 |------------|----------------|
