@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from pprint import pprint
 import plots
-from scipy.stats import chi2_contingency
+from scipy.stats import chi2_contingency, spearmanr
 import textwrap
 
 #########################################################################################
@@ -343,6 +343,16 @@ def compute_thematic_scores(df, columnes_generes, map_thematic):
 
     return resultats_df
 
+def spearman_analysis(df, var1, var2, label=""):
+    rho, p = spearmanr(df[var1], df[var2], nan_policy="omit")
+
+    print(f"{label}")
+    print(f"ρ = {rho:.3f}")
+    print(f"p-value = {p:.5f}")
+    print("--------------------------------------------------------")
+
+    return rho, p
+
 def chi_square_analysis(df, var1, var2, label=""):
     contingency = pd.crosstab(df[var1], df[var2])
 
@@ -353,28 +363,26 @@ def chi_square_analysis(df, var1, var2, label=""):
 
     print(f"{label}")
     print(f"χ² = {chi2:.3f}")
-    print(f"p = {p:.5f}")
+    print(f"p-value = {p:.5f}")
     print(f"gl = {dof}")
     print(f"Cramér's V = {cramers_v:.3f}")
     print("--------------------------------------------------------")
 
     return chi2, p, dof, cramers_v
 
-def plot_thematic_grid(results_dict):
-
-    fig, axes = plt.subplots(2, 3, figsize=(18, 10))
-    axes = axes.flatten()
+def plot_thematic_individual(results_dict):
 
     colors = {
-        "Noies": "purple",
-        "Lectoras": "purple",
-        "Nois": "orange",
-        "Lectors masculins": "orange"
+        "Rànking de les temàtiques preferides per a la lectura per oci": "steelblue",
+        "Rànking de les temàtiques preferides per a la lectura per oci entre les noies": "purple",
+        "Rànking de les temàtiques preferides per a la lectura per oci entre els nois": "orange"
     }
 
     default_color = "steelblue"
 
-    for ax, (title, df) in zip(axes, results_dict.items()):
+    for title, df in results_dict.items():
+
+        fig, ax = plt.subplots(figsize=(8, 5))
 
         freq = df["puntuacio_total"].copy()
 
@@ -392,8 +400,8 @@ def plot_thematic_grid(results_dict):
         ax.set_xlabel("Gèneres literaris")
         ax.tick_params(axis="x", rotation=45)
 
-    plt.tight_layout()
-    # plt.show()
+        plt.tight_layout()
+        # plt.show()
 
 def plot_descriptive_hists(df: pd.DataFrame, var: str, title: str, xlabel: str, ylabel: str, color: str = None, sort: list = None, ax=None):
     """
