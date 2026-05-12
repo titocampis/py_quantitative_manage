@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from pprint import pprint
-from scipy.stats import linregress
 import plots
+from scipy.stats import chi2_contingency
 import textwrap
 
 #########################################################################################
@@ -178,7 +178,7 @@ def clean_reading_dataset_and_consistency(
     
     llibres_alts = [
         "11-15 llibres o còmics.",
-        "Més de 15 llibres o còmics."
+        "Més de 15 llibres o còmics"
     ]
     # -------------------------------------------------------------------------------------
 
@@ -343,6 +343,23 @@ def compute_thematic_scores(df, columnes_generes, map_thematic):
 
     return resultats_df
 
+def chi_square_analysis(df, var1, var2, label=""):
+    contingency = pd.crosstab(df[var1], df[var2])
+
+    chi2, p, dof, expected = chi2_contingency(contingency)
+
+    n = contingency.sum().sum()
+    cramers_v = np.sqrt(chi2 / (n * (min(contingency.shape) - 1)))
+
+    print(f"{label}")
+    print(f"χ² = {chi2:.3f}")
+    print(f"p = {p:.5f}")
+    print(f"gl = {dof}")
+    print(f"Cramér's V = {cramers_v:.3f}")
+    print("--------------------------------------------------------")
+
+    return chi2, p, dof, cramers_v
+
 def plot_thematic_grid(results_dict):
 
     fig, axes = plt.subplots(2, 3, figsize=(18, 10))
@@ -392,7 +409,7 @@ def plot_descriptive_hists(df: pd.DataFrame, var: str, title: str, xlabel: str, 
 
     # Nueva figura independiente solo si no le paso ax
     if ax is None:
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=(8, 5))
 
     freq.plot(kind="bar", ax=ax, color=color)
 

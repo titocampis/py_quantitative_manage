@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from pprint import pprint
-from scipy.stats import linregress
+from scipy.stats import chi2_contingency
 from scipy.stats import spearmanr
 import sys
 
@@ -78,6 +78,284 @@ df = df.rename(columns={
 })
 
 # =======================================================================================
+# Sorting, maps and Spearman ready variables
+# =======================================================================================
+# Maps
+# =======================================================
+
+# Generic sorts and maps
+# ===
+sort_gust = [
+    "Gens.",
+    "Poc.",
+    "Regular.",
+    "Bastant.",
+    "Molt."
+]
+
+map_gust_sp = {
+    "Gens.": 0,
+    "Poc.": 1,
+    "Regular.": 2,
+    "Bastant.": 3,
+    "Molt.": 4    
+}
+
+sort_acords = [
+    "Molt en desacord.",
+    "Poc d'acord,",
+    "Parcialment d'acord.",
+    "Bastant d'acord.",
+    "Molt d'acord."
+]
+
+map_acord_sp = {
+    "Molt en desacord.": 0,
+    "Poc d'acord,": 1,
+    "Parcialment d'acord.": 2,
+    "Bastant d'acord.": 3,
+    "Molt d'acord.": 4
+}
+
+sort_freq = [
+    "Mai.",
+    "Gairebé mai.",
+    "Algunes vegades.",
+    "Sovint.",
+    "Molt sovint."
+]
+
+map_freq_sp = {
+    "Mai.": 0,
+    "Gairebé mai.": 1,
+    "Algunes vegades.": 2,
+    "Sovint.": 3,
+    "Molt sovint.": 4
+}
+
+# Temps de lectura setmanal
+# ===
+sort_temps = [
+    "0 minuts.",
+    "Menys de 30 minuts a la setmana.",
+    "Entre 30 minuts i 1 hora a la setmana.",
+    "Entre 1 i 2 hores a la setmana.",
+    "Entre 2 i 3 hores a la setmana.",
+    "3 hores o més a la setmana."
+]
+
+map_temps_sp = {
+    "0 minuts.": 0,
+    "Menys de 30 minuts a la setmana.": 1,
+    "Entre 30 minuts i 1 hora a la setmana.": 2,
+    "Entre 1 i 2 hores a la setmana.": 3,
+    "Entre 2 i 3 hores a la setmana.": 4,
+    "3 hores o més a la setmana.": 5
+}
+
+# Llibres 12 mesos
+# ===
+sort_llibres = [
+    "0 llibres o còmics.",
+    "1-2 llibres o còmics.",
+    "3-5 llibres o còmics.",
+    "6-10 llibres o còmics.",
+    "11-15 llibres o còmics.",
+    "Més de 15 llibres o còmics"
+]
+
+map_llibres_num = {
+    "0 llibres o còmics.": 0,
+    "1-2 llibres o còmics.": 1.5,
+    "3-5 llibres o còmics.": 4,
+    "6-10 llibres o còmics.": 8,
+    "11-15 llibres o còmics.": 13,
+    "Més de 15 llibres o còmics": 18
+}
+
+map_llibres_sp = {
+    "0 llibres o còmics.": 0,
+    "1-2 llibres o còmics.": 1,
+    "3-5 llibres o còmics.": 2,
+    "6-10 llibres o còmics.": 3,
+    "11-15 llibres o còmics.": 4,
+    "Més de 15 llibres o còmics": 5
+}
+
+# Pàgines anuals
+# ===
+map_pagines_sp = {
+    "0": 0,
+    "1-300": 1,
+    "301-800": 2,
+    "801-2000": 3,
+    "2001-4000": 4,
+    ">4000": 5
+}
+
+map_pagines_num = {
+    "1-99 pàgines.": 50,
+    "100-299 pàgines.": 200,
+    "300-599 pàgines.": 450,
+    "Més de 600 pàgines": 700
+}
+
+# Classificació lectora
+# ===
+map_class_sp =  {
+    "No lector / Lector molt ocasional": 0,
+    "Lector ocasional": 1,
+    "Lector habitual": 2
+}
+
+# Sessions de lectura
+# ===
+sort_sessions = [
+    "Llegeixo gairebé sempre en estones molt curtes (menys de 15 minuts).",
+    "Llegeixo sobretot en estones curtes (15–30 minuts).",
+    "Combino estones curtes (15–30 minuts) i mitjanes (30–60 minuts).",
+    "Llegeixo habitualment en sessions mitjanes (30-60 minuts) i llargues (més d’1 hora seguida)."
+]
+
+map_sessions_sp = {
+    "Llegeixo gairebé sempre en estones molt curtes (menys de 15 minuts).": 0,
+    "Llegeixo sobretot en estones curtes (15–30 minuts).": 1,
+    "Combino estones curtes (15–30 minuts) i mitjanes (30–60 minuts).": 2,
+    "Llegeixo habitualment en sessions mitjanes (30-60 minuts) i llargues (més d’1 hora seguida).": 3
+}
+
+sort_distraccions_inv = [
+    "No miro mai les xarxes socials mentre llegeixo",
+    "Cada 2 hores aprox.",
+    "Cada hora aprox.",
+    "Cada 30 minuts aprox.",
+    "Cada 15 minuts aprox.",
+    "Cada 5 minuts aprox."
+]
+
+map_distraccions_inv_sp = {
+    "Cada 5 minuts aprox.": 5,
+    "Cada 15 minuts aprox.": 4,
+    "Cada 30 minuts aprox.": 3,
+    "Cada hora aprox.": 2,
+    "Cada 2 hores aprox.": 1,
+    "No miro mai les xarxes socials mentre llegeixo": 0
+}
+
+# Lectura obligatoria
+# ===
+sort_lectura_obligatoria = [
+    "No en llegeixo cap.",
+    "En llegeixo poques o molt poques.",
+    "En llegeixo aproximadament la meitat.",
+    "Les llegeixo gairebé totes.",
+    "Les llegeixo totes."
+]
+
+map_lectura_obligatoria_sp = {
+    "No en llegeixo cap.": 0,
+    "En llegeixo poques o molt poques.": 1,
+    "En llegeixo aproximadament la meitat.": 2,
+    "Les llegeixo gairebé totes.": 3,
+    "Les llegeixo totes.": 4    
+}
+
+# Narrativa social adolescent sobre la lectura
+# ===
+sort_afirmacio = [
+    "La lectura no m'agrada gens o em sembla avorrida.",
+    "No m’agrada gaire la lectura o no em resulta interessant.",
+    "La lectura m’és indiferent.",
+    "La lectura em sembla interessant i una activitat agradable.",
+    "La lectura em sembla molt interessant i una activitat molt positiva."
+]
+
+map_afirmacio_sp = {
+    "La lectura no m'agrada gens o em sembla avorrida.": 0,
+    "No m’agrada gaire la lectura o no em resulta interessant.": 1,
+    "La lectura m’és indiferent.": 2,
+    "La lectura em sembla interessant i una activitat agradable.": 3,
+    "La lectura em sembla molt interessant i una activitat molt positiva.": 4
+}
+
+sort_com_es_veu = [
+    "Una activitat avorrida o poc interessant.",
+    "Una activitat normal, sense cap etiqueta especial.",
+    "Una activitat positiva o interessant."
+]
+
+map_com_es_veu_sp = {
+    "Una activitat avorrida o poc interessant.": 0,
+    "Una activitat normal, sense cap etiqueta especial.": 1,
+    "Una activitat positiva o interessant.": 2
+}
+
+# TRIC
+# ===
+sort_tric = [
+    "0 minuts al dia.",
+    "Menys de 30 minuts al dia.",
+    "Entre 30 minuts i 1 hora al dia.",
+    "Entre 1 i 2 hores al dia.",
+    "Entre 2 i 3 hores al dia.",
+    "3 hores o més al dia."
+]
+
+map_tric_sp = {
+    "0 minuts al dia.": 0,
+    "Menys de 30 minuts al dia.": 1,
+    "Entre 30 minuts i 1 hora al dia.": 2,
+    "Entre 1 i 2 hores al dia.": 3,
+    "Entre 2 i 3 hores al dia.": 4,
+    "3 hores o més al dia": 5
+}
+
+# Entorn familiar pro-lector
+# ===
+sort_estudis_familiars = [
+    "Educació Primaria.",
+    "Educació Secundària.",
+    "Batxillerat o Cicles Formatius de Grau Mitjà o Superior.",
+    "Estudis Universitaris.",
+]
+
+map_estudis_familiars_sp = {
+    "Educació Primaria.": 0,
+    "Educació Secundària.": 1,
+    "Batxillerat o Cicles Formatius de Grau Mitjà o Superior.": 2,
+    "Estudis Universitaris.": 3,
+}
+
+sort_num_llibres = [
+    "0 llibres",
+    "Entre 1 i 10 llibres.",
+    "Entre 11 i 25 llibres.",
+    "Entre 26 i 100 llibres.",
+    "Entre 101 i 200 llibres.",
+    "Més de 200 llibres."
+]
+
+map_num_llibres_sp = {
+    "0 llibres": 0,
+    "Entre 1 i 10 llibres.": 1,
+    "Entre 11 i 25 llibres.": 2,
+    "Entre 26 i 100 llibres.": 3,
+    "Entre 101 i 200 llibres.": 4,
+    "Més de 200 llibres.": 5
+}
+
+# =======================================================================================
+# Create the Spearman ready variables
+# =======================================================================================
+# Temps de lectura setmanal
+# ===
+df["p4_temps_lectura_sp"] = df["p4_temps_lectura"].map(map_temps_sp)
+
+# Llibres 12 mesos
+# ===
+df["p5_llibres_sp"] = df["p5_llibres"].map(map_llibres_sp)
+
+# =======================================================================================
 # Save poltergeists
 # =======================================================================================
 df = tmt.save_poltergeists(df, verbose=verbose)
@@ -113,9 +391,185 @@ if verbose:
     print(f"First 5 lines of the dataframe: \n{df_no_readers[show_list].head(12)}")
 
 # =======================================================================================
-# 1. Thematic
+# 1. Característiques Generals de la mostra
 # =======================================================================================
 if len(tags) > 0 and 1 in tags:
+    print("\n=======================================================================================\nCaracterístiques Generals de la Mostra\n=======================================================================================")
+    
+    # Boys & girls
+    # =======================================================
+    tmt.plot_descriptive_hists(
+        df=df.copy(),
+        var="Gènere",
+        title="Distribució de l'alumnat segons el gènere",
+        xlabel="",
+        ylabel="Percentatge d'alumnes"
+    )
+
+    # Cursos
+    # =======================================================
+    tmt.plot_descriptive_hists(
+        df=df.copy(),
+        var="Curs",
+        title="Distribució de l'alumnat segons el curs",
+        xlabel="",
+        ylabel="Percentatge d'alumnes"
+    )
+
+    # Itinerari (només si estàs cursant Batxillerat)
+    # =======================================================
+    tmt.plot_descriptive_hists(
+        df=df.copy(),
+        var="Itinerari (només si estàs cursant Batxillerat)",
+        title="Distribució de l'alumnat segons l'itinerari (només Batxillerat)",
+        xlabel="",
+        ylabel="Percentatge d'alumnes"
+    )
+
+# =======================================================================================
+# 2. Temps de lectura setmanal i llibres llegits en els últims 12 mesos per oci per grups
+# =======================================================================================
+if len(tags) > 0 and 2 in tags:
+    print("\n=======================================================================================\nTemps de lectura setmanal i llibres llegits en els últims 12 mesos per oci per grups\n=======================================================================================")
+    # print(df[df["Gènere"] == "Prefereixo no respondre."])
+    rho_p4_temps_p_5_llibres, p_value_p4_temps_p_5_llibres = spearmanr(
+        df["p4_temps_lectura_sp"],
+        df["p5_llibres_sp"],
+        nan_policy="omit"
+    )
+
+    tmt.chi_square_analysis(
+        df[df["Gènere"] != "Prefereixo no respondre."].copy(),
+        "Gènere",
+        "p4_temps_lectura",
+        "Chi-cuadrat: gènere normatiu vs temps de lectura"
+    )
+
+    tmt.chi_square_analysis(
+        df[df["Gènere"] != "Prefereixo no respondre."].copy(),
+        "Gènere",
+        "p5_llibres",
+        "Chi-cuadrat: gènere normatiu vs llibres llegits"
+    )
+
+    # Llibres llegits en els últims 12 mesos per oci per grups
+    # =======================================================
+    # General
+    # ===
+    tmt.plot_descriptive_hists(
+        df=df.copy(),
+        var="p4_temps_lectura",
+        title="Distribució de l'alumnat segons el temps promig de lectura setmanal per oci",
+        xlabel="",
+        ylabel="Percentatge d'alumnes",
+        sort=sort_temps
+    )
+    
+    # Boys vs girls
+    # ===
+    tmt.plot_descriptive_combined_hists(
+        df[df["Gènere"] == "Femení."].copy(),
+        df[df["Gènere"] == "Masculí."].copy(),
+        groups=["Noies", "Nois"],
+        var="p4_temps_lectura",
+        title="Distribució de l'alumnat segons el temps promig de lectura setmanal per oci per gènere",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        colors=["purple", "orange"],
+        sort=sort_temps
+    )
+
+    # Groups
+    # ===
+    tmt.plot_descriptive_combined_hists(
+        df[df["Curs"] == "3r d'ESO."].copy(),
+        df[df["Curs"] == "4t d'ESO."].copy(),
+        df[df["Curs"] == "1r de Batxillerat."].copy(),
+        df[df["Curs"] == "2n de Batxillerat."].copy(),
+        groups=["3r d'ESO", "4t d'ESO", "1r de Batxillerat", "2n de Batxillerat"],
+        var="p4_temps_lectura",
+        title="Distribució de l'alumnat segons el temps promig de lectura setmanal per oci per curs",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        colors=["blue", "orange", "green", "red"],
+        sort=sort_temps
+    )
+
+    # Ciencies Socials vs Tecnologia i Ciencia
+    # ===
+    tmt.plot_descriptive_combined_hists(
+        df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències Socials."].copy(),
+        df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències i Tecnologia."].copy(),
+        groups=["Ciències Socials", "Ciències i Tecnologia"],
+        var="p4_temps_lectura",
+        title="Distribució de l'alumnat segons el temps promig de lectura setmanal per oci per itinerari",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        colors=["red", "green"],
+        sort=sort_temps
+    )
+
+    # Llibres llegits en els últims 12 mesos per oci per grups
+    # =======================================================
+    # General
+    # ===
+    tmt.plot_descriptive_hists(
+        df=df.copy(),
+        var="p5_llibres",
+        title="Distribució de l'alumnat segons els llibres llegits per oci en els últims 12 mesos",
+        xlabel="",
+        ylabel="Percentatge d'alumnes",
+        sort=sort_llibres
+    )
+    
+    # Boys vs girls
+    # =======================================================
+    tmt.plot_descriptive_combined_hists(
+        df[df["Gènere"] == "Femení."].copy(),
+        df[df["Gènere"] == "Masculí."].copy(),
+        groups=["Noies", "Nois"],
+        var="p5_llibres",
+        title="Distribució de l'alumnat segons els llibres llegits per oci en els últims 12 mesos per gènere",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        colors=["purple", "orange"],
+        sort=sort_llibres
+    )
+
+    # Groups
+    # =======================================================
+    tmt.plot_descriptive_combined_hists(
+        df[df["Curs"] == "3r d'ESO."].copy(),
+        df[df["Curs"] == "4t d'ESO."],
+        df[df["Curs"] == "1r de Batxillerat."],
+        df[df["Curs"] == "2n de Batxillerat."],
+        groups=["3r d'ESO", "4t d'ESO", "1r de Batxillerat", "2n de Batxillerat"],
+        var="p5_llibres",
+        title="Distribució de l'alumnat segons els llibres llegits per oci en els últims 12 mesos per curs",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        colors=["blue", "orange", "green", "red"],
+        sort=sort_llibres
+    )
+
+    # Ciencies Socials vs Tecnologia i Ciencia
+    # =======================================================
+    tmt.plot_descriptive_combined_hists(
+        df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències Socials."],
+        df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències i Tecnologia."],
+        groups=["Ciències Socials", "Ciències i Tecnologia"],
+        var="p5_llibres",
+        title="Distribució de l'alumnat segons els llibres llegits per oci en els últims 12 mesos per itinerari",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        colors=["red", "green"],
+        sort=sort_llibres
+    )
+
+# =======================================================================================
+# 1. Thematic
+# =======================================================================================
+if len(tags) > 0 and 20 in tags:
     print("\n=======================================================================================\nThematic\n=======================================================================================")
     # Select df
     df_thematic = df.copy()
@@ -178,101 +632,14 @@ if len(tags) > 0 and 1 in tags:
 
     tmt.plot_thematic_grid(results)
 
-# =======================================================================================
-# 2. p4_temps_lectura
-# =======================================================================================
-if len(tags) > 0 and 2 in tags:
-    print("\n=======================================================================================\nReading Time \n=======================================================================================")
-    # print(df["p4_temps_lectura"].head(20))
-    sort = [
-        "0 minuts.",
-        "Menys de 30 minuts a la setmana.",
-        "Entre 30 minuts i 1 hora a la setmana.",
-        "Entre 1 i 2 hores a la setmana.",
-        "Entre 2 i 3 hores a la setmana.",
-        "3 hores o més a la setmana."
-    ]
-
-    # General
-    # =======================================================
-    tmt.plot_descriptive_hists(
-        df=df,
-        var="p4_temps_lectura",
-        title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana",
-        xlabel="",
-        ylabel="Percentatge d'alumnes",
-        sort=sort
-    )
-    
-    # Boys vs girls
-    # =======================================================
-    tmt.plot_descriptive_combined_hists(
-        df[df["Gènere"] == "Femení."],
-        df[df["Gènere"] == "Masculí."],
-        groups=["Noies", "Nois"],
-        var="p4_temps_lectura",
-        title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana per genere",
-        xlabel="",
-        ylabel="Percentatge d'alumnes (%)",
-        colors=["purple", "orange"],
-        sort=sort
-    )
-
-    # Groups
-    # =======================================================
-    tmt.plot_descriptive_combined_hists(
-        df[df["Curs"] == "3r d'ESO."],
-        df[df["Curs"] == "4t d'ESO."],
-        df[df["Curs"] == "1r de Batxillerat."],
-        df[df["Curs"] == "2n de Batxillerat."],
-        groups=["3r d'ESO", "4t d'ESO", "1r de Batxillerat", "2n de Batxillerat"],
-        var="p4_temps_lectura",
-        title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana per curs",
-        xlabel="",
-        ylabel="Percentatge d'alumnes (%)",
-        colors=["blue", "orange", "green", "red"],
-        sort=sort
-    )
-
-    # Ciencies Socials vs Tecnologia i Ciencia
-    # =======================================================
-    tmt.plot_descriptive_combined_hists(
-        df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències Socials."],
-        df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències i Tecnologia."],
-        groups=["Ciències Socials", "Ciències i Tecnologia"],
-        var="p4_temps_lectura",
-        title="Distribució del temps promig dedicat a la lectura de llibres o còmics per oci a la setmana per itinerari",
-        xlabel="",
-        ylabel="Percentatge d'alumnes (%)",
-        colors=["red", "green"],
-        sort=sort
-    )
 
 # =======================================================================================
 # 3. Composed variables books * pages --> pages / year (p5_6_pagines)
 # =======================================================================================
 # Recode P5 to mean number of books
 # =======================================================
-map_llibres = {
-    "0 llibres o còmics.": 0,
-    "1-2 llibres o còmics.": 1.5,
-    "3-5 llibres o còmics.": 4,
-    "6-10 llibres o còmics.": 8,
-    "11-15 llibres o còmics.": 13,
-    "Més de 15 llibres o còmics": 18
-}
-
-df["p5_num"] = df["p5_llibres"].map(map_llibres)
-
-# Recode P6 to mean number of pages
-map_pagines = {
-    "1-99 pàgines.": 50,
-    "100-299 pàgines.": 200,
-    "300-599 pàgines.": 450,
-    "Més de 600 pàgines": 700
-}
-
-df["p6_num"] = df["p6_pag"].map(map_pagines)
+df["p5_num"] = df["p5_llibres"].map(map_llibres_num)
+df["p6_num"] = df["p6_pag"].map(map_pagines_num)
 
 # Create Composed variable p5 * p6 = total aproximado de páginas leídas al año
 df["p5_6_pagines_num"] = (
@@ -438,47 +805,12 @@ if len(tags) > 0 and 3 in tags:
 # =======================================================================================
 # 4. Classificació lectora
 # =======================================================================================
-# SP
-# =======================================================
-map_temps = {
-    "0 minuts.": 0,
-    "Menys de 30 minuts a la setmana.": 1,
-    "Entre 30 minuts i 1 hora a la setmana.": 2,
-    "Entre 1 i 2 hores a la setmana.": 3,
-    "Entre 2 i 3 hores a la setmana.": 4,
-    "3 hores o més a la setmana.": 5
-}
-
-map_pagines = {
-    "0": 0,
-    "1-300": 1,
-    "301-800": 2,
-    "801-2000": 3,
-    "2001-4000": 4,
-    ">4000": 5
-}
-
-map_llibres_sp = {
-    "0 llibres o còmics.": 0,
-    "1-2 llibres o còmics.": 1,
-    "3-5 llibres o còmics.": 2,
-    "6-10 llibres o còmics.": 3,
-    "11-15 llibres o còmics.": 4,
-    "Més de 15 llibres o còmics": 5
-}
-
-map_class =  {
-    "No lector / Lector molt ocasional": 0,
-    "Lector ocasional": 1,
-    "Lector habitual": 2
-}
 
 # Aplicar mapas
-df["p4_temps_lectura_sp"] = df["p4_temps_lectura"].map(map_temps)
-df["p5_6_pagines_sp"] = df["p5_6_pagines"].map(map_pagines)
-df["p5_llibres_sp"] = df["p5_llibres"].map(map_llibres_sp)
+df["p5_6_pagines_sp"] = df["p5_6_pagines"].map(map_pagines_sp)
+
 # ---
-df_readers["p4_temps_lectura_sp"] = df_readers["p4_temps_lectura"].map(map_temps)
+df_readers["p4_temps_lectura_sp"] = df_readers["p4_temps_lectura"].map(map_temps_sp)
 df_readers["p5_llibres_sp"] = df_readers["p5_llibres"].map(map_llibres_sp)
 
 # Add column clasificació_lectora
@@ -487,8 +819,8 @@ df = tmt.classify_reader(df)
 
 
 # Calculate new correlation with classificació_lectora
-df["p5_6_pagines_sp"] = df["p5_6_pagines"].map(map_pagines)
-df["classificacio_lectora_sp"] = df["classificacio_lectora"].map(map_class)
+df["p5_6_pagines_sp"] = df["p5_6_pagines"].map(map_pagines_sp)
+df["classificacio_lectora_sp"] = df["classificacio_lectora"].map(map_class_sp)
 
 if len(tags) > 0 and 4 in tags:
     print("\n=======================================================================================\nReading Classification \n=======================================================================================")
@@ -691,14 +1023,7 @@ if len(tags) > 0 and 6 in tags:
 # =======================================================================================
 # 7. sessions (Com acostumen a ser les sessions de lectura)
 # =======================================================================================
-map_sessions = {
-    "Llegeixo gairebé sempre en estones molt curtes (menys de 15 minuts).": 0,
-    "Llegeixo sobretot en estones curtes (15–30 minuts).": 1,
-    "Combino estones curtes (15–30 minuts) i mitjanes (30–60 minuts).": 2,
-    "Llegeixo habitualment en sessions mitjanes (30-60 minuts) i llargues (més d’1 hora seguida).": 3
-}
-
-df["sessions_sp"] = df["sessions"].map(map_sessions)
+df["sessions_sp"] = df["sessions"].map(map_sessions_sp)
 
 if len(tags) > 0 and 7 in tags:
     print("\n=======================================================================================\nSessions de lectura \n=======================================================================================")
@@ -730,58 +1055,11 @@ if len(tags) > 0 and 7 in tags:
 # =======================================================================================
 # 8. p16_lectura_obligatoria
 # =======================================================================================
-# Grau de lectura
-map_lectura_obligatoria = {
-    "No en llegeixo cap.": 0,
-    "En llegeixo poques o molt poques.": 1,
-    "En llegeixo aproximadament la meitat.": 2,
-    "Les llegeixo gairebé totes.": 3,
-    "Les llegeixo totes.": 4    
-}
 
-map_gust = {
-    "Gens.": 0,
-    "Poc.": 1,
-    "Regular.": 2,
-    "Bastant.": 3,
-    "Molt.": 4    
-}
 
-map_acords = {
-    "Molt en desacord.": 0,
-    "Poc d'acord,": 1,
-    "Parcialment d'acord.": 2,
-    "Bastant d'acord.": 3,
-    "Molt d'acord.": 4
-}
-
-df["p16_lectura_obligatoria_sp"] = df["p16_lectura_obligatoria"].map(map_lectura_obligatoria)
-df["gust_lectura_obligatoria_sp"] = df["T’agraden les lectures obligatòries de l’escola? "].map(map_gust)
-df["llegiria_mes_lectura_obligatoria_sp"] = df["Fins a quin punt estàs d'acord amb la següent afirmació: llegiria més lectures obligatòries de l'escola si s'adaptessin més als meus gustos."].map(map_acords)
-
-sort_acords = [
-    "Molt en desacord.",
-    "Poc d'acord,",
-    "Parcialment d'acord.",
-    "Bastant d'acord.",
-    "Molt d'acord."
-]
-
-sort_gust = [
-    "Gens.",
-    "Poc.",
-    "Regular.",
-    "Bastant.",
-    "Molt."
-]
-
-sort_freq = [
-    "Mai.",
-    "Gairebé mai.",
-    "Algunes vegades.",
-    "Sovint.",
-    "Molt sovint."
-]
+df["p16_lectura_obligatoria_sp"] = df["p16_lectura_obligatoria"].map(map_lectura_obligatoria_sp)
+df["gust_lectura_obligatoria_sp"] = df["T’agraden les lectures obligatòries de l’escola? "].map(map_gust_sp)
+df["llegiria_mes_lectura_obligatoria_sp"] = df["Fins a quin punt estàs d'acord amb la següent afirmació: llegiria més lectures obligatòries de l'escola si s'adaptessin més als meus gustos."].map(map_acord_sp)
 
 if len(tags) > 0 and 8 in tags:
     print("\n=======================================================================================\nLectures Obligatòries\n=======================================================================================")
@@ -977,31 +1255,9 @@ if len(tags) > 0 and 8 in tags:
 # =======================================================================================
 # 9. Narrativa social adolescent sobre la lectura
 # =======================================================================================
-map_afirmacio = {
-    "La lectura no m'agrada gens o em sembla avorrida.": 0,
-    "No m’agrada gaire la lectura o no em resulta interessant.": 1,
-    "La lectura m’és indiferent.": 2,
-    "La lectura em sembla interessant i una activitat agradable.": 3,
-    "La lectura em sembla molt interessant i una activitat molt positiva.": 4
-}
-
-map_com_es_veu = {
-    "Una activitat avorrida o poc interessant.": 0,
-    "Una activitat normal, sense cap etiqueta especial.": 1,
-    "Una activitat positiva o interessant.": 2
-}
-
-map_freq = {
-    "Mai.": 0,
-    "Gairebé mai.": 1,
-    "Algunes vegades.": 2,
-    "Sovint.": 3,
-    "Molt sovint.": 4
-}
-
-df["percepcio_social_lectura_sp"] = df["Amb quina de les següents afirmacions t’identifiques més?"].map(map_afirmacio)
-df["percepcio_individual_lectura_sp"] = df["En general, creus que llegir per oci entre els nois i noies de la teva edat és vist com:"].map(map_com_es_veu)
-df["compartir_sp"] = df["Comparteixes opinions de lectura sobre llibres o còmics que has llegit o estàs llegint amb altres persones? (Amics, família, companys de classe, companys d’activitats extraescolars, etc.)."].map(map_freq)
+df["percepcio_social_lectura_sp"] = df["Amb quina de les següents afirmacions t’identifiques més?"].map(map_afirmacio_sp)
+df["percepcio_individual_lectura_sp"] = df["En general, creus que llegir per oci entre els nois i noies de la teva edat és vist com:"].map(map_com_es_veu_sp)
+df["compartir_sp"] = df["Comparteixes opinions de lectura sobre llibres o còmics que has llegit o estàs llegint amb altres persones? (Amics, família, companys de classe, companys d’activitats extraescolars, etc.)."].map(map_freq_sp)
 
 # Grau de lectura
 if len(tags) > 0 and 9 in tags:
@@ -1053,20 +1309,6 @@ if len(tags) > 0 and 9 in tags:
     print(f"Correlació (Spearman) entre freqüència de compartir opinions de lectura i nombre de llibres anuals llegits: rho = {rho_compartir_llibres:.5f}, p-value = {p_value_compartir_llibres:.10f}")
     print("---------------------------------------------------------------------------------------")
 
-    sort_afirmacio = [
-        "La lectura no m'agrada gens o em sembla avorrida.",
-        "No m’agrada gaire la lectura o no em resulta interessant.",
-        "La lectura m’és indiferent.",
-        "La lectura em sembla interessant i una activitat agradable.",
-        "La lectura em sembla molt interessant i una activitat molt positiva."
-    ]
-
-    sort_com_es_veu = [
-        "Una activitat avorrida o poc interessant.",
-        "Una activitat normal, sense cap etiqueta especial.",
-        "Una activitat positiva o interessant."
-    ]
-
     fig, axs = plt.subplots(1, 2, figsize=(18, 12))
     axs = axs.flatten()
     tmt.plot_descriptive_hists(
@@ -1111,65 +1353,28 @@ if len(tags) > 0 and 9 in tags:
 # =======================================================================================
 # 10. TRIC
 # =======================================================================================
-df["consumir_contingut_sp"] = df["Veus o escoltes continguts audiovisuals relacionats amb literatura, llibres o còmics per oci?"].map(map_freq)
-
-sort_tric = [
-    "0 minuts al dia.",
-    "Menys de 30 minuts al dia.",
-    "Entre 30 minuts i 1 hora al dia.",
-    "Entre 1 i 2 hores al dia.",
-    "Entre 2 i 3 hores al dia.",
-    "3 hores o més al dia."
-]
-
-sort_distraccions_inv = [
-    "No miro mai les xarxes socials mentre llegeixo",
-    "Cada 2 hores aprox.",
-    "Cada hora aprox.",
-    "Cada 30 minuts aprox.",
-    "Cada 15 minuts aprox.",
-    "Cada 5 minuts aprox."
-]
-
-map_distraccions_inv = {
-    "Cada 5 minuts aprox.": 5,
-    "Cada 15 minuts aprox.": 4,
-    "Cada 30 minuts aprox.": 3,
-    "Cada hora aprox.": 2,
-    "Cada 2 hores aprox.": 1,
-    "No miro mai les xarxes socials mentre llegeixo": 0
-}
-
-map_tric = {
-    "0 minuts al dia.": 0,
-    "Menys de 30 minuts al dia.": 1,
-    "Entre 30 minuts i 1 hora al dia.": 2,
-    "Entre 1 i 2 hores al dia.": 3,
-    "Entre 2 i 3 hores al dia.": 4,
-    "3 hores o més al dia": 5
-}
-
-df["tecnos"] = df["Quant temps al dia dediques, de mitjana, a l’ús de dispositius digitals per a l’oci? (Mòbil, Ordinador, Tablet, Televisió, Smart-watch, etc.)."].map(map_tric)
-df["xarxes"] = df["Quant temps al dia dediques, de mitjana, a utilitzar xarxes socials o veure contingut audiovisual ràpid? (Instagram, TikTok, WhatsApp, X, Telegram, Facebook, Shorts de YouTube)."].map(map_tric)
+df["consumir_contingut_sp"] = df["Veus o escoltes continguts audiovisuals relacionats amb literatura, llibres o còmics per oci?"].map(map_freq_sp)
+df["tecnos"] = df["Quant temps al dia dediques, de mitjana, a l’ús de dispositius digitals per a l’oci? (Mòbil, Ordinador, Tablet, Televisió, Smart-watch, etc.)."].map(map_tric_sp)
+df["xarxes"] = df["Quant temps al dia dediques, de mitjana, a utilitzar xarxes socials o veure contingut audiovisual ràpid? (Instagram, TikTok, WhatsApp, X, Telegram, Facebook, Shorts de YouTube)."].map(map_tric_sp)
 df["plataformes_streaming"] = df[
     "Quant temps al dia dediques, de mitjana, a veure o sentir contingut audiovisual en Plataformes com Netflix, YouTube, Twitch, Canals de Televisió, Amazon Prime, Spotify, Movistar +, DAZN? (Ja sigui en format vídeo gravat, vídeo en streaming o pòdcast)"
-].map(map_tric)
+].map(map_tric_sp)
 
 df["videojocs"] = df[
     "Quant temps al dia dediques, de mitjana, a jugar a videojocs. (Ja sigui en PlayStation, Xbox, PC, mòbil, Nintendo Switch, Nintendo DS, etc.)."
-].map(map_tric)
+].map(map_tric_sp)
 
 df["distraccions"] = df[
     "Amb quina freqüència consultes xarxes socials habitualment mentre llegeixes?"
-].map(map_distraccions_inv)
+].map(map_distraccions_inv_sp)
 
 df["doble_tasca"] = df[
     "Quan llegeixes, acostumes a fer-ho amb música, vídeos o pòdcasts de fons?"
-].map(map_freq)
+].map(map_freq_sp)
 
 df_readers["doble_tasca"] = df_readers[
     "Quan llegeixes, acostumes a fer-ho amb música, vídeos o pòdcasts de fons?"
-].map(map_freq)
+].map(map_freq_sp)
 
 
 if len(tags) > 0 and 10 in tags:
@@ -1408,15 +1613,15 @@ if len(tags) > 0 and 10 in tags:
     )
 
 # =======================================================================================
-# 11. TRIC
+# 11. Altres activitats
 # =======================================================================================
-df["estudi_sp"] = df["Quant temps al dia dediques, de mitjana, a l’estudi i la realització de tasques acadèmiques fora de l’horari escolar? (Exàmens, deures, treballs, etc.)"].map(map_tric)
+df["estudi_sp"] = df["Quant temps al dia dediques, de mitjana, a l’estudi i la realització de tasques acadèmiques fora de l’horari escolar? (Exàmens, deures, treballs, etc.)"].map(map_tric_sp)
 
-df["cultura_sp"] = df["Quant temps al dia dediques, de mitjana, a realitzar activitats relacionades amb la cultura fora de l’horari escolar? (Música, dansa, teatre, pintura, escriptura, visites a museus, etc.)."].map(map_tric)
+df["cultura_sp"] = df["Quant temps al dia dediques, de mitjana, a realitzar activitats relacionades amb la cultura fora de l’horari escolar? (Música, dansa, teatre, pintura, escriptura, visites a museus, etc.)."].map(map_tric_sp)
 
-df["sport_sp"] = df["Quant temps al dia dediques, de mitjana, a la pràctica d’esport fora de l’horari escolar? (Futbol, bàsquet, atletisme, ciclisme, natació, ioga, gym, senderisme, tenis, pàdel, ping-pong, etc.)."].map(map_tric)
+df["sport_sp"] = df["Quant temps al dia dediques, de mitjana, a la pràctica d’esport fora de l’horari escolar? (Futbol, bàsquet, atletisme, ciclisme, natació, ioga, gym, senderisme, tenis, pàdel, ping-pong, etc.)."].map(map_tric_sp)
 
-df["hangout_sp"] = df["Quant temps al dia dediques, de mitjana, a quedar amb amics / amigues o parella sentimental fora de l’horari escolar?"].map(map_tric)
+df["hangout_sp"] = df["Quant temps al dia dediques, de mitjana, a quedar amb amics / amigues o parella sentimental fora de l’horari escolar?"].map(map_tric_sp)
 
 if len(tags) > 0 and 11 in tags:
     print("\n=======================================================================================\nAltres Activitats\n=======================================================================================")
@@ -1522,45 +1727,13 @@ if len(tags) > 0 and 11 in tags:
 # =======================================================================================
 # 12. Entorn familiar pro-lector
 # =======================================================================================
-sort_estudis_familiars = [
-    "Educació Primaria.",
-    "Educació Secundària.",
-    "Batxillerat o Cicles Formatius de Grau Mitjà o Superior.",
-    "Estudis Universitaris.",
-]
-
-map_estudis_familiars = {
-    "Educació Primaria.": 0,
-    "Educació Secundària.": 1,
-    "Batxillerat o Cicles Formatius de Grau Mitjà o Superior.": 2,
-    "Estudis Universitaris.": 3,
-}
-
-sort_num_llibres = [
-    "0 llibres",
-    "Entre 1 i 10 llibres.",
-    "Entre 11 i 25 llibres.",
-    "Entre 26 i 100 llibres.",
-    "Entre 101 i 200 llibres.",
-    "Més de 200 llibres."
-]
-
-map_num_llibres = {
-    "0 llibres": 0,
-    "Entre 1 i 10 llibres.": 1,
-    "Entre 11 i 25 llibres.": 2,
-    "Entre 26 i 100 llibres.": 3,
-    "Entre 101 i 200 llibres.": 4,
-    "Més de 200 llibres.": 5
-}
-
-df["estudis_familiars_sp"] = df["Quin és el nivell d’estudis més alt dels teus pares o tutors legals?"].map(map_estudis_familiars)
-df["vist_pares_lectura_sp"] = df["Durant la teva infància i adolescència, amb quina freqüència has vist als teus pares o tutors legals llegint llibres o còmics per oci?"].map(map_freq)
-df["parlat_pares_lectura_sp"] = df["Durant la teva infància i adolescència, amb quina freqüència has parlat amb els teus pares o tutors legals sobre literatura, llibres o còmics?"].map(map_freq)
-df["sessions_lectura_familiars_sp"] = df["Durant la teva infància i adolescència, amb quina freqüència heu realitzat sessions de lectura conjunta a casa?"].map(map_freq)
-df["biblioteca_infancia_sp"] = df["Durant la teva infància i adolescència, amb quina freqüència aproximadament has anat a la biblioteca amb els teus pares o tutors legals a llegir o agafar llibres en préstec?"].map(map_freq)
-df["normes_clares_tric_sp"] = df["Fins a quin punt estàs d'acord amb la següent afirmació: a casa meva hi ha normes clares sobre el temps que puc dedicar a les pantalles i dispositius digitals."].map(map_acords)
-df["num_llibres_sp"] = df["Quants llibres aproximadament heu tingut a casa durant la teva infància i adolescència?"].map(map_num_llibres)
+df["estudis_familiars_sp"] = df["Quin és el nivell d’estudis més alt dels teus pares o tutors legals?"].map(map_estudis_familiars_sp)
+df["vist_pares_lectura_sp"] = df["Durant la teva infància i adolescència, amb quina freqüència has vist als teus pares o tutors legals llegint llibres o còmics per oci?"].map(map_freq_sp)
+df["parlat_pares_lectura_sp"] = df["Durant la teva infància i adolescència, amb quina freqüència has parlat amb els teus pares o tutors legals sobre literatura, llibres o còmics?"].map(map_freq_sp)
+df["sessions_lectura_familiars_sp"] = df["Durant la teva infància i adolescència, amb quina freqüència heu realitzat sessions de lectura conjunta a casa?"].map(map_freq_sp)
+df["biblioteca_infancia_sp"] = df["Durant la teva infància i adolescència, amb quina freqüència aproximadament has anat a la biblioteca amb els teus pares o tutors legals a llegir o agafar llibres en préstec?"].map(map_freq_sp)
+df["normes_clares_tric_sp"] = df["Fins a quin punt estàs d'acord amb la següent afirmació: a casa meva hi ha normes clares sobre el temps que puc dedicar a les pantalles i dispositius digitals."].map(map_acord_sp)
+df["num_llibres_sp"] = df["Quants llibres aproximadament heu tingut a casa durant la teva infància i adolescència?"].map(map_num_llibres_sp)
 
 if len(tags) > 0 and 12 in tags:
     print("\n=======================================================================================\nEntorn Familiar Pro-Lector\n=======================================================================================")
