@@ -61,11 +61,9 @@ V = sqrt(chi2 / (n * (k - 1)))
 - **k** → number of categories considered in the test  
   `k = min(contingency_table.shape)`
 
-**Contingency Table:**
-
 | Range of V | Interpretation |
 |------------|----------------|
-| V < .10 | negligible association |
-| .10 ≤ V < .30 | weak association |
-| .30 ≤ V < .50 | moderate association |
-| V ≥ .50 | strong association |
+| V < .1 | negligible association |
+| .1 ≤ V < .3 | weak association |
+| .3 ≤ V < .5 | moderate association |
+| V ≥ .5 | strong association |
