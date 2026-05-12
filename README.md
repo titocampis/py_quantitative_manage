@@ -42,15 +42,26 @@ You just have to import your data into a csv in the file: [dades.csv](dades.csv)
 | .01 ≤ p < .05 | statistical significance (evidence of association; reject the null hypothesis) |
 | p ≥ .05 | not statistically significant (insufficient evidence to conclude association; fail to reject the null hypothesis) |
 
+### Contingency Table Example
+Contingency table is the cross-tabulation of two categorical variables that shows the frequency of each combination of categories.
+
+|       | 0 min | <30 min | 1–2 h | ... |
+|-------|-------|---------|-------|-----|
+| Noies | 50    | 20      | 10    | ... |
+| Nois  | 70    | 25      | 5     | ... |
+
 ### Cramér’s V (effect size for χ²)
 
 ```
 V = sqrt(chi2 / (n * (k - 1)))
 ```
+- **χ²** → chi-square statistic obtained from the contingency table  
+- **n** → total sample size used in the contingency table  
+  `n = contingency_table.sum().sum()`  
+- **k** → number of categories considered in the test  
+  `k = min(contingency_table.shape)`
 
-- **χ²** → chi-square statistic  
-- **n** → total sample size  
-- **k** → k = min(number of rows, number of columns)
+**Contingency Table:**
 
 | Range of V | Interpretation |
 |------------|----------------|
