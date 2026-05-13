@@ -11,6 +11,23 @@
 main.py [-v] [-t 9] 
 ```
 
+## How to create  virtual environment with requirements
+
+:one: Create python virtual environment folder
+```bash
+python3 -m venv venv
+```
+
+:two: Activate it in to your terminal session
+```bash
+source venv/bin/activate
+```
+
+:three: Load the requirements
+```bash
+pip install -r requirements.txt
+``
+
 ## Statistical Interpretation Guide
 
 ### Spearman Correlation (ρ)
