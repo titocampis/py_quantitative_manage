@@ -1,13 +1,15 @@
+# Standard library
 import argparse
 import csv
+from pprint import pprint
+import textwrap
+
+# Third-party
 import matplotlib.pyplot as plt
 from matplotlib.colors import TwoSlopeNorm
 import numpy as np
 import pandas as pd
-from pprint import pprint
-import plots
 from scipy.stats import chi2_contingency, spearmanr
-import textwrap
 
 #########################################################################################
 #

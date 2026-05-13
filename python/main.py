@@ -1,13 +1,15 @@
+# Standard library
+import sys
+from pprint import pprint
+import textwrap
+
+# Third-party
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from pprint import pprint
-from scipy.stats import chi2_contingency
-from scipy.stats import spearmanr
-import sys
+from scipy.stats import chi2_contingency, spearmanr
 
-import methods as mt
-import textwrap
+# Local imports
 import tfm_methods as tmt
 
 #########################################################################################
@@ -22,11 +24,11 @@ csv_name = "forms-habits-lectura-compartit"
 verbose, tags = tmt.parse_arguments()
 
 # Filters
-poltergeists = True
-filterr = True
+poltergeists = False
+filterr = False
 
 # Export cleaned dataset
-export_cleaned = True
+export_cleaned = False
 
 # Dictionary to store correlations of all variables with reading habits
 correlations_dict = {}
