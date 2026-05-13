@@ -16,10 +16,20 @@ import tfm_methods as tmt
 #
 #########################################################################################
 # Create statistics df from csv
-csv_name = "forms-habits-lectura-compartit.csv"
+csv_name = "forms-habits-lectura-compartit"
 
 # Verbosity
 verbose, tags = tmt.parse_arguments()
+
+# Filters
+poltergeists = True
+filterr = True
+
+# Export cleaned dataset
+export_cleaned = True
+
+# Dictionary to store correlations of all variables with reading habits
+correlations_dict = {}
 
 #########################################################################################
 #
@@ -37,7 +47,7 @@ verbose, tags = tmt.parse_arguments()
 # First Data Inspection
 # =======================================================================================
 # Import df from csv
-df = pd.read_csv(csv_name)
+df = pd.read_csv(f"{csv_name}.csv")
 
 # Ad id column
 df["id"] = range(1, len(df) + 1)
@@ -78,6 +88,18 @@ df = df.rename(columns={
 })
 
 # =======================================================================================
+# Save poltergeists
+# =======================================================================================
+if poltergeists:
+    df = tmt.save_poltergeists(df, verbose=verbose)
+
+# =======================================================================================
+# Clean dataset and ensure consistency
+# =======================================================================================
+if filterr:
+    df = tmt.clean_reading_dataset_and_consistency(df, verbose=verbose, export=export_cleaned, csv_name=csv_name)
+
+# =======================================================================================
 # Sorting, maps and Spearman ready variables
 # =======================================================================================
 # Maps
@@ -85,6 +107,13 @@ df = df.rename(columns={
 
 # Generic sorts and maps
 # ===
+sort_cursos = [
+    "3r d'ESO.",
+    "4t d'ESO.",
+    "1r de Batxillerat.",
+    "2n de Batxillerat."
+]
+
 sort_gust = [
     "Gens.",
     "Poc.",
@@ -329,6 +358,24 @@ map_tric_sp = {
     "3 hores o més al dia": 5
 }
 
+sort_sport = [
+    "0 minuts",
+    "Menys de 30 minuts al dia.",
+    "Entre 30 minuts i 1 hora al dia.",
+    "Entre 1 i 2 hores al dia.",
+    "Entre 2 i 3 hores al dia.",
+    "3 hores o més al dia."
+]
+
+map_sport_sp = {
+    "0 minuts": 0,
+    "Menys de 30 minuts al dia.": 1,
+    "Entre 30 minuts i 1 hora al dia.": 2,
+    "Entre 1 i 2 hores al dia.": 3,
+    "Entre 2 i 3 hores al dia.": 4,
+    "3 hores o més al dia": 5
+}
+
 # Entorn familiar pro-lector
 # ===
 sort_estudis_familiars = [
@@ -373,16 +420,6 @@ df["p4_temps_lectura_sp"] = df["p4_temps_lectura"].map(map_temps_sp)
 # Llibres 12 mesos
 # ===
 df["p5_llibres_sp"] = df["p5_llibres"].map(map_llibres_sp)
-
-# =======================================================================================
-# Save poltergeists
-# =======================================================================================
-df = tmt.save_poltergeists(df, verbose=verbose)
-
-# =======================================================================================
-# Clean dataset and ensure consistency
-# =======================================================================================
-df = tmt.clean_reading_dataset_and_consistency(df, verbose=verbose)
 
 # =======================================================================================
 # Create subdataframes of readers, no readers, gender, curs
@@ -432,7 +469,8 @@ if len(tags) > 0 and 1 in tags:
         var="Curs",
         title="Distribució de l'alumnat segons el curs",
         xlabel="",
-        ylabel="Percentatge d'alumnes"
+        ylabel="Percentatge d'alumnes",
+        sort=sort_cursos
     )
 
     # Itinerari (només si estàs cursant Batxillerat)
@@ -982,84 +1020,94 @@ if len(tags) > 0 and 5 in tags:
 # 6. sessions (Com acostumen a ser les sessions de lectura)
 # =======================================================================================
 df["sessions_sp"] = df["sessions"].map(map_sessions_sp)
-df["distraccions"] = df[
+df["distraccions_sp"] = df[
     "Amb quina freqüència consultes xarxes socials habitualment mentre llegeixes?"
 ].map(map_distraccions_inv_sp)
 
-df["doble_tasca"] = df[
+df["doble_tasca_sp"] = df[
     "Quan llegeixes, acostumes a fer-ho amb música, vídeos o pòdcasts de fons?"
 ].map(map_freq_sp)
 
-df_readers["doble_tasca"] = df_readers[
+df_readers["doble_tasca_sp"] = df_readers[
     "Quan llegeixes, acostumes a fer-ho amb música, vídeos o pòdcasts de fons?"
 ].map(map_freq_sp)
 
-if len(tags) > 0 and 6 in tags:
+if len(tags) > 0 and (6 in tags or 13 in tags):
     print("\n=======================================================================================\nSessions de lectura \n=======================================================================================")
     # Correlations
-    tmt.spearman_analysis(
+    correlations_dict["Durada sessions lectura"] = {}
+    correlations_dict["Durada sessions lectura"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "sessions_sp",
         "p4_temps_lectura_sp",
         "Spearman: sessions de lectura vs temps de lectura"
-    )
-
-    tmt.spearman_analysis(
+    )[0]
+    
+    correlations_dict["Durada sessions lectura"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "sessions_sp",
         "p5_llibres_sp",
         "Spearman: sessions de lectura vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["X.socials durant lectura"] = {}
+    correlations_dict["X.socials durant lectura"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
-        "distraccions",
+        "distraccions_sp",
         "p4_temps_lectura_sp",
         "Spearman: freqüència de distraccions vs temps de lectura"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["X.socials durant lectura"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
-        "distraccions",
+        "distraccions_sp",
         "p5_llibres_sp",
         "Spearman: freqüència de distraccions vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Música durant lectura"] = {}
+    correlations_dict["Música durant lectura"]["Temps lectura"] =   tmt.spearman_analysis(
         df.copy(),
-        "doble_tasca",
+        "doble_tasca_sp",
         "p4_temps_lectura_sp",
         "Spearman: freqüència de doble tasca vs temps de lectura"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Música durant lectura"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
-        "doble_tasca",
+        "doble_tasca_sp",
         "p5_llibres_sp",
         "Spearman: freqüència de doble tasca vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
     tmt.spearman_analysis(
         df_readers.copy(),
-        "doble_tasca",
+        "doble_tasca_sp",
         "p4_temps_lectura_sp",
         "Spearman: freqüència de doble tasca vs temps de lectura (only readers)"
     )
 
     tmt.spearman_analysis(
         df_readers.copy(),
-        "doble_tasca",
+        "doble_tasca_sp",
         "p5_llibres_sp",
         "Spearman: freqüència de doble tasca vs nombre de llibres anuals llegits (only readers)"
+    )
+
+    tmt.spearman_analysis(
+        df.copy(),
+        "sessions_sp",
+        "distraccions_sp",
+        "Spearman: durada de les sessions de lectura vs freqüència de distraccions (x.socials) mentre llegeixen"
     )
 
     # Plots sessions ------------------
     tmt.plot_descriptive_hists(
         df=df_readers.copy(),
         var="sessions",
-        title="Distribució de l'alumnat segons les sessions de lectura per oci",
+        title="Distribució de l'alumnat segons la durada de les sessions de lectura",
         xlabel="",
-        ylabel="Percentatge d'alumnes (%)",
+        ylabel="Percentatge d'alumnes",
         sort=sort_sessions
     )
 
@@ -1069,16 +1117,39 @@ if len(tags) > 0 and 6 in tags:
         df[df["classificacio_lectora"] == "Lector habitual"].copy(),
         groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
         var="sessions",
-        title="Distribució de l'alumnat segons les sessions de lectura per oci i classificació lectora",
+        title="Distribució de l'alumnat segons la durada de les sessions de lectura, per classificació lectora",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green"],
         sort=sort_sessions
     )
 
+    # Plots Distraccions ------------------
+    tmt.plot_descriptive_hists(
+        df=df,
+        var="Amb quina freqüència consultes xarxes socials habitualment mentre llegeixes?",
+        title="Distribució de l'alumnat segons la freqüència de consulta x.socials durant la lectura",
+        xlabel="",
+        ylabel="Percentatge d'alumnes",
+        sort=sort_distraccions_inv
+    )
+
+    tmt.plot_descriptive_combined_hists(
+        df[df["classificacio_lectora"] == "No lector / Lector molt ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector habitual"].copy(),
+        groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
+        var="Amb quina freqüència consultes xarxes socials habitualment mentre llegeixes?",
+        title="Distribució de l'alumnat segons la freqüència de consulta de x.socials durant la lectura, per classificació lectora",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        colors=["blue", "orange", "green"],
+        sort=sort_distraccions_inv
+    )
+
     # Plots Doble Tasca ------------------
     tmt.plot_descriptive_hists(
-        df=df_readers.copy(),
+        df=df.copy(),
         var="Quan llegeixes, acostumes a fer-ho amb música, vídeos o pòdcasts de fons?",
         title="Freqüència de lectura amb música, vídeos o pòdcasts de fons",
         xlabel="",
@@ -1092,72 +1163,50 @@ if len(tags) > 0 and 6 in tags:
         df[df["classificacio_lectora"] == "Lector habitual"].copy(),
         groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
         var="Quan llegeixes, acostumes a fer-ho amb música, vídeos o pòdcasts de fons?",
-        title="Freqüència de lectura amb música, vídeos o pòdcasts de fons i classificació lectora",
+        title="Freqüència de lectura amb música, vídeos o pòdcasts de fons, per classificació lectora",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green"],
         sort=sort_freq   
     )
 
-    # Plots Distraccions ------------------
-    tmt.plot_descriptive_hists(
-        df=df,
-        var="Amb quina freqüència consultes xarxes socials habitualment mentre llegeixes?",
-        title="Distribució de l'alumnat segons la freqüència de consulta x.socials mentre llegeixen",
-        xlabel="",
-        ylabel="Percentatge d'alumnes",
-        sort=sort_distraccions_inv
-    )
-
-    tmt.plot_descriptive_combined_hists(
-        df[df["classificacio_lectora"] == "No lector / Lector molt ocasional"].copy(),
-        df[df["classificacio_lectora"] == "Lector ocasional"].copy(),
-        df[df["classificacio_lectora"] == "Lector habitual"].copy(),
-        groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
-        var="Amb quina freqüència consultes xarxes socials habitualment mentre llegeixes?",
-        title="Distribució de l'alumnat segons la freqüència de consulta de x.socials mentre llegeixen i classificació lectora",
-        xlabel="",
-        ylabel="Percentatge d'alumnes (%)",
-        colors=["blue", "orange", "green"],
-        sort=sort_distraccions_inv
-    )
-
 # =======================================================================================
 # 7. p10_visites_biblioteca
 # =======================================================================================
 df["biblioteca_infancia_sp"] = df["Durant la teva infància i adolescència, amb quina freqüència aproximadament has anat a la biblioteca amb els teus pares o tutors legals a llegir o agafar llibres en préstec?"].map(map_freq_sp)
-if len(tags) > 0 and 7 in tags:
+if len(tags) > 0 and (7 in tags or 13 in tags):
     print("\n=======================================================================================\nVisites Biblioteca \n=======================================================================================")
-
     df["p10_visites_biblioteca_anual_sp"] = df["p10_visites_biblioteca"].map(map_visites_biblioteca_anual_sp)
 
-    tmt.spearman_analysis(
+    correlations_dict["Visites biblioteca últim any"] = {}
+    correlations_dict["Visites biblioteca últim any"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "p10_visites_biblioteca_anual_sp",
         "p4_temps_lectura_sp",
         "Spearman: visites biblioteca anual vs temps de lectura"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Visites biblioteca últim any"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "p10_visites_biblioteca_anual_sp",
         "p5_llibres_sp",
         "Spearman: visites biblioteca anual vs llibres llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Visites biblioteca amb familia"] = {}
+    correlations_dict["Visites biblioteca amb familia"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "biblioteca_infancia_sp",
         "p4_temps_lectura_sp",
         "Spearman: freqüència d'anar a la biblioteca amb els pares vs temps de lectura setmanal"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Visites biblioteca amb familia"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "biblioteca_infancia_sp",
         "p5_llibres_sp",
         "Spearman: freqüència d'anar a la biblioteca amb els pares vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
     tmt.plot_descriptive_hists(
         df=df.copy(),
@@ -1174,13 +1223,34 @@ if len(tags) > 0 and 7 in tags:
         df[df["classificacio_lectora"] == "Lector habitual"].copy(),
         groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
         var="p10_visites_biblioteca",
-        title="Distribució de l'alumnat segons les visites a la biblioteca en l'últim any per oci i classificació lectora",
+        title="Distribució de l'alumnat segons les visites a la biblioteca en l'últim any per oci, per classificació lectora",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green"],
         sort = sort_visites_biblioteca_anual
     )
 
+    tmt.plot_descriptive_hists(
+        df=df.copy(),
+        var="Durant la teva infància i adolescència, amb quina freqüència aproximadament has anat a la biblioteca amb els teus pares o tutors legals a llegir o agafar llibres en préstec?",
+        title="Distribució de l'alumnat segons les visites a la biblioteca durant la infància i adolescència",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        sort=sort_freq
+    )
+
+    tmt.plot_descriptive_combined_hists(
+        df[df["classificacio_lectora"] == "No lector / Lector molt ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector habitual"].copy(),
+        groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
+        var="Durant la teva infància i adolescència, amb quina freqüència aproximadament has anat a la biblioteca amb els teus pares o tutors legals a llegir o agafar llibres en préstec?",
+        title="Distribució de l'alumnat segons les visites a la biblioteca durant la infància i adolescència, per classificació lectora",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        colors=["blue", "orange", "green"],
+        sort = sort_freq
+    )
 
 # =======================================================================================
 # 8. p16_lectura_obligatoria
@@ -1189,29 +1259,45 @@ df["p16_lectura_obligatoria_sp"] = df["p16_lectura_obligatoria"].map(map_lectura
 df["gust_lectura_obligatoria_sp"] = df["T’agraden les lectures obligatòries de l’escola? "].map(map_gust_sp)
 df["llegiria_mes_lectura_obligatoria_sp"] = df["Fins a quin punt estàs d'acord amb la següent afirmació: llegiria més lectures obligatòries de l'escola si s'adaptessin més als meus gustos."].map(map_acord_sp)
 
-if len(tags) > 0 and 8 in tags:
+if len(tags) > 0 and (8 in tags or 13 in tags):
     print("\n=======================================================================================\nLectures Obligatòries\n=======================================================================================")
     # Correlations
-    tmt.spearman_analysis(
+    correlations_dict["Grau de lectura obligatòria"] = {}
+    correlations_dict["Grau de lectura obligatòria"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
-        "gust_lectura_obligatoria_sp",
         "p16_lectura_obligatoria_sp",
-        "Spearman: gust per la lectura obligatòria vs grau de lectura obligatòria"
-    )
+        "p4_temps_lectura_sp",
+        "Spearman: grau de lectura obligatòria vs temps de lectura"
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Grau de lectura obligatòria"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "p16_lectura_obligatoria_sp",
         "p5_llibres_sp",
         "Spearman: grau de lectura obligatòria vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
     tmt.spearman_analysis(
+        df.copy(),
+        "p16_lectura_obligatoria_sp",
+        "gust_lectura_obligatoria_sp",
+        "Spearman: gust per la lectura obligatòria vs grau de lectura obligatòria"
+    )
+
+    correlations_dict["Gust lectura obligatòria"] = {}
+    correlations_dict["Gust lectura obligatòria"]["Temps lectura"] = tmt.spearman_analysis(
+        df.copy(),
+        "gust_lectura_obligatoria_sp",
+        "p4_temps_lectura_sp",
+        "Spearman: gust per la lectura obligatòria vs temps de lectura"
+    )[0]
+
+    correlations_dict["Gust lectura obligatòria"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "gust_lectura_obligatoria_sp",
         "p5_llibres_sp",
         "Spearman: gust per la lectura obligatòria vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
     tmt.spearman_analysis(
         df.copy(),
@@ -1222,32 +1308,10 @@ if len(tags) > 0 and 8 in tags:
 
     tmt.spearman_analysis(
         df.copy(),
-        "p16_lectura_obligatoria_sp",
-        "p4_temps_lectura_sp",
-        "Spearman: grau de lectura obligatòria vs temps de lectura"
-    )
-
-    tmt.spearman_analysis(
-        df.copy(),
-        "gust_lectura_obligatoria_sp",
-        "p4_temps_lectura_sp",
-        "Spearman: gust per la lectura obligatòria vs temps de lectura"
-    )
-
-    tmt.spearman_analysis(
-        df.copy(),
         "llegiria_mes_lectura_obligatoria_sp",
         "p4_temps_lectura_sp",
         "Spearman: percepció de que llegiria més lectures obligatòries si s'adaptessin més als seus gustos vs temps de lectura"
     )
-
-    sort = [
-        "No en llegeixo cap.",
-        "En llegeixo poques o molt poques.",
-        "En llegeixo aproximadament la meitat.",
-        "Les llegeixo gairebé totes.",
-        "Les llegeixo totes."
-    ]
 
     tmt.plot_descriptive_hists(
         df=df,
@@ -1255,7 +1319,7 @@ if len(tags) > 0 and 8 in tags:
         title="Distribució de l'alumnat segons el grau de lectura de les lectures obligatòries de l’escola",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
-        sort=sort
+        sort=sort_lectura_obligatoria
     )
 
     tmt.plot_descriptive_hists(
@@ -1303,7 +1367,7 @@ if len(tags) > 0 and 8 in tags:
         title="Distribució de l'alumnat segons el gust per les lectures obligatòries de l’escola per classificació lectora",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
-        colors=["purple", "orange", "green"],
+        colors=["blue", "orange", "green"],
         sort=sort_gust
     )
 
@@ -1316,8 +1380,8 @@ if len(tags) > 0 and 8 in tags:
         title="Distribució de l'alumnat que llegeix les lectures obligatòries de l’escola per classificació lectora",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
-        colors=["purple", "orange", "green"],
-        sort=sort
+        colors=["blue", "orange", "green"],
+        sort=sort_lectura_obligatoria
     )
 
     tmt.plot_descriptive_combined_hists(
@@ -1326,10 +1390,10 @@ if len(tags) > 0 and 8 in tags:
         df[df["classificacio_lectora"] == "Lector habitual"].copy(),
         var="Fins a quin punt estàs d'acord amb la següent afirmació: llegiria més lectures obligatòries de l'escola si s'adaptessin més als meus gustos.",
         groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
-        title="Distribució de l'alumnat que llegirien més les lectures obligatòries de l'escola si s'adaptessin més als seus gustos per classificació lectora",
+        title="Percepció que llegirien més les lectures obligatòries si s'adaptessin més als seus gustos, per classificació lectora",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
-        colors=["purple", "orange", "green"],
+        colors=["blue", "orange", "green"],
         sort=sort_acords
     )
     
@@ -1341,50 +1405,53 @@ df["percepcio_individual_lectura_sp"] = df["En general, creus que llegir per oci
 df["compartir_sp"] = df["Comparteixes opinions de lectura sobre llibres o còmics que has llegit o estàs llegint amb altres persones? (Amics, família, companys de classe, companys d’activitats extraescolars, etc.)."].map(map_freq_sp)
 
 # Grau de lectura
-if len(tags) > 0 and 9 in tags:
+if len(tags) > 0 and (9 in tags or 13 in tags):
     print("\n=======================================================================================\nNarrativa Social\n=======================================================================================")
     # Correlacions
-    tmt.spearman_analysis(
+    correlations_dict["Percepció social lectura"] = {}
+    correlations_dict["Percepció social lectura"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "percepcio_social_lectura_sp",
         "p4_temps_lectura_sp",
         "Spearman: percepció social sobre la lectura vs temps de lectura"
-    )
+    )[0]
     
-    tmt.spearman_analysis(
+    correlations_dict["Percepció social lectura"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "percepcio_social_lectura_sp",
         "p5_llibres_sp",
         "Spearman: percepció social sobre la lectura vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Percepció personal lectura"] = {}
+    correlations_dict["Percepció personal lectura"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "percepcio_individual_lectura_sp",
         "p4_temps_lectura_sp",
         "Spearman: percepció individual sobre la lectura vs temps de lectura"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Percepció personal lectura"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "percepcio_individual_lectura_sp",
         "p5_llibres_sp",
         "Spearman: percepció individual sobre la lectura vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Compartir opinions de lectura"] = {}
+    correlations_dict["Compartir opinions de lectura"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "compartir_sp",
         "p4_temps_lectura_sp",
         "Spearman: freqüència de compartir opinions de lectura vs temps de lectura"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Compartir opinions de lectura"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "compartir_sp",
         "p5_llibres_sp",
         "Spearman: freqüència de compartir opinions de lectura vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
     # fig, axs = plt.subplots(1, 2, figsize=(18, 12))
     # axs = axs.flatten()
@@ -1419,9 +1486,22 @@ if len(tags) > 0 and 9 in tags:
     tmt.plot_descriptive_hists(
     df=df,
     var="Comparteixes opinions de lectura sobre llibres o còmics que has llegit o estàs llegint amb altres persones? (Amics, família, companys de classe, companys d’activitats extraescolars, etc.).",
-    title="Distribució de l'alumnat segons freqüència amb que es comparteixen opinions de lectura",
+    title="Distribució de l'alumnat segons la freqüència amb què comparteixen opinions sobre lectures",
     xlabel="",
     ylabel="Percentatge d'alumnes",
+    sort=sort_freq
+    )
+
+    tmt.plot_descriptive_combined_hists(
+    df[df["classificacio_lectora"] == "No lector / Lector molt ocasional"].copy(),
+    df[df["classificacio_lectora"] == "Lector ocasional"].copy(),
+    df[df["classificacio_lectora"] == "Lector habitual"].copy(),
+    groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
+    var="Comparteixes opinions de lectura sobre llibres o còmics que has llegit o estàs llegint amb altres persones? (Amics, família, companys de classe, companys d’activitats extraescolars, etc.).",
+    title="Distribució de l'alumnat segons la freqüència amb què comparteixen opinions sobre lectures, per classificació lectora",
+    xlabel="",
+    ylabel="Percentatge d'alumnes",
+    colors=["blue", "orange", "green"],
     sort=sort_freq
     )
 
@@ -1441,77 +1521,83 @@ df["videojocs"] = df[
 ].map(map_tric_sp)
 
 
-if len(tags) > 0 and 10 in tags:
+if len(tags) > 0 and (10 in tags or 13 in tags):
     print("\n=======================================================================================\nTRIC\n=======================================================================================")
-    tmt.spearman_analysis(
+    # Correlations
+    correlations_dict["Consumir contingut sobre lectura"] = {}
+    correlations_dict["Consumir contingut sobre lectura"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "consumir_contingut_sp",
         "p4_temps_lectura_sp",
         "Spearman: consum de contingut audiovisual vs temps de lectura"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Consumir contingut sobre lectura"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "consumir_contingut_sp",
         "p5_llibres_sp",
         "Spearman: consum de contingut audiovisual vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Temps dispositius digitals"] = {}
+    correlations_dict["Temps dispositius digitals"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "tecnos",
         "p4_temps_lectura_sp",
         "Spearman: temps dedicat a l’ús de dispositius digitals per a l’oci vs temps de lectura"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Temps dispositius digitals"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "tecnos",
         "p5_llibres_sp",
         "Spearman: temps dedicat a l’ús de dispositius digitals per a l’oci vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Temps xarxes socials"] = {}
+    correlations_dict["Temps xarxes socials"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "xarxes",
         "p4_temps_lectura_sp",
         "Spearman: temps dedicat a l’ús de xarxes socials vs temps de lectura"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Temps xarxes socials"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "xarxes",
         "p5_llibres_sp",
         "Spearman: temps dedicat a l’ús de xarxes socials vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Temps contingut audiovisual"] = {}
+    correlations_dict["Temps contingut audiovisual"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "plataformes_streaming",
         "p4_temps_lectura_sp",
         "Spearman: temps dedicat a veure contingut en plataformes de streaming vs temps de lectura"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Temps contingut audiovisual"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "plataformes_streaming",
         "p5_llibres_sp",
         "Spearman: temps dedicat a veure contingut en plataformes de streaming vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Temps videojocs"] = {}
+    correlations_dict["Temps videojocs"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "videojocs",
         "p4_temps_lectura_sp",
         "Spearman: temps dedicat a jugar a videojocs vs temps de lectura"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Temps videojocs"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "videojocs",
         "p5_llibres_sp",
         "Spearman: temps dedicat a jugar a videojocs vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
     # Plots Xarxes socials ------------------
     tmt.plot_descriptive_hists(
@@ -1536,30 +1622,6 @@ if len(tags) > 0 and 10 in tags:
         sort=sort_tric
     )
 
-    # Plots Contingut Audioviual Lectura ------------------
-    # fig, axs = plt.subplots(2, 1, figsize=(18, 6))
-    tmt.plot_descriptive_hists(
-        df=df,
-        var="Veus o escoltes continguts audiovisuals relacionats amb literatura, llibres o còmics per oci?",
-        title="Freqüència de consum de contingut audiovisual sobre literatura, llibres o còmics",
-        xlabel="",
-        ylabel="Percentatge d'alumnes",
-        sort=sort_freq
-    )
-
-    tmt.plot_descriptive_combined_hists(
-        df[df["classificacio_lectora"] == "No lector / Lector molt ocasional"].copy(),
-        df[df["classificacio_lectora"] == "Lector ocasional"].copy(),
-        df[df["classificacio_lectora"] == "Lector habitual"].copy(),
-        groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
-        var="Veus o escoltes continguts audiovisuals relacionats amb literatura, llibres o còmics per oci?",
-        title="Freqüència de consum de contingut audiovisual sobre literatura, llibres o còmics segons classificació lectora",
-        xlabel="",
-        ylabel="Percentatge d'alumnes (%)",
-        colors=["blue", "orange", "green"],
-        sort=sort_freq
-    )
-
     # Plots llegiria més si.... ------------------
     tmt.plot_descriptive_hists(
     df=df_readers,
@@ -1580,6 +1642,30 @@ if len(tags) > 0 and 10 in tags:
     sort=sort_acords
     )
 
+    # Plots Contingut Audioviual Lectura ------------------
+    # fig, axs = plt.subplots(2, 1, figsize=(18, 6))
+    tmt.plot_descriptive_hists(
+        df=df,
+        var="Veus o escoltes continguts audiovisuals relacionats amb literatura, llibres o còmics per oci?",
+        title="Distribució alumnat segons freq. de consum de contingut audiovisual sobre lectura",
+        xlabel="",
+        ylabel="Percentatge d'alumnes",
+        sort=sort_freq
+    )
+
+    tmt.plot_descriptive_combined_hists(
+        df[df["classificacio_lectora"] == "No lector / Lector molt ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector habitual"].copy(),
+        groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
+        var="Veus o escoltes continguts audiovisuals relacionats amb literatura, llibres o còmics per oci?",
+        title="Distribució alumnat segons freq. de consum de contingut audiovisual sobre lectura, per classificació lectora",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        colors=["blue", "orange", "green"],
+        sort=sort_freq
+    )
+
 # =======================================================================================
 # 11. Altres activitats
 # =======================================================================================
@@ -1587,67 +1673,72 @@ df["estudi_sp"] = df["Quant temps al dia dediques, de mitjana, a l’estudi i la
 
 df["cultura_sp"] = df["Quant temps al dia dediques, de mitjana, a realitzar activitats relacionades amb la cultura fora de l’horari escolar? (Música, dansa, teatre, pintura, escriptura, visites a museus, etc.)."].map(map_tric_sp)
 
-df["sport_sp"] = df["Quant temps al dia dediques, de mitjana, a la pràctica d’esport fora de l’horari escolar? (Futbol, bàsquet, atletisme, ciclisme, natació, ioga, gym, senderisme, tenis, pàdel, ping-pong, etc.)."].map(map_tric_sp)
+df["sport_sp"] = df["Quant temps al dia dediques, de mitjana, a la pràctica d’esport fora de l’horari escolar? (Futbol, bàsquet, atletisme, ciclisme, natació, ioga, gym, senderisme, tenis, pàdel, ping-pong, etc.)."].map(map_sport_sp)
 
 df["hangout_sp"] = df["Quant temps al dia dediques, de mitjana, a quedar amb amics / amigues o parella sentimental fora de l’horari escolar?"].map(map_tric_sp)
 
-if len(tags) > 0 and 11 in tags:
+if len(tags) > 0 and (11 in tags or 13 in tags):
     print("\n=======================================================================================\nAltres Activitats\n=======================================================================================")
-    tmt.spearman_analysis(
+    # Correlations
+    correlations_dict["Carrega lectiva fora d'horari"] = {}
+    correlations_dict["Carrega lectiva fora d'horari"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "estudi_sp",
         "p4_temps_lectura_sp",
         "Spearman: temps dedicat a l’estudi vs temps de lectura"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Carrega lectiva fora d'horari"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "estudi_sp",
         "p5_llibres_sp",
         "Spearman: temps dedicat a l’estudi vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Temps activitats culturals"] = {}
+    correlations_dict["Temps activitats culturals"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "cultura_sp",
         "p4_temps_lectura_sp",
         "Spearman: temps dedicat a activitats culturals vs temps de lectura"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Temps activitats culturals"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "cultura_sp",
         "p5_llibres_sp",
         "Spearman: temps dedicat a activitats culturals vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Temps esport"] = {}
+    correlations_dict["Temps esport"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "sport_sp",
         "p4_temps_lectura_sp",
         "Spearman: temps dedicat a la pràctica d’esport vs temps de lectura"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Temps esport"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "sport_sp",
         "p5_llibres_sp",
         "Spearman: temps dedicat a la pràctica d’esport vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Temps quedar amics / parella"] = {}
+    correlations_dict["Temps quedar amics / parella"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "hangout_sp",
         "p4_temps_lectura_sp",
         "Spearman: temps dedicat a quedar amb amics / amigues o parella sentimental vs temps de lectura"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Temps quedar amics / parella"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "hangout_sp",
         "p5_llibres_sp",
         "Spearman: temps dedicat a quedar amb amics / amigues o parella sentimental vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
     # Plots Cultura ------------------
     tmt.plot_descriptive_combined_hists(
@@ -1677,11 +1768,39 @@ if len(tags) > 0 and 11 in tags:
         sort=sort_tric
     )
 
+    # Plots Study ------------------
+    tmt.plot_descriptive_combined_hists(
+        df[df["classificacio_lectora"] == "No lector / Lector molt ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector habitual"].copy(),
+        groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
+        var="Quant temps al dia dediques, de mitjana, a l’estudi i la realització de tasques acadèmiques fora de l’horari escolar? (Exàmens, deures, treballs, etc.)",
+        title="Distribució de l'alumnat segons temps dedicat a l’estudi i tasques acadèmiques per class. lectora",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        colors=["blue", "orange", "green"],
+        sort=sort_tric
+    )
+
+    # Plots Sport ------------------
+    tmt.plot_descriptive_combined_hists(
+        df[df["classificacio_lectora"] == "No lector / Lector molt ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector habitual"].copy(),
+        groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
+        var="Quant temps al dia dediques, de mitjana, a la pràctica d’esport fora de l’horari escolar? (Futbol, bàsquet, atletisme, ciclisme, natació, ioga, gym, senderisme, tenis, pàdel, ping-pong, etc.).",
+        title="Distribució de l'alumnat segons temps dedicat a la pràctica d’esport per class. lectora",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        colors=["blue", "orange", "green"],
+        sort=sort_sport
+    )
+
      # Plots llegiria més si.... ------------------
     tmt.plot_descriptive_hists(
     df=df_readers,
     var="Fins a quin punt estàs d'acord amb la següent afirmació: llegiria més llibres o còmics si tingués menys càrrega acadèmica fora d'horari escolar. (Exàmens, deures, treballs, etc.)",
-    title="Percepció que llegirien més si tinguessin menys càrrega acadèmica fora d'horari escolar",
+    title="Percepció increment lectura si tinguessin menys càrrega acadèmica fora d'horari escolar",
     xlabel="",
     ylabel="Percentatge d'alumnes",
     sort=sort_acords
@@ -1697,91 +1816,98 @@ df["sessions_lectura_familiars_sp"] = df["Durant la teva infància i adolescènc
 df["normes_clares_tric_sp"] = df["Fins a quin punt estàs d'acord amb la següent afirmació: a casa meva hi ha normes clares sobre el temps que puc dedicar a les pantalles i dispositius digitals."].map(map_acord_sp)
 df["num_llibres_sp"] = df["Quants llibres aproximadament heu tingut a casa durant la teva infància i adolescència?"].map(map_num_llibres_sp)
 
-if len(tags) > 0 and 12 in tags:
+if len(tags) > 0 and (12 in tags or 13 in tags):
     print("\n=======================================================================================\nEntorn Familiar Pro-Lector\n=======================================================================================")
-    tmt.spearman_analysis(
+    # Correlacions
+    correlations_dict["Nivell d'estudis pares"] = {}
+    correlations_dict["Nivell d'estudis pares"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "estudis_familiars_sp",
         "p4_temps_lectura_sp",
         "Spearman: nivell d'estudis familiars vs temps de lectura setmanal"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Nivell d'estudis pares"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "estudis_familiars_sp",
         "p5_llibres_sp",
         "Spearman: nivell d'estudis familiars vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Veure pares llegint"] = {}
+    correlations_dict["Veure pares llegint"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "vist_pares_lectura_sp",
         "p4_temps_lectura_sp",
         "Spearman: freqüència de veure els pares llegint vs temps de lectura setmanal"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Veure pares llegint"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "vist_pares_lectura_sp",
         "p5_llibres_sp",
         "Spearman: freqüència de veure els pares llegint vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Parlar amb família sobre lectures"] = {}
+    correlations_dict["Parlar amb família sobre lectures"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "parlat_pares_lectura_sp",
         "p4_temps_lectura_sp",
         "Spearman: freqüència de parlar amb els pares sobre lectura vs temps de lectura setmanal"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Parlar amb família sobre lectures"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "parlat_pares_lectura_sp",
         "p5_llibres_sp",
         "Spearman: freqüència de parlar amb els pares sobre lectura vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Sessions de lectura conjunta"] = {}
+    correlations_dict["Sessions de lectura conjunta"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "sessions_lectura_familiars_sp",
         "p4_temps_lectura_sp",
         "Spearman: freqüència de sessions de lectura conjunta vs temps de lectura setmanal"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Sessions de lectura conjunta"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "sessions_lectura_familiars_sp",
         "p5_llibres_sp",
         "Spearman: freqüència de sessions de lectura conjunta vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Normes clares pantalles"] = {}
+    correlations_dict["Normes clares pantalles"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "normes_clares_tric_sp",
         "p4_temps_lectura_sp",
         "Spearman: percepció de normes clares sobre lectura vs temps de lectura setmanal"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Normes clares pantalles"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "normes_clares_tric_sp",
         "p5_llibres_sp",
         "Spearman: percepció de normes clares sobre lectura vs nombre de llibres anuals llegits"
-    )
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Núm. llibres a casa"] = {}
+    correlations_dict["Núm. llibres a casa"]["Temps lectura"] = tmt.spearman_analysis(
         df.copy(),
         "num_llibres_sp",
         "p4_temps_lectura_sp",
-        "Spearman: nombre de llibres anuals llegits vs temps de lectura setmanal"
-    )
+        "Spearman: nombre de llibres a la llar vs temps de lectura setmanal"
+    )[0]
 
-    tmt.spearman_analysis(
+    correlations_dict["Núm. llibres a casa"]["Llibres anuals"] = tmt.spearman_analysis(
         df.copy(),
         "num_llibres_sp",
         "p5_llibres_sp",
-        "Spearman: nombre de llibres anuals llegits vs nombre de llibres anuals llegits"
-    )
+        "Spearman: nombre de llibres a la llar vs nombre de llibres anuals llegits"
+    )[0]
 
     # Plot Num llibres biblioteca ------------------
     tmt.plot_descriptive_combined_hists(
@@ -1825,7 +1951,16 @@ if len(tags) > 0 and 12 in tags:
         sort=sort_freq
     )
 
-if tmt.ask_to_plot() == "y":
+if len(tags) > 0 and 13 not in tags and tmt.ask_to_plot() == "y":
+    plt.show()
+
+# =======================================================================================
+# 13. Heatmap de correlacions
+# =======================================================================================
+if len(tags) > 0 and 13 in tags:
+    print("\n=======================================================================================\nHeatmap de Correlacions\n=======================================================================================")
+    plt.close("all")
+    tmt.plot_spearman_heatmap(correlations_dict)
     plt.show()
 
 #########################################################################################

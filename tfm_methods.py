@@ -1,5 +1,7 @@
 import argparse
+import csv
 import matplotlib.pyplot as plt
+from matplotlib.colors import TwoSlopeNorm
 import numpy as np
 import pandas as pd
 from pprint import pprint
@@ -137,7 +139,9 @@ def save_poltergeists(df: pd.DataFrame, verbose: bool = False) -> pd.DataFrame:
 
 def clean_reading_dataset_and_consistency(
     df: pd.DataFrame,
-    verbose: bool = False
+    verbose: bool = False,
+    export: bool = False,
+    csv_name: str = ""
 ) -> pd.DataFrame:
     """
     Clean reading dataset and fix inconsistent answers.
@@ -274,6 +278,38 @@ def clean_reading_dataset_and_consistency(
         print("* Beneficio de la duda, pot ser que llegeixi poc durant setmanes habituals perque llegeix a l'estiu")
         print(df[mask_incongruencia_temps_baixos_llibres_alts][show_list].to_string(index=False))
 
+    if export:
+        reverse_mapping = {
+            "p4_temps_lectura": "Quant temps a la setmana dediques, de mitjana, a la lectura de llibres o còmics per oci? (Ja sigui en format físic o digital).",
+            "p5_llibres": "Quants llibres o còmics t’has llegit aproximadament en els últims 12 mesos per oci? (Ja sigui en format físic o digital)",
+            "p6_pag": "En cas que la resposta hagi estat diferent de 0 llibres o còmics, quantes pàgines, de mitjana, tenien aproximadament aquests llibres o còmics?",
+            "p7_lectura_actual": "Actualment estàs llegint algun llibre o còmic per oci?",
+            "p10_visites_biblioteca": "Quants cops aproximadament has visitat una biblioteca per llegir o agafar llibres en préstec en els últims 12 mesos per oci?",
+            "p16_lectura_obligatoria": "En quin grau llegeixes les lectures obligatòries de l’escola?",
+            "format": "Quin format de lectura utilitzes més habitualment per a la lectura de llibres o còmics per oci? ",
+            "sessions": "Quan llegeixes, com acostumen a ser les teves sessions de lectura?",
+            "Novel·la fantàstica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la fantàstica.]",
+            "Novel·la romàntica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la romàntica.]",
+            "Novel·la de terror": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la de terror.]",
+            "Novel·la negra": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la negra.]",
+            "Novel·la històrica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la històrica.]",
+            "Ciència ficció": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Ciència ficció.]",
+            "Còmic": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Còmic.]",
+            "Clàssics": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Clàssics.]",
+            "Poesia": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Poesia.]",
+            "Assaig": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Assaig (Filosofia, divulgació científica, etc.)]",
+            "Teatre": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Teatre.]"
+        }
+        df_to_export = df.copy()
+        df_to_export = df_to_export.rename(columns=reverse_mapping)
+        df_to_export = df_to_export.drop(columns=["id"])
+        df_to_export.to_csv(
+            f"{csv_name}_cleaned.csv",
+            index=False,
+            encoding="utf-8-sig",
+            quoting=csv.QUOTE_ALL
+        )
+        
     return df
 
 def classify_reader(df: pd.DataFrame) -> pd.DataFrame:
@@ -573,6 +609,80 @@ def plot_descriptive_combined_hists(
     )
 
     plt.tight_layout()
+
+
+def plot_spearman_heatmap(
+    correlations_dict,
+    title="Heatmap correlacions de Spearman",
+    cmap="RdYlBu_r",
+    vmin=-1,
+    vmax=1,
+    center=0,
+    figsize=(7, 10),
+    annotate=True,
+    fmt=".2f",
+    sort_by_mean_abs=False,
+    mask_small_values=False,
+    threshold=0.1,
+    show_colorbar=True
+):
+    """
+    Genera un heatmap a partir d'un diccionari de correlacions Spearman.
+    """
+
+    # =========================
+    # DATAFRAME
+    # =========================
+    df = pd.DataFrame(correlations_dict).T
+
+    # opcional: netejar soroll
+    if mask_small_values:
+        df = df.copy()
+        df[np.abs(df) < threshold] = 0
+
+    # opcional: ordenar per força mitjana
+    if sort_by_mean_abs:
+        order = df.abs().mean(axis=1).sort_values(ascending=False).index
+        df = df.loc[order]
+
+    # =========================
+    # PLOT
+    # =========================
+    fig, ax = plt.subplots(figsize=figsize)
+
+    norm = TwoSlopeNorm(vmin=vmin, vcenter=center, vmax=vmax)
+
+    im = ax.imshow(df.values, cmap=cmap, norm=norm, aspect="auto")
+
+    # labels
+    ax.set_xticks(range(df.shape[1]))
+    ax.set_xticklabels(df.columns, rotation=0, fontsize=10)
+
+    ax.set_yticks(range(df.shape[0]))
+    ax.set_yticklabels(df.index, fontsize=9)
+
+    # annotations
+    if annotate:
+        for i in range(df.shape[0]):
+            for j in range(df.shape[1]):
+                val = df.iloc[i, j]
+                ax.text(
+                    j, i, format(val, fmt),
+                    ha="center", va="center",
+                    fontsize=8,
+                    color="white" if abs(val) > 0.45 else "black"
+                )
+
+    # colorbar
+    if show_colorbar:
+        cbar = plt.colorbar(im, ax=ax, fraction=0.03, pad=0.02)
+        cbar.set_label("Spearman ρ")
+
+    ax.set_title(title, fontsize=13)
+    plt.tight_layout()
+    plt.show()
+
+    return df
 
 #########################################################################################
 #
