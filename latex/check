@@ -1,314 +1,9 @@
-\documentclass[11pt]{article}
-
-% =======================================================================
-% Variables
-% =======================================================================
-\title{TREBALL FINAL DE MÀSTER (TFM) \\[1.5ex]
-    \large REPTE 4 -- De la planificació a l'acció: treball de camp, resultats, discussió i conclusions}
-\author{Alejandro Campos Almazán}
-\date{Maig, 2026}
-
-\newcommand{\HeaderTitle}{Universitat Oberta de Catalunya -- Màster de formació al professorat d'educació secundària}
-\newcommand{\ReferencesFile}{references}
-\newcommand{\Language}{catalan}
-
-\newif\ifstartwithtitle
-\startwithtitletrue % Uncomment to start with just title
-
-\newif\ifshowheader
-\showheadertrue % Uncomment to have header
-
-\newif\ifshowfooter
-% \showfootertrue % Uncomment to have footer
-
-% =======================================================================
-% / Variables
-% =======================================================================
-
-% =======================================================================
-% Main Config
-% =======================================================================
-% --- How text input is interpreted ---
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-
-% --- Language ---
-\usepackage[\Language]{babel} 
-
-% --- Automatic language quotation ---
-\usepackage{csquotes}
-
-% --- Math ---
-\usepackage{amsmath}
-
-% --- Pictures ---
-\usepackage{graphicx}
-\usepackage{float}
-% Fix caption spacing for figures and tables
-\usepackage[justification=centering]{caption}   % centrado de los captions
-\captionsetup{skip=0.1pt}
-
-% --- Tables alignment ---
-\usepackage{array}
-
-% --- Layout and formatting for title and sections ---
-\usepackage{titling}
-\usepackage{titlesec}
-\usepackage[a4paper]{geometry}
-\setlength{\parindent}{0ex}
-\setlength{\parskip}{6pt}
-\geometry{top=2.5cm, bottom=3cm,left=2.5cm, right=2.5cm}
-
-% --- Add one more depth degree with paragraph ---
-\setcounter{secnumdepth}{5} % Enable numbering for paragraph and subparagraph
-\setcounter{tocdepth}{5} % Enable paragraph and subparagraph in the table of contents
-\titleformat{\paragraph}
-{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
-\titlespacing*{\paragraph}
-{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
-
-% =======================================================================
-% / Main Config
-% =======================================================================
-
-% =======================================================================
-% Bibliography
-% =======================================================================
-% --- APA7 Bibliography ---
-\usepackage[style=apa, backend=biber]{biblatex}
-%\DeclareLanguageMapping{catalan}{catalan-apa}
-\addbibresource{\ReferencesFile}
-
-% --- French layout in Bibliography---
-\setlength{\bibhang}{1.27cm}     % sangría francesa (~0.5 pulgadas)
-\setlength{\bibitemsep}{0.8\baselineskip}  % separación entre entradas
-\setlength{\bibnamesep}{0.8\baselineskip}  % separación adicional entre autores distintos (opcional)
-
-% --- Define nested cites ---
-% Freud \nestedtextcite{2025}{perinat}
-\newcommand{\nestedtextcite}[2]{%
-  (#1, citat a \citeauthor{#2}, \citeyear{#2})%
-}
-
-% \nestedparencite{Freud}{2025}{perinat}
-\newcommand{\nestedparencite}[3]{%
-  (#1, #2, citat a \citeauthor{#3}, \citeyear{#3})%
-}
-
-% \nestedparenpagcite{Freud}{2025}{perinat}{p. 33}
-\newcommand{\nestedparencitepag}[4]{%
-  (#1, #2, citat a \citeauthor{#3}, \citeyear{#3}, #4)%
-}
-
-% =======================================================================
-% / Bibliography
-% =======================================================================
-
-% =======================================================================
-% Header | Footer
-% =======================================================================
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-
-% --- Footer ---
-\ifshowfooter
-  \fancyhf{} % remove previous config
-  \fancyfoot[L]{\textit{\HeaderTitle}} % left footer
-  \fancyfoot[R]{\thepage} % right footer set to number
-
-  % --- Footer instead of header ---
-  \renewcommand{\footrulewidth}{0.4pt}
-  \renewcommand{\headrulewidth}{0pt}
-
-  % --- By default first page has the footer ---
-  \fancypagestyle{plain}{
-    \fancyhf{}
-    \fancyfoot[L]{\textit{\HeaderTitle}}
-    \fancyfoot[R]{\thepage}
-    \renewcommand{\footrulewidth}{0.4pt}
-  }
-\fi
-
-% --- Header ---
-\ifshowheader
-  \fancyhf{} % remove previous config
-  \fancyhead[L]{\textit{\HeaderTitle}}
-  \fancyhead[R]{\thepage}
-  \renewcommand{\headrulewidth}{0.4pt}
-  \setlength{\headheight}{14pt}
-
-  % --- By default first page has the header ---
-  \fancypagestyle{plain}{
-    \fancyhf{}
-    \fancyhead[L]{\textit{\HeaderTitle}}
-    \fancyhead[R]{\thepage}
-    \renewcommand{\headrulewidth}{0.4pt}
-  }
-\fi
-
-% =======================================================================
-% / Header | Footer
-% =======================================================================
-
-% =======================================================================
-% Block templates
-% =======================================================================
-\usepackage[dvipsnames]{xcolor}
-\definecolor{LightGreen}{rgb}{0.56,0.93,0.56} % RGB aproximado
-\usepackage{tcolorbox}
-\tcbuselibrary{skins,breakable}
-
-\newenvironment{note_blue}[1]{%
-    \tcolorbox[beamer,%
-    noparskip,breakable,
-    colframe=Blue,%
-    colbacklower=LimeGreen!75!LightGreen,%
-    title=#1]}%
-    {\endtcolorbox}
-
-\newenvironment{note_violet}[1]{%
-    \tcolorbox[beamer,%
-    noparskip,breakable,
-    colframe=Violet,%
-    colbacklower=Black,%
-    title=#1]}%
-    {\endtcolorbox}
-
-\newenvironment{note_green}[1]{%
-    \tcolorbox[beamer,%
-    noparskip,breakable,
-    colframe=Green,%
-    colbacklower=LimeGreen!75!LightGreen,%
-    title=#1]}%
-    {\endtcolorbox}
-
-\newenvironment{warning}[1]{%
-    \tcolorbox[beamer,%
-    noparskip,breakable,
-    ,colframe=Red,%
-    colbacklower=LimeGreen!75!LightGreen,%
-    title=#1]}%
-    {\endtcolorbox}
-% =======================================================================
-% / Block templates
-% =======================================================================
-
-% =======================================================================
-% No number sections
-% =======================================================================
-\newcommand{\sectiononumber}[1]{%
-  \section*{#1}
-  \phantomsection
-  \addcontentsline{toc}{section}{#1}
-}
-
-\newcommand{\subsectiononumber}[1]{%
-  \subsection*{#1}
-  \phantomsection
-  \addcontentsline{toc}{subsection}{#1}
-}
-
-\newcommand{\subsubsectiononumber}[1]{%
-  \subsubsection*{#1}
-  \phantomsection
-  \addcontentsline{toc}{subsubsection}{#1}
-}
-% =======================================================================
-% / No number sections
-% =======================================================================
-
-% =======================================================================
-% Secondary Config
-% =======================================================================
-% --- Mainly unused ---
-% \usepackage{graphicx}
-% \usepackage{amsmath}
-% \PassOptionsToPackage{svgnames}{xcolor}
-% \usepackage{lipsum}
-% \usepackage{verbatim}
-% \tcbuselibrary{skins,breakable}
-% \usetikzlibrary{shadings,shadows}
-% \usepackage{listings}
-% \usepackage{amssymb}
-% \usepackage{multirow} % for Tables
-% \usepackage{fancyvrb} % for "\Verb" macro
-% \VerbatimFootnotes % enable use of \Verb in footnotes
-% \usepackage{listings}
-% \lstset{basicstyle=\ttfamily,
-%   showstringspaces=false,
-%   commentstyle=\color{green},
-%   keywordstyle=\color{blue}
-% }
-
-% --- Black Hyperlinks ---
-\usepackage[
-    colorlinks=true,
-    linkcolor=black,
-    citecolor=black,
-    urlcolor=black
-]{hyperref}
-
-% =======================================================================
-% / Secondary Config
-% =======================================================================
-
-% =======================================================================
-% Examples
-% =======================================================================
-% --- Pictures ---
-% \begin{figure}[h]
-%     \centering
-%     \includegraphics[width=0.8\textwidth]{pictures/organigrama-tecla-sala.png}
-%     \caption{Organigrama Tecla Sala.}
-%     \label{fig:organigrama-tecla-sala}
-% \end{figure}
-
-% --- Tables ---
-% \begin{tabular}{|p{2.7cm}|p{6.5cm}|p{5.7cm}|} 
-% \hline
-% \textbf{Component} & \textbf{Dibuix} & \textbf{Funció} \\[6pt] 
-% \hline
-% \raggedright\arraybackslash Placa Base Smart Cutebot & blabla & blabla \\
-% \hline
-% \raggedright\arraybackslash Micro:bit & 
-% \vspace{0.5px}
-% \centering
-% \includegraphics[width=6cm]{pictures//micro-bit.jpeg}
-% & Microcontrolador dissenyat per a l'aprenentatge que es pot integrar amb diferents perifèrics. \\
-% \hline
-% \end{tabular}
-
-% --- Blocks ---
-% \begin{warning}{Warning!}
-% Comproba que el teu kit d'Smart Cutebot conté tots els elements de la taula anterior. 
-% \end{warning}
-% \begin{note_violet}{Note}
-% Comproba que el teu kit d'Smart Cutebot conté tots els elements de la taula anterior. 
-% \end{note:violet}
-% =======================================================================
-% / Examples
-% =======================================================================
-
-% =======================================================================
-% Document
-% =======================================================================
-\begin{document}
-
-\maketitle
-
-\ifstartwithtitle
-  \thispagestyle{empty}   % suppress page number 
-  \setcounter{page}{0}  % start content on the next page
-  \newpage
-  \tableofcontents
-  \newpage
-\fi
-
 \section{Titol provisional del TFM}
 % =======================================================================
-\textbf{Titol:} Hàbits lectors per oci de l'alumnat de 3r d'ESO fins a 2n de Batxillerat en un centre educatiu de l'Hospitalet de Llobregat.
+\textbf{Titol:} Hàbits lectors de l'alumnat de 3r d'ESO fins a 2n de Batxillerat en un centre educatiu de l'Hospitalet de Llobregat.
 
-\textbf{Subtitol:} Anàlisi dels hàbits de lectura per oci de l'alumnat des de 3r d'ESO fins a 2n de Batxillerat i dels factors que els influeixen en un centre educatiu de l'Hospitalet de Llobregat.
+\textbf{Subtitol:} Anàlisi dels hàbits de lectura de l'alumnat des de 3r d'ESO fins a 2n de Batxillerat i dels
+factors que els influeixen en un centre educatiu de l'Hospitalet de Llobregat.
 
 \section{Resultats del procés d'anàlisi}
 % =======================================================================
@@ -337,113 +32,36 @@ La distribució per cursos és la següent: el 32.1\% ($n =$ 110) dels alumnes p
 
 Quant a l’itinerari de Batxillerat, el 32.7\% ($n =$ 56) de l’alumnat cursa la modalitat de Ciències Socials, mentre que el 67.3\% ($n =$ 115) cursa la modalitat de Ciències i Tecnologia. El centre no disposa de cap altra modalitat de Batxillerat.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/1_descriptive_genere.png}
-    \caption{Distribució de l'alumnat segons el gènere.}
-    \label{fig:descriptive_genere}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/1_descriptive_curs.png}
-    \caption{Distribució de l'alumnat segons el curs.}
-    \label{fig:descriptive_curs}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/1_descriptive_itinerari.png}
-    \caption{Distribució de l'alumnat segons la modalitat del Batxillerat.}
-    \label{fig:descriptive_itinerari}
-\end{figure}
-
 \subsection{Temps de lectura setmanal i llibres o còmics llegits en els últims 12 mesos per oci per grups}
 % ---------------------------------------------------
 
 \subsubsection{Resultats generals}
-Els resultats obtinguts (\autoref{fig:temps}) mostren una baixa freqüència de temps dedicat a la lectura per oci. En concret, el 51\% ($n =$ 175) de l'alumnat no dedica cap minut setmanal, de mitjana, a la lectura de llibres o còmics per oci. A més, el 67.9\% de la mostra dedica, de mitjana, menys de 30 minuts setmals a la lectura de llibres o còmics per oci, i el 78.4\% menys d'1 hora. Tanmateix, únicament el 13.4\% ($n =$ 46) dedica més de dues hores setmanals a aquesta activitat.
+Els resultats obtinguts (\autoref{fig:temps}) mostren una baixa freqüència de temps dedicat a la lectura per oci. En concret, el 51.7\% ($n =$ 169) de l'alumnat no dedica cap minut setmanal, de mitjana, a la lectura de llibres o còmics per oci. A més, el 67.6\% de la mostra dedica, de mitjana, menys de 30 minuts setmals a la lectura de llibres o còmics per oci, i el 77.7\% menys d'1 hora. Tanmateix, únicament el 14.1\% ($n =$ 46) dedica més de dues hores setmanals a aquesta activitat.
 
-Pel que fa al nombre de llibres o còmics llegits durant els darrers 12 mesos (\autoref{fig:llibres}), observem que el 35\% ($n =$ 120) de l’alumnat no n’ha llegit cap, i el 60.9\% n’ha llegit com a màxim dos. En canvi, només el 19.8\% ($n =$ 68) afirma haver llegit més de cinc llibres o còmics durant aquest període.
+Pel que fa al nombre de llibres o còmics llegits durant els darrers 12 mesos (\autoref{fig:llibres}), el 3.5\% ($n =$ 116) de l’alumnat no n’ha llegit cap, i el 60.9\% ($n =$ 199) n’ha llegit com a màxim dos. En canvi, només el 20.2\% ($n =$ 66) afirma haver llegit més de cinc llibres o còmics durant aquest període.
 
-La distribució observada tant en el temps dedicat a la lectura de llibres o còmics setmanalment per oci com en el nombre de llibres o còmics llegits durant els darrers 12 mesos per oci presenta una tendència similar. Aquest fet és coherent amb l’elevada correlació de Spearman observada entre ambdues variables ($\rho =$ .0.86, p < .001)%, la qual suggereix una relació significativa i molt consistent entre els dos indicadors del comportament lector i aporta evidència de validesa convergent de les mesures utilitzades.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/2_temps.png}
-    \caption{Distribució de l'alumnat segons el temps promig de lectura setmanal de llibres o còmics per oci.}
-    \label{fig:temps}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/2_llibres.png}
-    \caption{Distribució de l'alumnat segons el nombre de llibres o còmics llegits en els últims 12 mesos per oci.}
-    \label{fig:llibres}
-\end{figure}
+La distribució observada tant en el temps dedicat a la lectura de llibres o còmics setmanalment per oci com en el nombre de llibres o còmics llegits durant els darrers 12 mesos per oci presenta una tendència similar. Aquest fet és coherent amb l’elevada correlació de Spearman observada entre ambdues variables ($\rho =$ .759, p < .001)%, la qual suggereix una relació consistent entre els dos indicadors del comportament lector i aporta evidència de validesa convergent de les mesures utilitzades.
 
 \subsubsection{Resultats temps de lectura setmanal i llibres o còmics llegits en els últims 12 mesos per oci per gènere}\label{resus_gen}
-Per a les anàlisis inferencials relacionades amb el gènere, s’ha exclòs la categoria ``prefereixo no respondre'' a causa del reduït nombre de casos ($n =$ 9, 2.6\%) presents en aquesta categoria, tal com s'observa a la \autoref{fig:descriptive_genere}.
+Per a les anàlisis inferencials relacionades amb el gènere, s’ha exclòs la categoria ``prefereixo no respondre'' a causa del reduït nombre de casos ($n =$ 8, 2.4\%) presents en aquesta categoria, tal com s'observa a la \autoref{fig:descriptive_genere}.
 
-Els resultats obtinguts en funció del gènere (\autoref{fig:temps_genere} i \autoref{fig:llibres_genere}) ens mostren diferències clares entre nois i noies. Els nois presenten una major proporció d’alumnes que no dedica, o dedica poc temps a la lectura de llibres o còmics per oci setmanalment: un 55.8\% dels nois no dedica cap minut setmanal a aquesta activitat, i un 73.7\% li dedica menys de 30 minuts, enfront del 47.2\% i 61.8\% de les noies, respectivament.
+Els resultats obtinguts en funció del gènere (\autoref{fig:temps_genere} i \autoref{fig:llibres_genere}) ens mostren diferències clares entre nois i noies. Els nois presenten una major proporció d’alumnes que no dedica, o dedica poc temps a la lectura de llibres o còmics per oci setmanalment: un 58.7\% dels nois no dedica cap minut setmanal a aquesta activitat, i un 74.1\% li dedica menys de 30 minuts, enfront del 46.6\% i 61.4\% de les noies, respectivament.
 
-D’altra banda, les noies mostren una major presència en les categories de lectura més freqüent: el 7.9\% de les noies dedica entre 2 i 3 hores setmanals a la lectura de llibres o còmics per oci (davant del 2.6\% dels nois), i el 12.4\% de les noies dedica més de 3 hores setmanals a aquesta activitat (davant del 3.8\% dels nois).
+D’altra banda, les noies mostren una major presència en les categories de lectura més freqüent: el 8\% de les noies dedica entre 2 i 3 hores setmanals a la lectura de llibres o còmics per oci (davant del 2.8\% dels nois), i el 12.5\% de les noies dedica més de 3 hores setmanals a aquesta activitat (davant del 4.2\% dels nois).
 
-Aquesta tendència també s’observa en el nombre de llibres o còmics llegits durant els darrers 12 mesos per oci (\autoref{fig:llibres_genere}). Un 42.9\% dels nois no ha llegit cap llibre o còmic per oci, respecte un 28.1\% de les noies. Tanmateix, les noies concentren percentatges superiors en les categories de lectura més elevades, especialment entre 6 i 10 llibres o còmics anuals (13.5\% davant del 7.1\%) i en més de 10 llibres (12.4\% davant del 6.4\%).
+Aquesta tendència també s’observa en el nombre de llibres o còmics llegits durant els darrers 12 mesos per oci (\autoref{fig:llibres_genere}). Els nois presenten una proporció més elevada d’alumnat que no ha llegit cap llibre o còmic per oci (45.5\%) respecte de les noies (27.3\%). Tanmateix, les noies concentren percentatges superiors en les categories de lectura més elevades, especialment entre 6 i 10 llibres o còmics anuals (13.6\% davant del 6.3\%) i en més de 10 llibres (12.4\% davant del 7\%).
 
-La prova $\chi^2$ d’independència confirma aquestes diferències, mostrant una associació estadísticament significativa entre el gènere i el temps setmanal dedicat a la lectura de llibres o còmics per oci ($\chi^2 = 17.14$, $p = .004$). De la mateixa manera, també s’observa una associació estadísticament significativa entre el gènere i el nombre de llibres o còmics llegits durant els darrers 12 mesos ($\chi^2 = 13.29$, $p = .021$). No obstant això, la magnitud d’aquestes associacions, avaluada mitjançant el coeficient V de Cramér, indica que es tracta de relacions de baixa intensitat (V = .227 i V = .2, respectivament), fet que suggereix que, tot i haver diferències estadísticament significatives entre els hàbits de lectura per oci de nois i noies, aquestes diferències no són de gran magnitud.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/2_temps_genere.png}
-    \caption{Distribució de l'alumnat segons el temps promig de lectura setmanal de llibres o còmics per oci per gènere.}
-    \label{fig:temps_genere}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/2_llibres_genere.png}
-    \caption{Distribució de l'alumnat segons el nombre de llibres o còmics llegits en els últims 12 mesos per oci per gènere.}
-    \label{fig:llibres_genere}
-\end{figure}
+La prova $\chi^2$ d’independència confirma aquestes diferències, mostrant una associació estadísticament significativa entre el gènere i el temps setmanal dedicat a la lectura de llibres o còmics per oci ($\chi^2 = 15.31$, $p = .009$). De la mateixa manera, també s’observa una associació estadísticament significativa entre el gènere i el nombre de llibres o còmics llegits durant els darrers 12 mesos ($\chi^2 = 15.95$, $p = .007$). No obstant això, la magnitud d’aquestes associacions, avaluada mitjançant el coeficient V de Cramér, indica que es tracta de relacions de baixa intensitat (V = .219 i V = .224, respectivament), fet que suggereix que, tot i haver diferències estadísticament significatives entre els hàbits de lectura per oci de nois i noies, aquestes diferències no són de gran magnitud.
 
 \subsubsection{Resultats temps de lectura setmanal i llibres o còmics llegits en els últims 12 mesos per oci per curs}
-Quant al curs acadèmic, no s’observa una tendència clara o consistent de variació en els hàbits de lectura per oci entre els diferents nivells educatius (\autoref{fig:temps_curs} i \autoref{fig:llibres_curs}), a diferència del que s’ha observat en funció del gènere. Tanmateix, 4t d’ESO destaca per concentrar els percentatges més elevats d’alumnat amb una menor dedicació a la lectura, tant en termes de temps setmanal com de nombre de llibres llegits. En concret, és el curs amb una major proporció d’estudiants que no dedica cap temps setmanal a la lectura per oci (58.1\%) i que no ha llegit cap llibre o còmic durant els darrers 12 mesos (40.5\%), així com l’únic curs en què no s’observa alumnat en la categoria de més de 3 hores setmanals de lectura, i un únic alumne d'aquest curs ha llegit més de 15 llibres o còmics en l'últim any per oci.
+Quant al curs acadèmic, no s’observa una tendència clara o consistent de variació en els hàbits de lectura per oci entre els diferents nivells educatius (\autoref{fig:temps_curs} i \autoref{fig:llibres_curs}), a diferència del que s’ha observat en funció del gènere. Tanmateix, 4t d’ESO destaca per concentrar els percentatges més elevats d’alumnat amb una menor dedicació a la lectura, tant en termes de temps setmanal com de nombre de llibres llegits. En concret, és el curs amb una major proporció d’estudiants que no dedica cap temps setmanal a la lectura per oci (63.8\%) i que no ha llegit cap llibre o còmic durant els darrers 12 mesos (44.8\%), així com l’únic curs en què no s’observa alumnat en la categoria de més de 3 hores setmanals de lectura.
 
 En canvi, 3r d’ESO mostra una distribució més equilibrada entre categories, amb presència en tots els nivells de lectura, incloent percentatges rellevants en les categories més elevades (10.9\% en més de 15 llibres). 
 
 Finalment, els cursos de batxillerat presenten una major heterogeneïtat: mentre que 1r de Batxillerat destaca per una distribució més concentrada en categories intermèdies, 2n de Batxillerat mostra una certa polarització, amb presència tant en nivells baixos com en nivells alts de lectura.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/2_temps_curs.png}
-    \caption{Distribució de l'alumnat segons el temps promig de lectura setmanal de llibres o còmics per oci per curs.}
-    \label{fig:temps_curs}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/2_llibres_curs.png}
-    \caption{Distribució de l'alumnat segons el nombre de llibres o còmics llegits en els últims 12 mesos per oci per curs.}
-    \label{fig:llibres_curs}
-\end{figure}
-
 \subsubsection{Resultats temps de lectura setmanal i llibres o còmics llegits en els últims 12 mesos per oci per itinerari}
 Respecte a l’itinerari de batxillerat, no s’observen diferències rellevants en la distribució dels hàbits de lectura per oci entre l’alumnat de Ciències Socials i el de Ciències i Tecnologia (\autoref{fig:temps_itinerari} i \autoref{fig:llibres_itinerari}).
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/2_temps_itinerari.png}
-    \caption{Distribució de l'alumnat segons el temps promig de lectura setmanal de llibres o còmics per oci per modalitat de Batxillerat.}
-    \label{fig:temps_itinerari}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/2_llibres_itinerari.png}
-    \caption{Distribució de l'alumnat segons el nombre de llibres o còmics llegits en els últims 12 mesos per oci per modalitat de Batxillerat.}
-    \label{fig:llibres_itinerari}
-\end{figure}
 
 \subsection{Nombre de pàgines anuals llegides per oci per grups}
 % ---------------------------------------------------
@@ -466,20 +84,6 @@ Pel que fa a la distribució de la variable de pàgines estimades llegides anual
 
 Aquesta asimetria es posa també de manifest en la gran quantitat d'\emph{outliers} (valors atípics) en el rang superior de la distribució que s'observen en el \emph{boxplot} de la \autoref{fig:pagines_boxplot}. Aquests valors extrems contribueixen a ampliar la dispersió global de la variable ($s$ = 2275.01), la qual concentra un gran nombre de casos en el rang baix de pàgines estimades llegides, mentre que uns pocs casos presenten valors molt elevats, arribant fins a un màxim de 12.600 pàgines anuals.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{pictures/3_pagines_boxplot.png}
-    \caption{Boxplot de la variable nombre de pàgines estimades de llibres o còmics llegits en els últims 12 mesos.}
-    \label{fig:pagines_boxplot}
-\end{figure}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lr}
-\hline
-\textbf{Estadístics} & \textbf{Valor} \\
-\hline
-$n$ & 327 \\
 $\bar{x}$ & 1259.48 \\
 $s$ & 2275.01 \\
 $\min(x)$ & 0 \\
@@ -502,13 +106,6 @@ Aquestes diferències estadístiques ens mostren com el volum de lectura per oci
 Així mateix, la presència d'\emph{outliers} en els \emph{boxplots} de la \autoref{fig:pagines_boxplot_genere} per ambdós grups, especialment en el grup de noies, contribueix a ampliar la dispersió global de la variable i reforça les diferències entre gèneres.
 
 Per ambdós gèneres es mante la forta asimetria positiva, deguda a la gran diferencia entre mitjana i mediana, fet que ens torna a indicar que hi ha un gran nombre d'estudiants que llegeix poc o molt poc per oci i un petit nombre d'estudiants que llegeixen un volum molt elevat de pàgines per oci. En el cas dels nois, tan els valors centrals de la cua com els \emph{outliers} són considerablement més baixos que en el cas de les noies, fet que s'observa en els els \emph{boxplots} de la \autoref{fig:pagines_boxplot_genere} i es reflecteix en la menor dispersió de la variable observada en la \autoref{tab:estadistics_pagines_genere}: grup de nois ($s$ = 1510.01) respecte del grup de noies ($s$ = 2572.96). 
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{pictures/3_pagines_boxplot_genere.png}
-    \caption{Boxplots de la variable nombre de pàgines estimades de llibres o còmics llegits en els últims 12 mesos per gènere.}
-    \label{fig:pagines_boxplot_genere}
-\end{figure}
 
 \begin{table}[H]
 \centering
@@ -604,61 +201,12 @@ Respecte al gènere (\autoref{fig:classificacio_genere}), els resultats  mantene
 
 En funció del curs acadèmic (\autoref{fig:classificacio_curs}), tampoc no s’observa una tendència lineal clara, tot i que 4t d’ESO destaca novament com el curs amb una menor proporció de lectors habituals (5.2\%) i una major concentració d’alumnat en la categoria de \emph{no lector / lector molt ocasional} (82.8\%), reforçant els patrons detectats anteriorment.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{pictures/4_class.png}
-    \caption{Classificació de l'alumnat segons l'hàbit lector per oci.}
-    \label{fig:classificacio}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/4_class_genere.png}
-    \caption{Classificació de l'alumnat segons l'hàbit lector per oci per gènere.}
-    \label{fig:classificacio_genere}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/4_class_curs.png}
-    \caption{Classificació de l'alumnat segons l'hàbit lector per oci per curs.}
-    \label{fig:classificacio_curs}
-\end{figure}
-
 \subsection{Temàtica i format preferits per a la lectura per oci}
 % ---------------------------------------------------
 
 Observant els resultats obtinguts pel conjunt de la mostra (\autoref{fig:ranking_thematic}), la novel·la romàntica, la novel·la fantàstica i el còmic són les categories que més es llegeixen per oci; i poesia i teatre les que menys. Tanmateix, hi ha diferències considerables en funció del gènere (\autoref{fig:ranking_thematic_girls} i \autoref{fig:ranking_thematic_boys}): les noies presenten una preferència especialment marcada per la novel·la romàntica, seguida de la novel·la fantàstica i el còmic, mentre que els nois mostren una distribució més equilibrada entre diferents gèneres, amb una presència destacable del còmic, la ciència-ficció i la novel·la fantàstica.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/5_thematic.png}
-    \caption{Rànking de les temàtiques preferides per a la lectura per oci.}
-    \label{fig:ranking_thematic}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/5_thematic_girls.png}
-    \caption{Rànking de les temàtiques preferides per a la lectura per oci entre les noies.}
-    \label{fig:ranking_thematic_girls}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/5_thematic_boys.png}
-    \caption{Rànking de les temàtiques preferides per a la lectura per oci entre els nois.}
-    \label{fig:ranking_thematic_boys}
-\end{figure}
-
 Pel que fa al format de lectura (\autoref{fig:ranking_format}), s’observa un predomini molt clar del format físic o en paper, utilitzat pel 85.7\% de l’alumnat lector. En comparació, els formats digitals presenten una presència considerablement menor, tant en dispositius web o PDF (9.7\%) com en format \emph{eBook} (4.5\%). Aquests resultats suggereixen que, malgrat la digitalització actual de l’entorn juvenil, l'alumnat de l'escola continua preferint el format físic per a la lectura per oci.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/5_format.png}
-    \caption{Format de lectura preferit per a la lectura per oci de llibres o còmics.}
-    \label{fig:ranking_format}
-\end{figure}
 
 \subsection{Lectura per oci i sessions de lectura}
 % ---------------------------------------------------
@@ -670,20 +218,6 @@ En funció de la classificació lectora (\autoref{fig:tipologia_sessions_class})
 
 Aquesta relació es veu reforçada per les correlacions positives moderades observades entre la durada de les sessions de lectura per oci, i, tant el temps setmanal dedicat a la lectura per oci ($\rho = .457$, $p < .001$), com el nombre de llibres llegits anualment per oci ($\rho = .471$, $p < .001$), suggerint que les sessions més llargues tendeixen a associar-se amb un major hàbit lector. Cal esmentar que, aquestes correlacions s'han calculat excloent els casos que no segueixen un patró clar de lectura, ja que aquesta categoria no proporciona informació específica sobre la durada de les sessions i podria distorsionar la relació entre les variables.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/6_sessions.png}
-    \caption{Distribució de l'alumnat segons la durada de les sessions de lectura per oci.}
-    \label{fig:tipologia_sessions}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/6_sessions_class.png}
-    \caption{Distribució de l'alumnat segons la durada de les sessions de lectura per oci, per classificació lectora.}
-    \label{fig:tipologia_sessions_class}
-\end{figure}
-
 \subsubsection{Resultats consulta de xarxes socials mentre llegeixen}
 Pel que fa a la freqüència de consulta de xarxes socials durant la lectura (\autoref{fig:tipologia_consulta_xs}), destaca l'alt percentatge d'alumnat que afirma no consultar les xarxes socials mentre llegeix (35.5\%), i l'alt percentatge que també afirma consultar-les cada 15 minuts o menys aproximadament (34.2\%).
 
@@ -693,40 +227,12 @@ En sintonia amb l'acabat d'expossar, els resultats mostren correlacions negative
 
 De manera coherent, també s’observa una correlació negativa feble entre la freqüència de consulta de xarxes socials i la durada de les sessions de lectura ($\rho = -.311$, $p < .001$), fet que indica que l’alumnat que interromp més sovint la lectura per consultar xarxes tendeix també lleugerament a realitzar sessions lectores més curtes.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/6_consulta_xs.png}
-    \caption{Distribució de l'alumnat segons la freqüència de consulta de xarxes socials durant la lectura.}
-    \label{fig:tipologia_consulta_xs}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/6_consulta_xs_class.png}
-    \caption{Distribució de l'alumnat segons la freqüència de consulta de xarxes socials durant la lectura, per classificació lectora.}
-    \label{fig:tipologia_consulta_xs_class}
-\end{figure}
-
 \subsubsection{Resultats escolta de música, vídeos o pòdcasts durant la lectura}
 En relació amb la freqüència d'escoltar música, vídeos o pòdcasts durant la lectura (\autoref{fig:tipologia_musica}), els resultats mostren que la majoria de l’alumnat no acostuma a escoltar música, vídeos o pòdcasts de fons mentre llegeix (63.3\%), mentre que només una petita pert afirma escoltar-los sovint o molt sovint (12.8\%).
 
 Analitzant els resultats en funció de la classificació lectora (\autoref{fig:tipologia_musica_class}), inicialment s’observen correlacions positives febles amb el temps de lectura per oci ($\rho = .196$, $p < .001$) i el nombre de llibres llegits anualment per oci ($\rho = .194$, $p < .001$). Els lectors habituals presenten una subtil major proporció d’alumnat que escolta sovint o molt sovint música, vídeos o pòdcasts de fons mentre llegeix (19\%) respecte dels lectors ocasionals (11.1\%) i dels no lectors o lectors molt ocasionals (11.2\%).
 
 Tanmateix, aquestes correlacions positives febles desapareixen completament quan l’anàlisi es restringeix únicament a l’alumnat que llegeix alguna vegada per oci ($\rho = .064$, $p = 0.42$ respecte al temps de lectura; $\rho = .067$, $p = 0.4$ respecte al nombre de llibres llegits anualment). Aquest resultat suggereix que la relació observada inicialment podria estar considerablement influenciada per la interpretació contextual de l’ítem dins del qüestionari. En aquest sentit, alguns alumnes van interpretar la pregunta sobre la freqüència d'escoltar música, vídeos o podcasts durant la lectura en relació exclusiva amb la lectura per oci, de manera que l’alumnat que no acostuma a llegir per oci tendia a respondre ``mai'' de forma sistemàtica. Això probablement ha contribuït a generar una associació fictícia entre ambdues variables, que es reflexa en les correlacions febles exposades.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/6_musica.png}
-    \caption{Distribució de l'alumnat segons la freqüència amb la que escolten música, vídeos o pòdcasts de fons mentre llegeixen.}
-    \label{fig:tipologia_musica}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/6_musica_class.png}
-    \caption{Distribució de l'alumnat segons la freqüència amb la que escolten música, vídeos o pòdcasts de fons mentre llegeixen, per classificació lectora.}
-    \label{fig:tipologia_musica_class}
-\end{figure}
 
 \subsection{Lectura per oci i visites a la biblioteca}
 % ---------------------------------------------------
@@ -737,20 +243,6 @@ Tanmateix, s’observen diferències rellevants en funció de la classificació 
 Aquest patró es veu reforçat per les correlacions positives febles-moderades observades entre la freqüència de visites a la biblioteca per agafar llibres o còmics en préstec per oci durant l’últim any, i, tant el temps setmanal dedicat a la lectura per oci ($\rho = .351$, $p < .001$) com el nombre de llibres llegits anualment per oci ($\rho = .365$, $p < .001$), suggerint que una major vinculació amb la biblioteca s’associa amb hàbits lectors més consolidats.
 
 En canvi, en relació amb la freqüència de visites a la biblioteca amb pares o tutors legals durant la infància i adolescència, les correlacions observades amb el temps setmanal dedicat a la lectura per oci i amb el nombre de llibres llegits anualment per oci són molt febles, pràcticament negligibles ($\rho = .12$, $p = .03$ i $\rho = .109$, $p = .049$ respectivament). Això indica que la freqüència de visites a la biblioteca amb pares o tutors legals durant la infància i adolescència gairebé no presenta relació amb els hàbits lectors actuals de l’alumnat del centre.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/7_biblio.png}
-    \caption{Distribució de l'alumnat segons la freqüència amb la que han visitat la biblioteca l'últim any.}
-    \label{fig:tipologia_biblio}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/7_biblio_class.png}
-    \caption{Distribució de l'alumnat segons la freqüència amb la que han visitat la biblioteca l'últim any, per classificació lectora.}
-    \label{fig:tipologia_biblio_class}
-\end{figure}
 
 \subsection{Lectura per oci i lectures obligatories de l'escola}
 % ---------------------------------------------------
@@ -765,48 +257,6 @@ Tot i això, la valoració general de les lectures obligatòries és relativamen
 En aquesta línia, s’observa una correlació positiva feble-moderada entre el gust per les lectures obligatòries i el grau de lectura d’aquestes ($\rho = .361$, $p < .001$). Aquest fet posa de manifest que, tot i que cap d'ells és un factor determinant, el gust per les lectures obligatòries es relaciona més positivament amb la lectura de les mateixes que el fet de tenir hàbits lectors consolidats per oci.
 
 Les dades obtingudes ens suggereixen que els hàbits lectors per oci gairebé no es relacionen amb la valoració general de les lectures obligatòries, ja que les correlacions observades entre el gust per les lectures obligatòries, i, tant el temps setmanal dedicat a la lectura per oci ($\rho = .18$, $p = .001$), com el nombre de llibres llegits anualment per oci ($\rho = .14$, $p = .009$) són molt febles, pràcticament negligibles.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/8_obligatoria.png}
-    \caption{Distribució de l'alumnat segons la freqüència amb la que llegeixen les lectures obligatòries.}
-    \label{fig:obligatoria}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/8_obligatoria_ia.png}
-    \caption{Distribució de l'alumnat segons la freqüència amb la que utilitzen resums d’internet o eines d’IA generativa per completar les proves associades a les lectures obligatòries.}
-    \label{fig:obligatoria_ia}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/8_obligatoria_reduccio.png}
-    \caption{Distribució de l'alumnat segons la reducció de lectures obligatories des que van començar a utilitzar eines d’IA generativa.}
-    \label{fig:obligatoria_reduccio}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/8_obligatoria_class.png}
-    \caption{Distribució de l'alumnat segons la freqüència amb la que llegeixen les lectures obligatòries, per classificació lectora.}
-    \label{fig:obligatoria_class}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/8_obligatoria_gust.png}
-    \caption{Distribució de l'alumnat segons el gust per les lectures obligatòries.}
-    \label{fig:obligatoria_gust}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/8_obligatoria_increment_gust.png}
-    \caption{Distribució de l'alumnat segons la percepció que llegirien més lectures obligatòries si els hi agradessin més.}
-    \label{fig:obligatoria_increment_gust}
-\end{figure}
 
 \label{sec:narrativa}
 \subsection{Lectura per oci,  narrativa adolescent i percepcions personals sobre la lectura com activitat}
@@ -825,34 +275,6 @@ Finalment, la freqüència amb què l’alumnat comparteix opinions sobre lectur
 
 Descriptivament, s'observa a la \autoref{fig:narrativa_compartir_class} com un 74.1\% dels alumnes no lectors o lectors molt ocasionals no comparteixen mai o quasi mai opinions sobre lectures, respecte dels lectors habituals (22.4\%) i dels lectors ocasionals (35.6\%). D’altra banda, un 50\% dels lectors habituals comparteixen opinions sobre lectures sovint o molt sovint, respecte dels lectors ocasionals (17.8\%) i dels no lectors o lectors molt ocasionals (6.3\%).
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/9_narrativa_social.png}
-    \caption{Distribució de l'alumnat segons la percepció de com es veu socialment la lectura entre els adolescents.}
-    \label{fig:narrativa_social}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/9_narrativa_personal.png}
-    \caption{Distribució de l'alumnat segons la percepció personal sobre la lectura.}
-    \label{fig:narrativa_personal}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/9_narrativa_compartir.png}
-    \caption{Distribució de l'alumnat segons la freqüència amb què comparteixen opinions sobre lectures.}
-    \label{fig:narrativa_compartir}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/9_narrativa_compartir_class.png}
-    \caption{Distribució de l'alumnat segons la freqüència amb què comparteixen opinions sobre lectures, per classificació lectora.}
-    \label{fig:narrativa_compartir_class}
-\end{figure}
-
 \subsection{Lectura per oci, noves tecnologies i xarxes socials}
 % ---------------------------------------------------
 Pel que fa a la relació entre els hàbits lectors i el consum digital o audiovisual, els resultats mostren una realitat més complexa que una simple oposició entre lectura i pantalles. En primer lloc, el temps diari dedicat a l’ús de dispositius digitals per a l’oci no mostra associacions significatives amb els indicadors d’activitat lectora (dispositius digitals vs. temps de lectura setmanal per oci: $\rho = -.05$, $p = .53$; dispositius digitals vs. nombre de llibres anuals per oci: $\rho = -.03$, $p = .7$). Aquest fet demostra que l'ús de dispositius digitals no competeix amb els hàbits lectors per oci.
@@ -865,37 +287,12 @@ Els resultats descriptius (\autoref{fig:tric_time_class}) apunten a que aquesta 
 
 Aquest resultat suggereix que, tot i que l'ús de xarxes socials no és un competidor directe de la lectura per oci, un ús més intensiu d’aquestes plataformes sí podria estar associat lleugerament amb nivells més baixos d’activitat lectora, tot i que la magnitud d’aquesta relació és reduïda.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/10_tric_time.png}
-    \caption{Distribució de l'alumnat segons el temps diari dedicat a l'ús de xarxes socials o plataformes de contingut audiovisual ràpid.}
-    \label{fig:tric_time}
-\end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/10_tric_time_class.png}
-    \caption{Distribució de l'alumnat segons el temps diari dedicat a l'ús de xarxes socials o plataformes de contingut audiovisual ràpid, per classificació lectora.}
-    \label{fig:tric_time_class}
-\end{figure}
 
 Finalment, s'ha estudiat la relació entre el consum de contingut audiovisual relacionat amb la lectura i els hàbits lectors per oci. En aquest sentit, s'han obtingut correlacions positives febles-moderades entre aquesta activitat i el temps de lectura setmanal per oci ($\rho = .37$, $p < .001$) i el nombre de llibres llegits anualment per oci ($\rho = .33$, $p < .001$), suggerint que un major consum de contingut audiovisual relacionat amb la lectura s’associa lleugerament amb hàbits lectors més consolidats.
 
 Descriptivament (\autoref{fig:tric_lite_class}) s'observa com un 52.3\% dels alumnes no lectors o lectors molt ocasionals afirmen no consumir mai contingut audiovisual relacionat amb la lectura, envers els lectors habituals (25.4\%) i els lectors ocasionals (31.9\%). D’altra banda, un 37.2\% dels lectors habituals consumeix sovint o molt sovint aquest tipus de contingut, respecte dels lectors ocasionals (23.4\%) i dels no lectors o lectors molt ocasionals (9.3\%).
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/10_tric_lite.png}
-    \caption{Distribució de l'alumnat segons la freqüència amb què consumeixen contingut audiovisual relacionat amb la lectura.}
-    \label{fig:tric_lite}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/10_tric_lite_class.png}
-    \caption{Distribució de l'alumnat segons la freqüència amb què consumeixen contingut audiovisual relacionat amb la lectura, per classificació lectora.}
-    \label{fig:tric_lite_class}
-\end{figure}
 
 \subsection{Lectura per oci i altres activitats d'oci}
 % ---------------------------------------------------
@@ -913,26 +310,6 @@ Finalment, s'observa que el temps dedicat a quedar amb amics, amigues o parella 
 
 Aquest fet es veu reforçat per l'anàlisi descriptiva (\autoref{fig:altres_hang_class}), que mostra com un 49.1\% dels lectors habituals dedica, de mitjana, menys de 30 minuts diaris a quedar amb amics, amigues o parella sentimental, respecte del 42.5\% dels lectors ocasionals i del 24.5\% dels no lectors o lectors molt ocasionals.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{pictures/11_altres_perc.png}
-    \caption{Distribució de l'alumnat segons la percepció que llegirien més per oci si tinguessin menys càrrega acadèmica fora de l'horari escolar.}
-    \label{fig:altres_perc}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/11_altres_cultura_class.png}
-    \caption{Distribució de l'alumnat segons la freqüència amb què participen en activitats culturals, per classificació lectora.}
-    \label{fig:altres_cultura_class}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/11_altres_hang_class.png}
-    \caption{Distribució de l'alumnat segons la freqüència amb què surten amb amics, amigues o parella sentimental, per classificació lectora.}
-    \label{fig:altres_hang_class}
-\end{figure}
 
 \subsection{Lectura per oci i entorn familiar pro-lector}
 % ---------------------------------------------------
@@ -952,82 +329,7 @@ Finalment, el nombre de llibres que han tingut disponibles a casa durant la inf�
 
 Les correlacions observades respecte aquesta qüestió són positives febles, tant amb el temps de lectura setmanal ($\rho = .25$, $p < .001$) com amb el nombre de llibres llegits anualment ($\rho = .3$, $p < .001$) reforçant el fet que disposar d’un entorn familiar amb major accés a llibres durant el desenvolupament podria afavorir, parcialment, el desenvolupament d’hàbits lectors.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/12_familia_compartir_class.png}
-    \caption{Distribució de l'alumnat segons la freqüència amb què comparteixen opinions sobre lectures amb les families, per classificació lectora.}
-    \label{fig:familia_compartir_class}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/12_familia_normes.png}
-    \caption{Distribució de l'alumnat segons la freqüència amb què surten amb amics, amigues o parella sentimental, per classificació lectora.}
-    \label{fig:familia_normes_class}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{pictures/12_familia_llibres.png}
-    \caption{Distribució de l'alumnat segons el nombre de llibres disponibles a casa durant la infància i l'adolescència, per classificació lectora.}
-    \label{fig:familia_llibres}
-\end{figure}
 
 \newpage
 \subsection{Heatmap de correlacions entre les variables indicadores d'habits lectors per oci i la resta de variables analitzades}
 % ---------------------------------------------------
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{pictures/13_heatmap.png}
-    \caption{Heatmap de correlacions entre les variables indicadores d'hàbits lectors per oci i la resta de variables analitzades.}
-    \label{fig:heatmap_correlacions}
-\end{figure}
-
-\section{Discussió}
-% =======================================================================
-
-\subsection{Hàbits lectors per oci baixos en el conjunt de la mostra}
-% ---------------------------------------------------
-
-
-
-\subsection{Diferències de gènere en els hàbits lectors per oci}
-% ---------------------------------------------------
-
-\subsection{Lectura per oci i lectures obligatòries de l'escola}
-% ---------------------------------------------------
-
-\subsection{Lectura per oci, una activitat social}
-% ---------------------------------------------------
-
-\subsection{Lectura per oci, noves tecnologies i xarxes socials}
-% ---------------------------------------------------
-
-\subsection{Lectura per oci i entorn familiar pro-lector}
-% ---------------------------------------------------
-
-
-\section{Conclusions}
-% =======================================================================
-
-\section{Valoració personal del procés d'ideació i desenvolupament del TFM}
-% =======================================================================
-
-% =======================================================================
-\ifstartwithtitle
-  \newpage
-\fi
-\printbibliography
-
-% =======================================================================
-\newpage
-\appendix
-
-\section{Anexe Guio Entrevista}
-This is Annex A.
-
-\end{document}
-
-% =======================================================================
-% / Document
-% =======================================================================

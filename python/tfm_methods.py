@@ -73,50 +73,71 @@ def save_poltergeists(df: pd.DataFrame, verbose: bool = False) -> pd.DataFrame:
         print(df[df["id"] == 160][show_list].to_string(index=False)) # 2026/04/28 12:52:16 p. m. EEST
 
     # Poltergeist 1: Incongruencia entre tiempo de lectura y número de libros leídos
-    df.loc[df["id"] == 160, "p4_temps_lectura"] = "Entre 30 minuts i 1 hora a la setmana."
-    df.loc[df["id"] == 160, "p5_llibres"] = "3-5 llibres o còmics."
-    df.loc[df["id"] == 160, "p6_pag"] = "100-299 pàgines."
+    polt_id = 160
+    df.loc[df["id"] == polt_id, "p4_temps_lectura"] = "Entre 30 minuts i 1 hora a la setmana."
+    df.loc[df["id"] == polt_id, "p5_llibres"] = "3-5 llibres o còmics."
+    df.loc[df["id"] == polt_id, "p6_pag"] = "100-299 pàgines."
 
     if verbose:
-        print(df[df["id"] == 160][show_list].to_string(index=False))
+        print(df[df["id"] == polt_id][show_list].to_string(index=False))
 
     # Poltergeist 2: Incongruencia entre tiempo de lectura y número de libros leídos
+    polt_id = 104
     if verbose:
-        print("\n------------ Saved Poltergeist 2 (id=104)----------------\n > Incongruencia entre tiempo de lectura y número de libros leídos")
-        print(df[df["id"] == 104][show_list].to_string(index=False)) # 2026/04/27 11:38:51 a. m. EEST
-    df.loc[df["id"] == 104, "p4_temps_lectura"] = "0 minuts."
-    df.loc[df["id"] == 104, "p5_llibres"] = "0 llibres o còmics."
+        print(f"\n------------ Saved Poltergeist 2 (id={polt_id})----------------\n > Incongruencia entre tiempo de lectura y número de libros leídos")
+        print(df[df["id"] == polt_id][show_list].to_string(index=False)) # 2026/04/27 11:38:51 a. m. EEST
+    df.loc[df["id"] == polt_id, "p4_temps_lectura"] = "0 minuts."
+    df.loc[df["id"] == polt_id, "p5_llibres"] = "0 llibres o còmics."
 
     if verbose:
-        print(df[df["id"] == 104][show_list].to_string(index=False))
+        print(df[df["id"] == polt_id][show_list].to_string(index=False))
 
     # Poltergeist 3: Se ha olvidado poner las páginas leidas
+    polt_id = 138
     if verbose:
-        print("\n------------ Saved Poltergeist 3 (id=138)----------------\n > Se ha olvidado poner las páginas leidas")
-        print(df[df["id"] == 138][show_list].to_string(index=False)) # 2026/04/27 11:38:51 a. m. EEST
-    df.loc[df["id"] == 138, "p6_pag"] = "100-299 pàgines."
+        print(f"\n------------ Saved Poltergeist 3 (id={polt_id})----------------\n > Se ha olvidado poner las páginas leidas")
+        print(df[df["id"] == polt_id][show_list].to_string(index=False)) # 2026/04/27 11:38:51 a. m. EEST
+    df.loc[df["id"] == polt_id, "p6_pag"] = "100-299 pàgines."
 
     if verbose:
-        print(df[df["id"] == 138][show_list].to_string(index=False)) # 2026/04/28 9:23:35 a. m. EEST
+        print(df[df["id"] == polt_id][show_list].to_string(index=False)) # 2026/04/28 9:23:35 a. m. EEST
 
     # Poltergeist 4: Incongruencia entre tiempo de lectura y número de libros leídos
+    polt_id = 10
     if verbose:
-        print("\n------------ Saved Poltergeist 4 (id=10)----------------\n > Incongruencia entre tiempo de lectura y número de libros leídos")
-        print(df[df["id"] == 10][show_list].to_string(index=False)) # 2026/04/27 11:38:51 a. m. EEST
-    df.loc[df["id"] == 10, "p6_pag"] = "1-99 pàgines."
-    df.loc[df["id"] == 10, "p4_temps_lectura"] = "Menys de 30 minuts a la setmana."
+        print(f"\n------------ Saved Poltergeist 4 (id={polt_id})----------------\n > Incongruencia entre tiempo de lectura y número de libros leídos")
+        print(df[df["id"] == polt_id][show_list].to_string(index=False)) # 2026/04/27 11:38:51 a. m. EEST
+    df.loc[df["id"] == polt_id, "p6_pag"] = "1-99 pàgines."
+    df.loc[df["id"] == polt_id, "p4_temps_lectura"] = "Menys de 30 minuts a la setmana."
 
     # Poltergeist 5: Incongruencia entre paginas y libros leidos + incongruencia tematica + tiempo y libros leidos
+    polt_id = 213
     if verbose:
-        print("\n------------ Saved Poltergeist 5 (id=213)----------------\n > Incongruencia entre paginas y libros leidos + incongruencia tematica + tiempo y libros leidos")
-        print(df[df["id"] == 213][show_list].to_string(index=False))
-    df.loc[df["id"] == 213, "p4_temps_lectura"] = "0 minuts."
+        print(f"\n------------ Saved Poltergeist 5 (id={polt_id})----------------\n > Incongruencia entre paginas y libros leidos + incongruencia tematica + tiempo y libros leidos")
+        print(df[df["id"] == polt_id][show_list].to_string(index=False))
+    df.loc[df["id"] == polt_id, "p4_temps_lectura"] = "0 minuts."
 
     # Poltergeist 6: Incongruencia entre tiempo de lectura y libros leidos
+    polt_id = 300
     if verbose:
-        print("\n------------ Saved Poltergeist 6 (id=300)----------------\n > Incongruencia entre tiempo de lectura y número de libros leídos")
-        print(df[df["id"] == 300][show_list].to_string(index=False))
-    df.loc[df["id"] == 300, "p5_llibres"] = "3-5 llibres o còmics."
+        print(f"\n------------ Saved Poltergeist 6 (id={polt_id})----------------\n > Incongruencia entre tiempo de lectura y número de libros leídos")
+        print(df[df["id"] == polt_id][show_list].to_string(index=False))
+    df.loc[df["id"] == polt_id, "p5_llibres"] = "3-5 llibres o còmics."
+
+    # Poltergeist 7: Troll
+    polt_id = 320
+    if verbose:
+        show_list_7 = [
+            "id",
+            "p4_temps_lectura", 
+            "p5_llibres", 
+            "p6_pag", 
+            "Gènere"
+        ]
+        print(f"\n------------ Saved Poltergeist 7 (id={polt_id})----------------\n > Troll")
+        print(df[df["id"] == polt_id][show_list_7].to_string(index=False))
+    df.loc[df["id"] == polt_id, "p5_llibres"] = "0 llibres o còmics."
+    df.loc[df["id"] == polt_id, "p4_temps_lectura"] = "0 minuts."
 
     # # Poltergeist X: Incongruencia entre tiempo de lectura y número de libros leídos (NO APLICADA, NO ES FILTRA)
     # if verbose:
@@ -142,8 +163,6 @@ def save_poltergeists(df: pd.DataFrame, verbose: bool = False) -> pd.DataFrame:
 def clean_reading_dataset_and_consistency(
     df: pd.DataFrame,
     verbose: bool = False,
-    export: bool = False,
-    csv_name: str = ""
 ) -> pd.DataFrame:
     """
     Clean reading dataset and fix inconsistent answers.
@@ -279,40 +298,45 @@ def clean_reading_dataset_and_consistency(
         print("\n------------ Incongruencies llibres alts i temps baixos ----------------")
         print("* Beneficio de la duda, pot ser que llegeixi poc durant setmanes habituals perque llegeix a l'estiu")
         print(df[mask_incongruencia_temps_baixos_llibres_alts][show_list].to_string(index=False))
-
-    if export:
-        reverse_mapping = {
-            "p4_temps_lectura": "Quant temps a la setmana dediques, de mitjana, a la lectura de llibres o còmics per oci? (Ja sigui en format físic o digital).",
-            "p5_llibres": "Quants llibres o còmics t’has llegit aproximadament en els últims 12 mesos per oci? (Ja sigui en format físic o digital)",
-            "p6_pag": "En cas que la resposta hagi estat diferent de 0 llibres o còmics, quantes pàgines, de mitjana, tenien aproximadament aquests llibres o còmics?",
-            "p7_lectura_actual": "Actualment estàs llegint algun llibre o còmic per oci?",
-            "p10_visites_biblioteca": "Quants cops aproximadament has visitat una biblioteca per llegir o agafar llibres en préstec en els últims 12 mesos per oci?",
-            "p16_lectura_obligatoria": "En quin grau llegeixes les lectures obligatòries de l’escola?",
-            "format": "Quin format de lectura utilitzes més habitualment per a la lectura de llibres o còmics per oci? ",
-            "sessions": "Quan llegeixes, com acostumen a ser les teves sessions de lectura?",
-            "Novel·la fantàstica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la fantàstica.]",
-            "Novel·la romàntica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la romàntica.]",
-            "Novel·la de terror": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la de terror.]",
-            "Novel·la negra": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la negra.]",
-            "Novel·la històrica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la històrica.]",
-            "Ciència ficció": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Ciència ficció.]",
-            "Còmic": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Còmic.]",
-            "Clàssics": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Clàssics.]",
-            "Poesia": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Poesia.]",
-            "Assaig": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Assaig (Filosofia, divulgació científica, etc.)]",
-            "Teatre": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Teatre.]"
-        }
-        df_to_export = df.copy()
-        df_to_export = df_to_export.rename(columns=reverse_mapping)
-        df_to_export = df_to_export.drop(columns=["id"])
-        df_to_export.to_csv(
-            f"{csv_name}_cleaned.csv",
-            index=False,
-            encoding="utf-8-sig",
-            quoting=csv.QUOTE_ALL
-        )
         
     return df
+
+def export_dataset(df: pd.DataFrame, csv_name: str):
+    """
+    Export cleaned dataset with original question texts as column names.
+    """
+
+    reverse_mapping = {
+        "p4_temps_lectura": "Quant temps a la setmana dediques, de mitjana, a la lectura de llibres o còmics per oci? (Ja sigui en format físic o digital).",
+        "p5_llibres": "Quants llibres o còmics t’has llegit aproximadament en els últims 12 mesos per oci? (Ja sigui en format físic o digital)",
+        "p6_pag": "En cas que la resposta hagi estat diferent de 0 llibres o còmics, quantes pàgines, de mitjana, tenien aproximadament aquests llibres o còmics?",
+        "p7_lectura_actual": "Actualment estàs llegint algun llibre o còmic per oci?",
+        "p10_visites_biblioteca": "Quants cops aproximadament has visitat una biblioteca per llegir o agafar llibres en préstec en els últims 12 mesos per oci?",
+        "p16_lectura_obligatoria": "En quin grau llegeixes les lectures obligatòries de l’escola?",
+        "format": "Quin format de lectura utilitzes més habitualment per a la lectura de llibres o còmics per oci? ",
+        "sessions": "Quan llegeixes, com acostumen a ser les teves sessions de lectura?",
+        "Novel·la fantàstica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la fantàstica.]",
+        "Novel·la romàntica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la romàntica.]",
+        "Novel·la de terror": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la de terror.]",
+        "Novel·la negra": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la negra.]",
+        "Novel·la històrica": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Novel·la històrica.]",
+        "Ciència ficció": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Ciència ficció.]",
+        "Còmic": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Còmic.]",
+        "Clàssics": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Clàssics.]",
+        "Poesia": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Poesia.]",
+        "Assaig": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Assaig (Filosofia, divulgació científica, etc.)]",
+        "Teatre": "Marca ordenadament els 3 gèneres literaris que més llegeixes per oci. [Teatre.]"
+    }
+
+    df_to_export = df.copy()
+    df_to_export = df_to_export.rename(columns=reverse_mapping)
+    df_to_export = df_to_export.drop(columns=["id"])
+    df_to_export.to_csv(
+        csv_name,
+        index=False,
+        encoding="utf-8-sig",
+        quoting=csv.QUOTE_ALL
+    )
 
 def classify_reader(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()

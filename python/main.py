@@ -99,7 +99,13 @@ if poltergeists:
 # Clean dataset and ensure consistency
 # =======================================================================================
 if filterr:
-    df = tmt.clean_reading_dataset_and_consistency(df, verbose=verbose, export=export_cleaned, csv_name=csv_name)
+    df = tmt.clean_reading_dataset_and_consistency(df, verbose=verbose)
+
+# =======================================================================================
+# Export cleaned dataset
+# =======================================================================================
+if export_cleaned:
+    tmt.export_dataset(df, csv_name=f"{csv_name}_cleaned.csv")
 
 # =======================================================================================
 # Sorting, maps and Spearman ready variables
