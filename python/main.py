@@ -30,6 +30,9 @@ filterr = False
 # Export cleaned dataset
 export_cleaned = False
 
+# Save figures
+save_figures = False
+
 # Dictionary to store correlations of all variables with reading habits
 correlations_dict = {}
 
@@ -467,7 +470,9 @@ if len(tags) > 0 and 1 in tags:
         var="Gènere",
         title="Distribució de l'alumnat segons el gènere",
         xlabel="",
-        ylabel="Percentatge d'alumnes"
+        ylabel="Percentatge d'alumnes",
+        save_figures=save_figures,
+        figure_path="../latex/pictures/1_descriptive_genere"
     )
 
     # Cursos
@@ -478,7 +483,9 @@ if len(tags) > 0 and 1 in tags:
         title="Distribució de l'alumnat segons el curs",
         xlabel="",
         ylabel="Percentatge d'alumnes",
-        sort=sort_cursos
+        sort=sort_cursos,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/1_descriptive_curs"
     )
 
     # Itinerari (només si estàs cursant Batxillerat)
@@ -488,7 +495,9 @@ if len(tags) > 0 and 1 in tags:
         var="Itinerari (només si estàs cursant Batxillerat)",
         title="Distribució de l'alumnat segons l'itinerari (només Batxillerat)",
         xlabel="",
-        ylabel="Percentatge d'alumnes"
+        ylabel="Percentatge d'alumnes",
+        save_figures=save_figures,
+        figure_path="../latex/pictures/1_descriptive_itinerari"
     )
 
 # =======================================================================================
@@ -528,7 +537,9 @@ if len(tags) > 0 and 2 in tags:
         title="Distribució de l'alumnat segons el temps promig de lectura setmanal per oci",
         xlabel="",
         ylabel="Percentatge d'alumnes",
-        sort=sort_temps
+        sort=sort_temps,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/2_temps"
     )
     
     # Boys vs girls
@@ -542,7 +553,9 @@ if len(tags) > 0 and 2 in tags:
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["purple", "orange"],
-        sort=sort_temps
+        sort=sort_temps,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/2_temps_genere"
     )
 
     # Groups
@@ -558,7 +571,9 @@ if len(tags) > 0 and 2 in tags:
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green", "red"],
-        sort=sort_temps
+        sort=sort_temps,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/2_temps_curs"
     )
 
     # Ciencies Socials vs Tecnologia i Ciencia
@@ -572,7 +587,9 @@ if len(tags) > 0 and 2 in tags:
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["red", "green"],
-        sort=sort_temps
+        sort=sort_temps,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/2_temps_itinerari"
     )
 
     # Llibres llegits en els últims 12 mesos per oci per grups
@@ -585,7 +602,9 @@ if len(tags) > 0 and 2 in tags:
         title="Distribució de l'alumnat segons els llibres llegits per oci en els últims 12 mesos",
         xlabel="",
         ylabel="Percentatge d'alumnes",
-        sort=sort_llibres
+        sort=sort_llibres,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/2_llibres"
     )
     
     # Boys vs girls
@@ -599,7 +618,9 @@ if len(tags) > 0 and 2 in tags:
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["purple", "orange"],
-        sort=sort_llibres
+        sort=sort_llibres,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/2_llibres_genere"
     )
 
     # Groups
@@ -615,7 +636,9 @@ if len(tags) > 0 and 2 in tags:
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green", "red"],
-        sort=sort_llibres
+        sort=sort_llibres,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/2_llibres_curs"
     )
 
     # Ciencies Socials vs Tecnologia i Ciencia
@@ -629,7 +652,9 @@ if len(tags) > 0 and 2 in tags:
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["red", "green"],
-        sort=sort_llibres
+        sort=sort_llibres,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/2_llibres_itinerari"
     )
 
 # =======================================================================================
@@ -766,6 +791,8 @@ if len(tags) > 0 and 3 in tags:
     plt.ylabel("Pàgines")
     plt.xlabel("")
     plt.grid(True)
+    if save_figures:
+        plt.savefig("../latex/pictures/3_pagines_boxplot.png", bbox_inches="tight")
 
     # # Plot 
     # plt.figure()
@@ -785,6 +812,8 @@ if len(tags) > 0 and 3 in tags:
     plt.suptitle("")  # elimina el título automático de pandas
     plt.ylabel("Pàgines")
     plt.xlabel("")
+    if save_figures:
+        plt.savefig("../latex/pictures/3_pagines_boxplot_genere.png", bbox_inches="tight")
 
     # # Plot
     # df_filtrat.boxplot(column="p5_6_pagines_num", by="Gènere", showmeans=True, showfliers=False)
@@ -803,6 +832,9 @@ if len(tags) > 0 and 3 in tags:
     plt.suptitle("")  # elimina el título automático de pandas
     plt.ylabel("Pàgines")
     plt.xlabel("")
+    if save_figures:
+        plt.savefig("../latex/pictures/3_pagines_boxplot_curs.png", bbox_inches="tight")
+
     # plt.yscale("log")
     # plt.ylim(1, df["p5_6_pagines_num"].max())
 
@@ -878,7 +910,9 @@ if len(tags) > 0 and 4 in tags:
         title="Classificació de l'alumnat segons l'hàbit lector per oci",
         xlabel="",
         ylabel="Percentatge d'alumnes",
-        sort=sort
+        sort=sort,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/4_class"
     )
 
     # print(df[df["classificacio_lectora"] == "Lector ocasional"][["p4_temps_lectura", "p5_6_pagines_num"]].to_string())
@@ -895,7 +929,9 @@ if len(tags) > 0 and 4 in tags:
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["purple", "orange"],
-        sort=sort
+        sort=sort,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/4_class_genere"
     )
 
     # Groups
@@ -911,7 +947,9 @@ if len(tags) > 0 and 4 in tags:
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green", "red"],
-        sort=sort
+        sort=sort,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/4_class_curs"
     )
 
     # # Ciencies Socials vs Tecnologia i Ciencia
@@ -992,7 +1030,15 @@ if len(tags) > 0 and 5 in tags:
         "Rànking de les temàtiques preferides per a la lectura per oci entre els nois": readers_resultats_boys
     }
 
-    tmt.plot_thematic_individual(results)
+    tmt.plot_thematic_individual(
+        results,
+        save_figures=save_figures,
+        figure_paths=[
+            "../latex/pictures/5_thematic", 
+            "../latex/pictures/5_thematic_girls",
+            "../latex/pictures/5_thematic_boys"
+        ]
+    )
 
     # Formats de lectura
     # =======================================================
@@ -1022,6 +1068,8 @@ if len(tags) > 0 and 5 in tags:
         title="Format de lectura més habitual per a la lectura de llibres o còmics per oci",
         xlabel="",
         ylabel="Percentatge d'alumnes",
+        save_figures=save_figures,
+        figure_path="../latex/pictures/5_format"
     )
 
 # =======================================================================================
@@ -1116,7 +1164,9 @@ if len(tags) > 0 and (6 in tags or 13 in tags):
         title="Distribució de l'alumnat segons la durada de les sessions de lectura",
         xlabel="",
         ylabel="Percentatge d'alumnes",
-        sort=sort_sessions
+        sort=sort_sessions,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/6_sessions"
     )
 
     tmt.plot_descriptive_combined_hists(
@@ -1129,7 +1179,9 @@ if len(tags) > 0 and (6 in tags or 13 in tags):
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green"],
-        sort=sort_sessions
+        sort=sort_sessions,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/6_sessions_class"
     )
 
     # Plots Distraccions ------------------
@@ -1139,7 +1191,9 @@ if len(tags) > 0 and (6 in tags or 13 in tags):
         title="Distribució de l'alumnat segons la freqüència de consulta x.socials durant la lectura",
         xlabel="",
         ylabel="Percentatge d'alumnes",
-        sort=sort_distraccions_inv
+        sort=sort_distraccions_inv,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/6_musica"
     )
 
     tmt.plot_descriptive_combined_hists(
@@ -1152,7 +1206,9 @@ if len(tags) > 0 and (6 in tags or 13 in tags):
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green"],
-        sort=sort_distraccions_inv
+        sort=sort_distraccions_inv,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/6_musica_class"
     )
 
     # Plots Doble Tasca ------------------
@@ -1162,7 +1218,9 @@ if len(tags) > 0 and (6 in tags or 13 in tags):
         title="Freqüència de lectura amb música, vídeos o pòdcasts de fons",
         xlabel="",
         ylabel="Percentatge d'alumnes",
-        sort=sort_freq
+        sort=sort_freq,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/6_consulta_xs"
     )
 
     tmt.plot_descriptive_combined_hists(
@@ -1175,7 +1233,9 @@ if len(tags) > 0 and (6 in tags or 13 in tags):
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green"],
-        sort=sort_freq   
+        sort=sort_freq,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/6_consulta_xs_class"
     )
 
 # =======================================================================================
@@ -1222,7 +1282,9 @@ if len(tags) > 0 and (7 in tags or 13 in tags):
         title="Distribució de l'alumnat segons les visites a la biblioteca en l'últim any per oci",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
-        sort=sort_visites_biblioteca_anual
+        sort=sort_visites_biblioteca_anual,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/7_biblio"
     )
 
     tmt.plot_descriptive_combined_hists(
@@ -1235,7 +1297,9 @@ if len(tags) > 0 and (7 in tags or 13 in tags):
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green"],
-        sort = sort_visites_biblioteca_anual
+        sort = sort_visites_biblioteca_anual,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/7_biblio_class"
     )
 
     tmt.plot_descriptive_hists(
@@ -1327,7 +1391,9 @@ if len(tags) > 0 and (8 in tags or 13 in tags):
         title="Distribució de l'alumnat segons el grau de lectura de les lectures obligatòries de l’escola",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
-        sort=sort_lectura_obligatoria
+        sort=sort_lectura_obligatoria,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/8_obligatoria"
     )
 
     tmt.plot_descriptive_hists(
@@ -1336,7 +1402,9 @@ if len(tags) > 0 and (8 in tags or 13 in tags):
         title="Distribució de l'alumnat segons el gust per les lectures obligatòries de l’escola",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
-        sort=sort_gust
+        sort=sort_gust,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/8_obligatoria_gust"
     )
 
     tmt.plot_descriptive_hists(
@@ -1345,7 +1413,9 @@ if len(tags) > 0 and (8 in tags or 13 in tags):
         title="Distribució de l'alumnat segons reducció de lectures obligatòries per IA generativa",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
-        sort=sort_acords
+        sort=sort_acords,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/8_obligatoria_reduccio"
     )
 
     tmt.plot_descriptive_hists(
@@ -1354,7 +1424,9 @@ if len(tags) > 0 and (8 in tags or 13 in tags):
         title="Distribució de l'alumnat segons l'ús de resums d’internet o IA generativa",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
-        sort=sort_freq
+        sort=sort_freq,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/8_obligatoria_ia"
     )
 
     tmt.plot_descriptive_hists(
@@ -1363,7 +1435,10 @@ if len(tags) > 0 and (8 in tags or 13 in tags):
         title="Percepció que llegirien més les lectures obligatòries si s'adaptessin més als seus gustos",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
-        sort=sort_acords
+        sort=sort_acords,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/8_obligatoria_increment_gust"
+
     )
 
     tmt.plot_descriptive_combined_hists(
@@ -1389,7 +1464,9 @@ if len(tags) > 0 and (8 in tags or 13 in tags):
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green"],
-        sort=sort_lectura_obligatoria
+        sort=sort_lectura_obligatoria,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/8_obligatoria_class"
     )
 
     tmt.plot_descriptive_combined_hists(
@@ -1469,7 +1546,9 @@ if len(tags) > 0 and (9 in tags or 13 in tags):
     title="Distribució de l'alumnat segons la seva percepció sobre l'activitat de llegit per oci",
     xlabel="",
     ylabel="Percentatge d'alumnes",
-    sort=sort_afirmacio
+    sort=sort_afirmacio,
+    save_figures=save_figures,
+    figure_path="../latex/pictures/9_narrativa_personal"
     )   
 
     tmt.plot_descriptive_hists(
@@ -1479,7 +1558,9 @@ if len(tags) > 0 and (9 in tags or 13 in tags):
     xlabel="",
     ylabel="Percentatge d'alumnes",
     sort=sort_com_es_veu,
-    color="green"
+    color="green",
+    save_figures=save_figures,
+    figure_path="../latex/pictures/9_narrativa_social"
     ) 
 
     tmt.plot_descriptive_hists(
@@ -1488,7 +1569,9 @@ if len(tags) > 0 and (9 in tags or 13 in tags):
     title="Distribució segons la percepció que llegirien més si compartissin més opions de lectura",
     xlabel="",
     ylabel="Percentatge d'alumnes",
-    sort=sort_acords
+    sort=sort_acords,
+    save_figures=save_figures,
+    figure_path="../latex/pictures/9_narrativa_llegir_compartir"
     )
 
     tmt.plot_descriptive_hists(
@@ -1497,7 +1580,9 @@ if len(tags) > 0 and (9 in tags or 13 in tags):
     title="Distribució de l'alumnat segons la freqüència amb què comparteixen opinions sobre lectures",
     xlabel="",
     ylabel="Percentatge d'alumnes",
-    sort=sort_freq
+    sort=sort_freq,
+    save_figures=save_figures,
+    figure_path="../latex/pictures/9_narrativa_compartir"
     )
 
     tmt.plot_descriptive_combined_hists(
@@ -1510,7 +1595,9 @@ if len(tags) > 0 and (9 in tags or 13 in tags):
     xlabel="",
     ylabel="Percentatge d'alumnes",
     colors=["blue", "orange", "green"],
-    sort=sort_freq
+    sort=sort_freq,
+    save_figures=save_figures,
+    figure_path="../latex/pictures/9_narrativa_compartir_class"
     )
 
 
@@ -1614,7 +1701,9 @@ if len(tags) > 0 and (10 in tags or 13 in tags):
         title="Distribució de l'alumnat segons el temps diari dedicat a xarxes socials o contingut audiovisual ràpid",
         xlabel="",
         ylabel="Percentatge d'alumnes",
-        sort=sort_tric
+        sort=sort_tric,
+        save_figures=save_figures,
+            figure_path="../latex/pictures/10_tric_time"
     )
 
     tmt.plot_descriptive_combined_hists(
@@ -1627,7 +1716,9 @@ if len(tags) > 0 and (10 in tags or 13 in tags):
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green"],
-        sort=sort_tric
+        sort=sort_tric,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/10_tric_time_class"
     )
 
     # Plots llegiria més si.... ------------------
@@ -1658,7 +1749,9 @@ if len(tags) > 0 and (10 in tags or 13 in tags):
         title="Distribució alumnat segons freq. de consum de contingut audiovisual sobre lectura",
         xlabel="",
         ylabel="Percentatge d'alumnes",
-        sort=sort_freq
+        sort=sort_freq,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/10_tric_lite"
     )
 
     tmt.plot_descriptive_combined_hists(
@@ -1671,7 +1764,9 @@ if len(tags) > 0 and (10 in tags or 13 in tags):
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green"],
-        sort=sort_freq
+        sort=sort_freq,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/10_tric_lite_class"
     )
 
 # =======================================================================================
@@ -1759,7 +1854,9 @@ if len(tags) > 0 and (11 in tags or 13 in tags):
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green"],
-        sort=sort_tric
+        sort=sort_tric,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/11_altres_cultura_class"
     )
 
     # Plots Hangout ------------------
@@ -1773,7 +1870,9 @@ if len(tags) > 0 and (11 in tags or 13 in tags):
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green"],
-        sort=sort_tric
+        sort=sort_tric,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/11_altres_hang_class"
     )
 
     # Plots Study ------------------
@@ -1811,7 +1910,9 @@ if len(tags) > 0 and (11 in tags or 13 in tags):
     title="Percepció increment lectura si tinguessin menys càrrega acadèmica fora d'horari escolar",
     xlabel="",
     ylabel="Percentatge d'alumnes",
-    sort=sort_acords
+    sort=sort_acords,
+    save_figures=save_figures,
+    figure_path="../latex/pictures/11_altres_perc"
     )
 
 # =======================================================================================
@@ -1928,7 +2029,9 @@ if len(tags) > 0 and (12 in tags or 13 in tags):
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green"],
-        sort=sort_num_llibres
+        sort=sort_num_llibres,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/12_familia_llibres"
     )
 
     # Plot normes clares ------------------
@@ -1942,7 +2045,9 @@ if len(tags) > 0 and (12 in tags or 13 in tags):
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green"],
-        sort=sort_acords
+        sort=sort_acords,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/12_familia_normes"
     )
 
     # Plot parlar pares literatura ------------------
@@ -1956,7 +2061,9 @@ if len(tags) > 0 and (12 in tags or 13 in tags):
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green"],
-        sort=sort_freq
+        sort=sort_freq,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/12_familia_compartir"
     )
 
 if len(tags) > 0 and 13 not in tags and tmt.ask_to_plot() == "y":
@@ -1968,7 +2075,7 @@ if len(tags) > 0 and 13 not in tags and tmt.ask_to_plot() == "y":
 if len(tags) > 0 and 13 in tags:
     print("\n=======================================================================================\nHeatmap de Correlacions\n=======================================================================================")
     plt.close("all")
-    tmt.plot_spearman_heatmap(correlations_dict)
+    tmt.plot_spearman_heatmap(correlations_dict, save_figures=save_figures, figure_path="../latex/pictures/13_heatmap")
     plt.show()
 
 #########################################################################################

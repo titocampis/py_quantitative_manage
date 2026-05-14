@@ -432,8 +432,10 @@ def chi_square_analysis(df, var1, var2, label=""):
 
     return chi2, p, dof, cramers_v
 
-def plot_thematic_individual(results_dict):
+def plot_thematic_individual(results_dict, save_figures=False, figure_paths=None):
 
+    it = 0
+    
     colors = {
         "Rànking de les temàtiques preferides per a la lectura per oci": "steelblue",
         "Rànking de les temàtiques preferides per a la lectura per oci entre les noies": "purple",
@@ -463,9 +465,12 @@ def plot_thematic_individual(results_dict):
         ax.tick_params(axis="x", rotation=45)
 
         plt.tight_layout()
-        # plt.show()
+        
+        if save_figures:
+            plt.savefig(f"{figure_paths[it]}.png")
+            it += 1
 
-def plot_descriptive_hists(df: pd.DataFrame, var: str, title: str, xlabel: str, ylabel: str, color: str = None, sort: list = None, ax=None):
+def plot_descriptive_hists(df: pd.DataFrame, var: str, title: str, xlabel: str, ylabel: str, color: str = None, sort: list = None, ax=None, save_figures=False, figure_path=""):
     """
     Plot descriptive histograms for the TFM project (one figure per plot)
     """
@@ -503,7 +508,9 @@ def plot_descriptive_hists(df: pd.DataFrame, var: str, title: str, xlabel: str, 
     ax.tick_params(axis='x', rotation=45)
 
     plt.tight_layout()
-    # plt.show()
+
+    if save_figures:
+        plt.savefig(f"{figure_path}.png")
 
 
 def plot_descriptive_combined_hists(
@@ -517,7 +524,9 @@ def plot_descriptive_combined_hists(
     sort: list = None,
     text: str = None,
     ax=None,
-    figsize=(10, 5)
+    figsize=(10, 5),
+    save_figures=False,
+    figure_path=""
 ):
     """
     Plot combined descriptive histograms for multiple groups.
@@ -636,6 +645,9 @@ def plot_descriptive_combined_hists(
 
     plt.tight_layout()
 
+    if save_figures:
+        plt.savefig(f"{figure_path}.png")
+
 
 def plot_spearman_heatmap(
     correlations_dict,
@@ -650,7 +662,9 @@ def plot_spearman_heatmap(
     sort_by_mean_abs=False,
     mask_small_values=False,
     threshold=0.1,
-    show_colorbar=True
+    show_colorbar=True,
+    save_figures=False,
+    figure_path=""
 ):
     """
     Genera un heatmap a partir d'un diccionari de correlacions Spearman.
@@ -706,6 +720,10 @@ def plot_spearman_heatmap(
 
     ax.set_title(title, fontsize=13)
     plt.tight_layout()
+
+    if save_figures:
+        plt.savefig(f"{figure_path}.png")
+
     plt.show()
 
     return df
