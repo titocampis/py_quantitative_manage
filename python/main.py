@@ -1481,8 +1481,8 @@ if len(tags) > 0 and (8 in tags or 13 in tags):
 # =======================================================================================
 # 9. Narrativa social adolescent sobre la lectura
 # =======================================================================================
-df["percepcio_social_lectura_sp"] = df["Amb quina de les següents afirmacions t’identifiques més?"].map(map_afirmacio_sp)
-df["percepcio_individual_lectura_sp"] = df["En general, creus que llegir per oci entre els nois i noies de la teva edat és vist com:"].map(map_com_es_veu_sp)
+df["percepcio_individual_lectura_sp"] = df["Amb quina de les següents afirmacions t’identifiques més?"].map(map_afirmacio_sp)
+df["percepcio_social_lectura_sp"] = df["En general, creus que llegir per oci entre els nois i noies de la teva edat és vist com:"].map(map_com_es_veu_sp)
 df["compartir_sp"] = df["Comparteixes opinions de lectura sobre llibres o còmics que has llegit o estàs llegint amb altres persones? (Amics, família, companys de classe, companys d’activitats extraescolars, etc.)."].map(map_freq_sp)
 
 # Grau de lectura

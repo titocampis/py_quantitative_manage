@@ -19,6 +19,7 @@
 
 ## Pending Tasks
 Tasks to complete for r4:
+- :warning: Arreglar estropicio de girar las variables social e individual
 - :white_check_mark: Fix al %
 - :white_check_mark: Fix all Spearman Correlations, Chi-Squared, V Cramer, etc.
 - :white_check_mark: Write discussions
