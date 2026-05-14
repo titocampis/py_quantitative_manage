@@ -15,12 +15,21 @@
 | 10 | v | v | v |
 | 11 | v | v | v |
 | 12 | v | v | v |
-| 13 | x | v | x |
+| 13 | v | v | v |
 
 ## Pending Tasks
+Tasks to complete for r4:
+- :white_check_mark: Fix al %
+- :white_check_mark: Fix all Spearman Correlations, Chi-Squared, V Cramer, etc.
+- :white_check_mark: Write discussions
+- :white_check_mark: Write results
+- First refinement discussions + ortografia
+- First refinement results + ortografia
+
 Tasks to complete in next reptes:
-- Fix al %
-- Fix all Spearman Correlations, Chi-Squared, V Cramer, etc.
 - Unify the method used to analyze results
-- Review the usage of the words: moderació i significació
+- Review the usage of the words: moderació, significació, consistència, etc.
 - Include qualitative part: entrevistes semiestructurades
+- Fulfill all WIPS
+- Refine discussions
+- Refine results

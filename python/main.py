@@ -1693,6 +1693,18 @@ if len(tags) > 0 and (10 in tags or 13 in tags):
     # Plots Xarxes socials ------------------
     tmt.plot_descriptive_hists(
         df=df,
+        var="Quant temps al dia dediques, de mitjana, a l’ús de dispositius digitals per a l’oci? (Mòbil, Ordinador, Tablet, Televisió, Smart-watch, etc.).",
+        title="Distribució de l'alumnat segons el temps dedicat a dispositius digitals per a l'oci",
+        xlabel="",
+        ylabel="Percentatge d'alumnes",
+        sort=sort_tric,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/10_tec_time"
+    )
+
+    # Plots Xarxes socials ------------------
+    tmt.plot_descriptive_hists(
+        df=df,
         var="Quant temps al dia dediques, de mitjana, a utilitzar xarxes socials o veure contingut audiovisual ràpid? (Instagram, TikTok, WhatsApp, X, Telegram, Facebook, Shorts de YouTube).",
         title="Distribució de l'alumnat segons el temps diari dedicat a xarxes socials o contingut audiovisual ràpid",
         xlabel="",
