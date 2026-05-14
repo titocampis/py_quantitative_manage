@@ -3,18 +3,18 @@
 ## Data Status
 | Subsection | Percentages (%) | Graphics & Tables | Correlations |
 |---------------|----------------|---------------|----------------|
-| 1 | v | v | N/A |
-| 2 | x | v | x |
-| 3 | x | x | x |
-| 4 | x | x | x |
-| 5 | x | x | N/A |
-| 6 | x | x | x |
-| 7 | x | x | x |
-| 8 | x | x | x |
-| 9 | x | x | x |
-| 10 | v | v | x |
-| 11 | v | v | x |
-| 12 | v | v | x |
+| 1  | v | v | N/A |
+| 2  | v | v | v |
+| 3  | v | v | v |
+| 4  | v | v | V |
+| 5  | v | v | N/A |
+| 6  | v | v | v |
+| 7  | v | v | v |
+| 8  | v | v | v |
+| 9  | v | v | v |
+| 10 | v | v | v |
+| 11 | v | v | v |
+| 12 | v | v | v |
 | 13 | x | v | x |
 
 ## Pending Tasks

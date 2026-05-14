@@ -275,8 +275,13 @@ def clean_reading_dataset_and_consistency(
 
     df.loc[mask_no_lectura_oci, "p4_temps_lectura"] = "0 minuts."
     df.loc[mask_no_lectura_oci, "p5_llibres"] = "0 llibres o còmics."
+    df.loc[mask_no_lectura_oci, "sessions"] = "No llegeixo per oci."
+    df.loc[mask_no_lectura_oci, "format"] = "No llegeixo per oci."
 
     df.loc[mask_incongruencia_temps_alts_llibres_baixos, "p4_temps_lectura"] = "0 minuts."
+    df.loc[mask_incongruencia_temps_alts_llibres_baixos, "sessions"] = "No llegeixo per oci."
+    df.loc[mask_incongruencia_temps_alts_llibres_baixos, "format"] = "No llegeixo per oci."
+
     # NO APLICAT -> Pot ser que llegeixi poc una setaman habitual perque llegeix a l'estiu
     # df.loc[mask_incongruencia_temps_baixos_llibres_alts, "p4_temps_lectura"] = "0 minuts.
     # -------------------------------------------------------------------------------------

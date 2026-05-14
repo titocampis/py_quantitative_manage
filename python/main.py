@@ -1,13 +1,9 @@
 # Standard library
-import sys
 from pprint import pprint
-import textwrap
 
 # Third-party
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
-from scipy.stats import chi2_contingency, spearmanr
 
 # Local imports
 import tfm_methods as tmt
@@ -436,8 +432,8 @@ df["p5_llibres_sp"] = df["p5_llibres"].map(map_llibres_sp)
 # Create subdataframes of readers, no readers, gender, curs
 # =======================================================================================
 readers_mask = (
-    (df["p5_llibres"] != "0 llibres o còmics.") &
-    (df["p4_temps_lectura"] != "0 minuts.") &
+    # (df["p5_llibres"] != "0 llibres o còmics.") &
+    # (df["p4_temps_lectura"] != "0 minuts.") &
     (df["sessions"] != "No llegeixo per oci.") &
     (df["format"] != "No llegeixo per oci.")
 )
@@ -1032,12 +1028,12 @@ if len(tags) > 0 and 5 in tags:
 
     tmt.plot_thematic_individual(
         results,
-        save_figures=save_figures,
-        figure_paths=[
-            "../latex/pictures/5_thematic", 
-            "../latex/pictures/5_thematic_girls",
-            "../latex/pictures/5_thematic_boys"
-        ]
+        # save_figures=save_figures,
+        # figure_paths=[
+        #     "../latex/pictures/5_thematic", 
+        #     "../latex/pictures/5_thematic_girls",
+        #     "../latex/pictures/5_thematic_boys"
+        # ]
     )
 
     # Formats de lectura
@@ -1159,7 +1155,7 @@ if len(tags) > 0 and (6 in tags or 13 in tags):
 
     # Plots sessions ------------------
     tmt.plot_descriptive_hists(
-        df=df_readers.copy(),
+        df=df.copy(),
         var="sessions",
         title="Distribució de l'alumnat segons la durada de les sessions de lectura",
         xlabel="",
@@ -1193,7 +1189,7 @@ if len(tags) > 0 and (6 in tags or 13 in tags):
         ylabel="Percentatge d'alumnes",
         sort=sort_distraccions_inv,
         save_figures=save_figures,
-        figure_path="../latex/pictures/6_musica"
+        figure_path="../latex/pictures/6_consulta_xs"
     )
 
     tmt.plot_descriptive_combined_hists(
@@ -1208,7 +1204,7 @@ if len(tags) > 0 and (6 in tags or 13 in tags):
         colors=["blue", "orange", "green"],
         sort=sort_distraccions_inv,
         save_figures=save_figures,
-        figure_path="../latex/pictures/6_musica_class"
+        figure_path="../latex/pictures/6_consulta_xs_class"
     )
 
     # Plots Doble Tasca ------------------
@@ -1220,7 +1216,7 @@ if len(tags) > 0 and (6 in tags or 13 in tags):
         ylabel="Percentatge d'alumnes",
         sort=sort_freq,
         save_figures=save_figures,
-        figure_path="../latex/pictures/6_consulta_xs"
+        figure_path="../latex/pictures/6_musica"
     )
 
     tmt.plot_descriptive_combined_hists(
@@ -1235,7 +1231,7 @@ if len(tags) > 0 and (6 in tags or 13 in tags):
         colors=["blue", "orange", "green"],
         sort=sort_freq,
         save_figures=save_figures,
-        figure_path="../latex/pictures/6_consulta_xs_class"
+        figure_path="../latex/pictures/6_musica_class"
     )
 
 # =======================================================================================
@@ -1723,7 +1719,7 @@ if len(tags) > 0 and (10 in tags or 13 in tags):
 
     # Plots llegiria més si.... ------------------
     tmt.plot_descriptive_hists(
-    df=df_readers,
+    df=df,
     var="Fins a quin punt estàs d'acord amb la següent afirmació: llegiria més llibres o còmics si dediqués menys temps a les xarxes socials i plataformes de videos curts? . (Instagram, TikTok, WhatsApp, X, Telegram, Facebook, Shorts de YouTube).",
     title="Percepció que llegirien més si dediquessin menys temps a x.socials i plat. de videos curts",
     xlabel="",
@@ -1732,7 +1728,7 @@ if len(tags) > 0 and (10 in tags or 13 in tags):
     )
 
     tmt.plot_descriptive_hists(
-    df=df_readers,
+    df=df,
     var="Fins a quin punt estàs d'acord amb la següent afirmació: llegiria més llibres o còmics si dediqués menys temps a videojocs (PlayStation, PC, mòbil, etc.) i/o plataformes de contingut audiovisual.  (Netflix, YouTube, Twitch, canals de televisió, Amazon Prime, HBO, Disney +, Movistar +, DAZN).",
     title="Percepció que llegirien més si dediquessin menys temps a vjocs i cont. audiovisual",
     xlabel="",
@@ -1905,7 +1901,7 @@ if len(tags) > 0 and (11 in tags or 13 in tags):
 
      # Plots llegiria més si.... ------------------
     tmt.plot_descriptive_hists(
-    df=df_readers,
+    df=df,
     var="Fins a quin punt estàs d'acord amb la següent afirmació: llegiria més llibres o còmics si tingués menys càrrega acadèmica fora d'horari escolar. (Exàmens, deures, treballs, etc.)",
     title="Percepció increment lectura si tinguessin menys càrrega acadèmica fora d'horari escolar",
     xlabel="",
