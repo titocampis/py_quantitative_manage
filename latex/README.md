@@ -19,13 +19,13 @@
 
 ## Pending Tasks
 Tasks to complete for r4:
-- :warning: Arreglar estropicio de girar las variables social e individual
+- :white_check_mark: :warning: Arreglar estropicio de girar las variables social e individual
 - :white_check_mark: Fix al %
 - :white_check_mark: Fix all Spearman Correlations, Chi-Squared, V Cramer, etc.
 - :white_check_mark: Write discussions
 - :white_check_mark: Write results
-- First refinement discussions + ortografia
-- First refinement results + ortografia
+- :white_check_mark: First refinement discussions + ortografia 
+- :white_check_mark: First refinement results + ortografia
 
 Tasks to complete in next reptes:
 - Unify the method used to analyze results

@@ -1,0 +1,9 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is 'Alejandro_Campos_TFM_r4.blg'
+[41] biber:340> INFO - === Thu May 14, 2026, 23:57:42
+[51] Biber.pm:419> INFO - Reading 'Alejandro_Campos_TFM_r4.bcf'
+[97] Biber.pm:979> INFO - Found 0 citekeys in bib section 0
+[108] bbl.pm:660> INFO - Writing 'Alejandro_Campos_TFM_r4.bbl' with encoding 'UTF-8'
+[109] bbl.pm:763> INFO - Output to Alejandro_Campos_TFM_r4.bbl
+[109] Biber.pm:131> WARN - The file 'Alejandro_Campos_TFM_r4.bcf' does not contain any citations!
+[109] Biber.pm:133> INFO - WARNINGS: 1

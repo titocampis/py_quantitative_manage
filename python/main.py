@@ -530,7 +530,7 @@ if len(tags) > 0 and 2 in tags:
     tmt.plot_descriptive_hists(
         df=df.copy(),
         var="p4_temps_lectura",
-        title="Distribució de l'alumnat segons el temps promig de lectura setmanal per oci",
+        title="Distribució de l'alumnat segons el temps mitjà de lectura setmanal per oci",
         xlabel="",
         ylabel="Percentatge d'alumnes",
         sort=sort_temps,
@@ -545,7 +545,7 @@ if len(tags) > 0 and 2 in tags:
         df[df["Gènere"] == "Masculí."].copy(),
         groups=["Noies", "Nois"],
         var="p4_temps_lectura",
-        title="Distribució de l'alumnat segons el temps promig de lectura setmanal per oci per gènere",
+        title="Distribució de l'alumnat segons el temps mitjà de lectura setmanal per oci per gènere",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["purple", "orange"],
@@ -563,7 +563,7 @@ if len(tags) > 0 and 2 in tags:
         df[df["Curs"] == "2n de Batxillerat."].copy(),
         groups=["3r d'ESO", "4t d'ESO", "1r de Batxillerat", "2n de Batxillerat"],
         var="p4_temps_lectura",
-        title="Distribució de l'alumnat segons el temps promig de lectura setmanal per oci per curs",
+        title="Distribució de l'alumnat segons el temps mitjà de lectura setmanal per oci per curs",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["blue", "orange", "green", "red"],
@@ -579,7 +579,7 @@ if len(tags) > 0 and 2 in tags:
         df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències i Tecnologia."].copy(),
         groups=["Ciències Socials", "Ciències i Tecnologia"],
         var="p4_temps_lectura",
-        title="Distribució de l'alumnat segons el temps promig de lectura setmanal per oci per itinerari",
+        title="Distribució de l'alumnat segons el temps mitjà de lectura setmanal per oci per itinerari",
         xlabel="",
         ylabel="Percentatge d'alumnes (%)",
         colors=["red", "green"],
@@ -1595,6 +1595,22 @@ if len(tags) > 0 and (9 in tags or 13 in tags):
     save_figures=save_figures,
     figure_path="../latex/pictures/9_narrativa_compartir_class"
     )
+
+    tmt.plot_descriptive_combined_hists(
+    df[df["classificacio_lectora"] == "No lector / Lector molt ocasional"].copy(),
+    df[df["classificacio_lectora"] == "Lector ocasional"].copy(),
+    df[df["classificacio_lectora"] == "Lector habitual"].copy(),
+    groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
+    var="Amb quina de les següents afirmacions t’identifiques més?",
+    title="Distribució de l'alumnat segons la seva percepció personal sobre l'activitat de llegit per oci, per classificació lectora",
+    xlabel="",
+    ylabel="Percentatge d'alumnes",
+    colors=["blue", "orange", "green"],
+    sort=sort_afirmacio,
+    save_figures=save_figures,
+    figure_path="../latex/pictures/9_narrativa_personal_class"
+    )
+
 
 
 # =======================================================================================
