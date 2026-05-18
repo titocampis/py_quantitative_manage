@@ -19,43 +19,6 @@
 
 \refsection{0}
   \datalist[entry]{apa/apasortcite//global/global}
-    \entry{akande_library}{article}{}
-      \name{author}{2}{}{%
-        {{un=0,uniquepart=base,hash=7c447bfcf9746f78ccb4f14f3e209700}{%
-           family={Akande},
-           familyi={A\bibinitperiod},
-           given={S.\bibnamedelimi O.},
-           giveni={S\bibinitperiod\bibinitdelim O\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=8eb3c76bff0c510a6b85a9a3d2d300ef}{%
-           family={Oyedapo},
-           familyi={O\bibinitperiod},
-           given={R.\bibnamedelimi O.},
-           giveni={R\bibinitperiod\bibinitdelim O\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{383c8df071688936ef2752d22609d5dc}
-      \strng{fullhash}{383c8df071688936ef2752d22609d5dc}
-      \strng{bibnamehash}{383c8df071688936ef2752d22609d5dc}
-      \strng{authorbibnamehash}{383c8df071688936ef2752d22609d5dc}
-      \strng{authornamehash}{383c8df071688936ef2752d22609d5dc}
-      \strng{authorfullhash}{383c8df071688936ef2752d22609d5dc}
-      \field{sortinit}{A}
-      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{International Journal of Information and Knowledge Management}
-      \field{number}{1}
-      \field{title}{Effects of social media use on the reading habits of selected high school students in Nigeria}
-      \field{volume}{9}
-      \field{year}{2018}
-      \verb{doi}
-      \verb 10.4314/iijikm.v9i1.5
-      \endverb
-    \endentry
     \entry{ataniyazova}{article}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=69615a06f234d301278f688d04696d88}{%
@@ -304,34 +267,6 @@
       \verb http://www.researchjournali.com
       \endverb
     \endentry
-    \entry{generalitatPLEC}{online}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=78fddd89c908e669b6dad19dd27b66f9}{%
-           family={{Departament d'Educació i Formació Professional}},
-           familyi={D\bibinitperiod}}}%
-      }
-      \strng{namehash}{78fddd89c908e669b6dad19dd27b66f9}
-      \strng{fullhash}{78fddd89c908e669b6dad19dd27b66f9}
-      \strng{bibnamehash}{78fddd89c908e669b6dad19dd27b66f9}
-      \strng{authorbibnamehash}{78fddd89c908e669b6dad19dd27b66f9}
-      \strng{authornamehash}{78fddd89c908e669b6dad19dd27b66f9}
-      \strng{authorfullhash}{78fddd89c908e669b6dad19dd27b66f9}
-      \field{sortinit}{D}
-      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Què és el Pla de lectura de centre?}
-      \field{year}{s.d.}
-      \verb{urlraw}
-      \verb https://xtec.gencat.cat/ca/projectes/lectura/pladelectura/que-es-el-pla-de-lectura-de-centre/
-      \endverb
-      \verb{url}
-      \verb https://xtec.gencat.cat/ca/projectes/lectura/pladelectura/que-es-el-pla-de-lectura-de-centre/
-      \endverb
-    \endentry
     \entry{gil_comu}{book}{}
       \name{author}{2}{}{%
         {{un=0,uniquepart=base,hash=6f66b47cce055457c1f0f3aee2a6a383}{%
@@ -441,109 +376,6 @@
       \verb 10.3390/hhsnjg43
       \endverb
     \endentry
-    \entry{pirls}{online}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=8ea482a71e6747fe128f13a68fed2af7}{%
-           family={{International Association for the Evaluation of Educational Achievement}},
-           familyi={I\bibinitperiod}}}%
-      }
-      \list{institution}{1}{%
-        {IEA}%
-      }
-      \strng{namehash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{fullhash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{bibnamehash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{authorbibnamehash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{authornamehash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{authorfullhash}{8ea482a71e6747fe128f13a68fed2af7}
-      \field{extraname}{1}
-      \field{sortinit}{I}
-      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{PIRLS 2021 Assessment Framework and Questionnaires}
-      \field{year}{2021}
-      \verb{urlraw}
-      \verb https://www.iea.nl
-      \endverb
-      \verb{url}
-      \verb https://www.iea.nl
-      \endverb
-    \endentry
-    \entry{icils}{online}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=8ea482a71e6747fe128f13a68fed2af7}{%
-           family={{International Association for the Evaluation of Educational Achievement}},
-           familyi={I\bibinitperiod}}}%
-      }
-      \list{institution}{1}{%
-        {IEA}%
-      }
-      \strng{namehash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{fullhash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{bibnamehash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{authorbibnamehash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{authornamehash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{authorfullhash}{8ea482a71e6747fe128f13a68fed2af7}
-      \field{extraname}{2}
-      \field{sortinit}{I}
-      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{ICILS 2023 Assessment Framework and Questionnaires}
-      \field{year}{2023}
-      \verb{urlraw}
-      \verb https://www.iea.nl
-      \endverb
-      \verb{url}
-      \verb https://www.iea.nl
-      \endverb
-    \endentry
-    \entry{johnsson_bookreading}{article}{}
-      \name{author}{2}{}{%
-        {{un=0,uniquepart=base,hash=8c720c17e85657b421537349a2726ca3}{%
-           family={Johnsson-Smaragdi},
-           familyi={J\bibinithyphendelim S\bibinitperiod},
-           given={U.},
-           giveni={U\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=c077a41869f28b329490385fb3a7504f}{%
-           family={Jönsson},
-           familyi={J\bibinitperiod},
-           given={A.},
-           giveni={A\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{7d53d3b9619cf5f0081c9f2d58976761}
-      \strng{fullhash}{7d53d3b9619cf5f0081c9f2d58976761}
-      \strng{bibnamehash}{7d53d3b9619cf5f0081c9f2d58976761}
-      \strng{authorbibnamehash}{7d53d3b9619cf5f0081c9f2d58976761}
-      \strng{authornamehash}{7d53d3b9619cf5f0081c9f2d58976761}
-      \strng{authorfullhash}{7d53d3b9619cf5f0081c9f2d58976761}
-      \field{sortinit}{J}
-      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Scandinavian Journal of Educational Research}
-      \field{number}{5}
-      \field{title}{Book reading in leisure time: Long-term changes in young people’s book reading habits}
-      \field{volume}{50}
-      \field{year}{2006}
-      \field{pages}{519\bibrangedash 540}
-      \range{pages}{22}
-      \verb{doi}
-      \verb 10.1080/00313830600953600
-      \endverb
-    \endentry
     \entry{lanza_wittgenstein}{book}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=ee2f0d5a1aa4470bcd202461b0d3385f}{%
@@ -571,100 +403,6 @@
       \field{labeltitlesource}{title}
       \field{title}{Wittgenstein}
       \field{year}{2019}
-    \endentry
-    \entry{eukids}{online}{}
-      \name{author}{3}{}{%
-        {{un=0,uniquepart=base,hash=a4a7e5799f13142da623471cc3f2323a}{%
-           family={Livingstone},
-           familyi={L\bibinitperiod},
-           given={Sonia},
-           giveni={S\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=1c108590ee811c79954caee77d7af8e3}{%
-           family={Hasebrink},
-           familyi={H\bibinitperiod},
-           given={Uwe},
-           giveni={U\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=06f600aaadc179401696c2ceb5fe4dbd}{%
-           family={Görzig},
-           familyi={G\bibinitperiod},
-           given={Anke},
-           giveni={A\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{9200c36f88b7ebfa8c62e6ea69b4b97a}
-      \strng{fullhash}{e486607674183606a21087d9c47969b1}
-      \strng{bibnamehash}{e486607674183606a21087d9c47969b1}
-      \strng{authorbibnamehash}{e486607674183606a21087d9c47969b1}
-      \strng{authornamehash}{9200c36f88b7ebfa8c62e6ea69b4b97a}
-      \strng{authorfullhash}{e486607674183606a21087d9c47969b1}
-      \field{sortinit}{L}
-      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{EU Kids Online: Researching children’s internet use across Europe}
-      \field{year}{2017}
-      \verb{urlraw}
-      \verb https://www.eukidsonline.net
-      \endverb
-      \verb{url}
-      \verb https://www.eukidsonline.net
-      \endverb
-    \endentry
-    \entry{hleq}{article}{}
-      \name{author}{4}{}{%
-        {{un=0,uniquepart=base,hash=97b11e276b815a246d6d5082fa8a0843}{%
-           family={Marjanovič\bibnamedelima Umek},
-           familyi={M\bibinitperiod\bibinitdelim U\bibinitperiod},
-           given={Ljubica},
-           giveni={L\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=eb39ebb68cdc71637e3d9528b28af631}{%
-           family={Fekonja-Peklaj},
-           familyi={F\bibinithyphendelim P\bibinitperiod},
-           given={Urška},
-           giveni={U\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=e38c56f04a23097415f5f2f799af3551}{%
-           family={Sočan},
-           familyi={S\bibinitperiod},
-           given={Gregor},
-           giveni={G\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=905be4694636a0d44756739a6fa53de6}{%
-           family={Kavčič},
-           familyi={K\bibinitperiod},
-           given={Tina},
-           giveni={T\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{933a5bf5d6d7e521b32b349933153128}
-      \strng{fullhash}{965fc4a7e8ff890d38efa480c5810207}
-      \strng{bibnamehash}{965fc4a7e8ff890d38efa480c5810207}
-      \strng{authorbibnamehash}{965fc4a7e8ff890d38efa480c5810207}
-      \strng{authornamehash}{933a5bf5d6d7e521b32b349933153128}
-      \strng{authorfullhash}{965fc4a7e8ff890d38efa480c5810207}
-      \field{sortinit}{M}
-      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Early Child Development and Care}
-      \field{number}{7}
-      \field{title}{The Home Literacy Environment Questionnaire (HLEQ): Development and validation}
-      \field{volume}{175}
-      \field{year}{2005}
-      \field{pages}{627\bibrangedash 644}
-      \range{pages}{18}
-      \verb{doi}
-      \verb 10.1080/0300443042000302663
-      \endverb
     \endentry
     \entry{owusu_sm}{article}{}
       \name{author}{1}{}{%
@@ -742,6 +480,9 @@
            giveni={S\bibinitperiod},
            givenun=0}}%
       }
+      \list{publisher}{1}{%
+        {Ateneo Mercantil de Valencia}%
+      }
       \strng{namehash}{8b827f8e41141a7f60d1f051c1a50d2c}
       \strng{fullhash}{8b827f8e41141a7f60d1f051c1a50d2c}
       \strng{bibnamehash}{8b827f8e41141a7f60d1f051c1a50d2c}
@@ -757,15 +498,9 @@
       \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{{"Maldita Roma". La conquista del poder de Julio César. Tertulia Histórica con Santiago Posteguillo [Contingut Audiovisual]}. \emph{Ateneo Mercantil de Valencia}. {Youtube}}
+      \field{howpublished}{YouTube [Contingut Audiovisual]}
+      \field{title}{"Maldita Roma". La conquista del poder de Julio César. Tertulia Histórica con Santiago Posteguillo}
       \field{year}{2024}
-      \field{dateera}{ce}
-      \verb{urlraw}
-      \verb https://www.youtube.com/watch?v=USO4pzIUO20
-      \endverb
-      \verb{url}
-      \verb https://www.youtube.com/watch?v=USO4pzIUO20
-      \endverb
     \endentry
     \entry{posteguillo_maldita}{book}{}
       \name{author}{1}{}{%
@@ -795,46 +530,6 @@
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Maldita Roma: La conquista del poder de Julio César}
-      \field{year}{2024}
-    \endentry
-    \entry{sanches}{book}{}
-      \name{author}{3}{}{%
-        {{un=0,uniquepart=base,hash=daa94b977c359d00ea0f283779dbe186}{%
-           family={Sànchez-Garcia},
-           familyi={S\bibinithyphendelim G\bibinitperiod},
-           given={Sandra},
-           giveni={S\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=c14dbbafa92a135d0f0e4a3bdab5acc1}{%
-           family={Maldonado-Lozano},
-           familyi={M\bibinithyphendelim L\bibinitperiod},
-           given={Manuel\bibnamedelima Jesús},
-           giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=49b056dc248eace8b4b532312e9ec870}{%
-           family={utiérrez-Zornoza},
-           familyi={u\bibinithyphendelim Z\bibinitperiod},
-           given={Myriam},
-           giveni={M\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{publisher}{1}{%
-        {Narcea Ediciones}%
-      }
-      \strng{namehash}{7a629367fd9d90f5f029c1709655a4a6}
-      \strng{fullhash}{cf2f567009d18d30d2ea0a29714e8126}
-      \strng{bibnamehash}{cf2f567009d18d30d2ea0a29714e8126}
-      \strng{authorbibnamehash}{cf2f567009d18d30d2ea0a29714e8126}
-      \strng{authornamehash}{7a629367fd9d90f5f029c1709655a4a6}
-      \strng{authorfullhash}{cf2f567009d18d30d2ea0a29714e8126}
-      \field{sortinit}{S}
-      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Educar a una sociedad lectora: la lectura como elemento potenciador del bienestar personal y de las relaciones sociales}
       \field{year}{2024}
     \endentry
     \entry{shutaleva}{article}{}
@@ -971,43 +666,6 @@
     \endentry
   \enddatalist
   \datalist[entry]{apa/global//global/global}
-    \entry{akande_library}{article}{}
-      \name{author}{2}{}{%
-        {{un=0,uniquepart=base,hash=7c447bfcf9746f78ccb4f14f3e209700}{%
-           family={Akande},
-           familyi={A\bibinitperiod},
-           given={S.\bibnamedelimi O.},
-           giveni={S\bibinitperiod\bibinitdelim O\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=8eb3c76bff0c510a6b85a9a3d2d300ef}{%
-           family={Oyedapo},
-           familyi={O\bibinitperiod},
-           given={R.\bibnamedelimi O.},
-           giveni={R\bibinitperiod\bibinitdelim O\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{383c8df071688936ef2752d22609d5dc}
-      \strng{fullhash}{383c8df071688936ef2752d22609d5dc}
-      \strng{bibnamehash}{383c8df071688936ef2752d22609d5dc}
-      \strng{authorbibnamehash}{383c8df071688936ef2752d22609d5dc}
-      \strng{authornamehash}{383c8df071688936ef2752d22609d5dc}
-      \strng{authorfullhash}{383c8df071688936ef2752d22609d5dc}
-      \field{sortinit}{A}
-      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{International Journal of Information and Knowledge Management}
-      \field{number}{1}
-      \field{title}{Effects of social media use on the reading habits of selected high school students in Nigeria}
-      \field{volume}{9}
-      \field{year}{2018}
-      \verb{doi}
-      \verb 10.4314/iijikm.v9i1.5
-      \endverb
-    \endentry
     \entry{ataniyazova}{article}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=69615a06f234d301278f688d04696d88}{%
@@ -1256,34 +914,6 @@
       \verb http://www.researchjournali.com
       \endverb
     \endentry
-    \entry{generalitatPLEC}{online}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=78fddd89c908e669b6dad19dd27b66f9}{%
-           family={{Departament d'Educació i Formació Professional}},
-           familyi={D\bibinitperiod}}}%
-      }
-      \strng{namehash}{78fddd89c908e669b6dad19dd27b66f9}
-      \strng{fullhash}{78fddd89c908e669b6dad19dd27b66f9}
-      \strng{bibnamehash}{78fddd89c908e669b6dad19dd27b66f9}
-      \strng{authorbibnamehash}{78fddd89c908e669b6dad19dd27b66f9}
-      \strng{authornamehash}{78fddd89c908e669b6dad19dd27b66f9}
-      \strng{authorfullhash}{78fddd89c908e669b6dad19dd27b66f9}
-      \field{sortinit}{D}
-      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Què és el Pla de lectura de centre?}
-      \field{year}{s.d.}
-      \verb{urlraw}
-      \verb https://xtec.gencat.cat/ca/projectes/lectura/pladelectura/que-es-el-pla-de-lectura-de-centre/
-      \endverb
-      \verb{url}
-      \verb https://xtec.gencat.cat/ca/projectes/lectura/pladelectura/que-es-el-pla-de-lectura-de-centre/
-      \endverb
-    \endentry
     \entry{gil_comu}{book}{}
       \name{author}{2}{}{%
         {{un=0,uniquepart=base,hash=6f66b47cce055457c1f0f3aee2a6a383}{%
@@ -1393,109 +1023,6 @@
       \verb 10.3390/hhsnjg43
       \endverb
     \endentry
-    \entry{pirls}{online}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=8ea482a71e6747fe128f13a68fed2af7}{%
-           family={{International Association for the Evaluation of Educational Achievement}},
-           familyi={I\bibinitperiod}}}%
-      }
-      \list{institution}{1}{%
-        {IEA}%
-      }
-      \strng{namehash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{fullhash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{bibnamehash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{authorbibnamehash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{authornamehash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{authorfullhash}{8ea482a71e6747fe128f13a68fed2af7}
-      \field{extraname}{1}
-      \field{sortinit}{I}
-      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{PIRLS 2021 Assessment Framework and Questionnaires}
-      \field{year}{2021}
-      \verb{urlraw}
-      \verb https://www.iea.nl
-      \endverb
-      \verb{url}
-      \verb https://www.iea.nl
-      \endverb
-    \endentry
-    \entry{icils}{online}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=8ea482a71e6747fe128f13a68fed2af7}{%
-           family={{International Association for the Evaluation of Educational Achievement}},
-           familyi={I\bibinitperiod}}}%
-      }
-      \list{institution}{1}{%
-        {IEA}%
-      }
-      \strng{namehash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{fullhash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{bibnamehash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{authorbibnamehash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{authornamehash}{8ea482a71e6747fe128f13a68fed2af7}
-      \strng{authorfullhash}{8ea482a71e6747fe128f13a68fed2af7}
-      \field{extraname}{2}
-      \field{sortinit}{I}
-      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{ICILS 2023 Assessment Framework and Questionnaires}
-      \field{year}{2023}
-      \verb{urlraw}
-      \verb https://www.iea.nl
-      \endverb
-      \verb{url}
-      \verb https://www.iea.nl
-      \endverb
-    \endentry
-    \entry{johnsson_bookreading}{article}{}
-      \name{author}{2}{}{%
-        {{un=0,uniquepart=base,hash=8c720c17e85657b421537349a2726ca3}{%
-           family={Johnsson-Smaragdi},
-           familyi={J\bibinithyphendelim S\bibinitperiod},
-           given={U.},
-           giveni={U\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=c077a41869f28b329490385fb3a7504f}{%
-           family={Jönsson},
-           familyi={J\bibinitperiod},
-           given={A.},
-           giveni={A\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{7d53d3b9619cf5f0081c9f2d58976761}
-      \strng{fullhash}{7d53d3b9619cf5f0081c9f2d58976761}
-      \strng{bibnamehash}{7d53d3b9619cf5f0081c9f2d58976761}
-      \strng{authorbibnamehash}{7d53d3b9619cf5f0081c9f2d58976761}
-      \strng{authornamehash}{7d53d3b9619cf5f0081c9f2d58976761}
-      \strng{authorfullhash}{7d53d3b9619cf5f0081c9f2d58976761}
-      \field{sortinit}{J}
-      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Scandinavian Journal of Educational Research}
-      \field{number}{5}
-      \field{title}{Book reading in leisure time: Long-term changes in young people’s book reading habits}
-      \field{volume}{50}
-      \field{year}{2006}
-      \field{pages}{519\bibrangedash 540}
-      \range{pages}{22}
-      \verb{doi}
-      \verb 10.1080/00313830600953600
-      \endverb
-    \endentry
     \entry{lanza_wittgenstein}{book}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=ee2f0d5a1aa4470bcd202461b0d3385f}{%
@@ -1523,100 +1050,6 @@
       \field{labeltitlesource}{title}
       \field{title}{Wittgenstein}
       \field{year}{2019}
-    \endentry
-    \entry{eukids}{online}{}
-      \name{author}{3}{}{%
-        {{un=0,uniquepart=base,hash=a4a7e5799f13142da623471cc3f2323a}{%
-           family={Livingstone},
-           familyi={L\bibinitperiod},
-           given={Sonia},
-           giveni={S\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=1c108590ee811c79954caee77d7af8e3}{%
-           family={Hasebrink},
-           familyi={H\bibinitperiod},
-           given={Uwe},
-           giveni={U\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=06f600aaadc179401696c2ceb5fe4dbd}{%
-           family={Görzig},
-           familyi={G\bibinitperiod},
-           given={Anke},
-           giveni={A\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{9200c36f88b7ebfa8c62e6ea69b4b97a}
-      \strng{fullhash}{e486607674183606a21087d9c47969b1}
-      \strng{bibnamehash}{e486607674183606a21087d9c47969b1}
-      \strng{authorbibnamehash}{e486607674183606a21087d9c47969b1}
-      \strng{authornamehash}{9200c36f88b7ebfa8c62e6ea69b4b97a}
-      \strng{authorfullhash}{e486607674183606a21087d9c47969b1}
-      \field{sortinit}{L}
-      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{EU Kids Online: Researching children’s internet use across Europe}
-      \field{year}{2017}
-      \verb{urlraw}
-      \verb https://www.eukidsonline.net
-      \endverb
-      \verb{url}
-      \verb https://www.eukidsonline.net
-      \endverb
-    \endentry
-    \entry{hleq}{article}{}
-      \name{author}{4}{}{%
-        {{un=0,uniquepart=base,hash=97b11e276b815a246d6d5082fa8a0843}{%
-           family={Marjanovič\bibnamedelima Umek},
-           familyi={M\bibinitperiod\bibinitdelim U\bibinitperiod},
-           given={Ljubica},
-           giveni={L\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=eb39ebb68cdc71637e3d9528b28af631}{%
-           family={Fekonja-Peklaj},
-           familyi={F\bibinithyphendelim P\bibinitperiod},
-           given={Urška},
-           giveni={U\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=e38c56f04a23097415f5f2f799af3551}{%
-           family={Sočan},
-           familyi={S\bibinitperiod},
-           given={Gregor},
-           giveni={G\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=905be4694636a0d44756739a6fa53de6}{%
-           family={Kavčič},
-           familyi={K\bibinitperiod},
-           given={Tina},
-           giveni={T\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{933a5bf5d6d7e521b32b349933153128}
-      \strng{fullhash}{965fc4a7e8ff890d38efa480c5810207}
-      \strng{bibnamehash}{965fc4a7e8ff890d38efa480c5810207}
-      \strng{authorbibnamehash}{965fc4a7e8ff890d38efa480c5810207}
-      \strng{authornamehash}{933a5bf5d6d7e521b32b349933153128}
-      \strng{authorfullhash}{965fc4a7e8ff890d38efa480c5810207}
-      \field{sortinit}{M}
-      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Early Child Development and Care}
-      \field{number}{7}
-      \field{title}{The Home Literacy Environment Questionnaire (HLEQ): Development and validation}
-      \field{volume}{175}
-      \field{year}{2005}
-      \field{pages}{627\bibrangedash 644}
-      \range{pages}{18}
-      \verb{doi}
-      \verb 10.1080/0300443042000302663
-      \endverb
     \endentry
     \entry{owusu_sm}{article}{}
       \name{author}{1}{}{%
@@ -1694,6 +1127,9 @@
            giveni={S\bibinitperiod},
            givenun=0}}%
       }
+      \list{publisher}{1}{%
+        {Ateneo Mercantil de Valencia}%
+      }
       \strng{namehash}{8b827f8e41141a7f60d1f051c1a50d2c}
       \strng{fullhash}{8b827f8e41141a7f60d1f051c1a50d2c}
       \strng{bibnamehash}{8b827f8e41141a7f60d1f051c1a50d2c}
@@ -1709,15 +1145,9 @@
       \true{uniqueprimaryauthor}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{{"Maldita Roma". La conquista del poder de Julio César. Tertulia Histórica con Santiago Posteguillo [Contingut Audiovisual]}. \emph{Ateneo Mercantil de Valencia}. {Youtube}}
+      \field{howpublished}{YouTube [Contingut Audiovisual]}
+      \field{title}{"Maldita Roma". La conquista del poder de Julio César. Tertulia Histórica con Santiago Posteguillo}
       \field{year}{2024}
-      \field{dateera}{ce}
-      \verb{urlraw}
-      \verb https://www.youtube.com/watch?v=USO4pzIUO20
-      \endverb
-      \verb{url}
-      \verb https://www.youtube.com/watch?v=USO4pzIUO20
-      \endverb
     \endentry
     \entry{posteguillo_maldita}{book}{}
       \name{author}{1}{}{%
@@ -1747,46 +1177,6 @@
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Maldita Roma: La conquista del poder de Julio César}
-      \field{year}{2024}
-    \endentry
-    \entry{sanches}{book}{}
-      \name{author}{3}{}{%
-        {{un=0,uniquepart=base,hash=daa94b977c359d00ea0f283779dbe186}{%
-           family={Sànchez-Garcia},
-           familyi={S\bibinithyphendelim G\bibinitperiod},
-           given={Sandra},
-           giveni={S\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=c14dbbafa92a135d0f0e4a3bdab5acc1}{%
-           family={Maldonado-Lozano},
-           familyi={M\bibinithyphendelim L\bibinitperiod},
-           given={Manuel\bibnamedelima Jesús},
-           giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=49b056dc248eace8b4b532312e9ec870}{%
-           family={utiérrez-Zornoza},
-           familyi={u\bibinithyphendelim Z\bibinitperiod},
-           given={Myriam},
-           giveni={M\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{publisher}{1}{%
-        {Narcea Ediciones}%
-      }
-      \strng{namehash}{7a629367fd9d90f5f029c1709655a4a6}
-      \strng{fullhash}{cf2f567009d18d30d2ea0a29714e8126}
-      \strng{bibnamehash}{cf2f567009d18d30d2ea0a29714e8126}
-      \strng{authorbibnamehash}{cf2f567009d18d30d2ea0a29714e8126}
-      \strng{authornamehash}{7a629367fd9d90f5f029c1709655a4a6}
-      \strng{authorfullhash}{cf2f567009d18d30d2ea0a29714e8126}
-      \field{sortinit}{S}
-      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Educar a una sociedad lectora: la lectura como elemento potenciador del bienestar personal y de las relaciones sociales}
       \field{year}{2024}
     \endentry
     \entry{shutaleva}{article}{}

@@ -3,10 +3,10 @@
 % =======================================================================
 % Variables
 % =======================================================================
-\title{Hàbits de lectura per oci en un centre educatiu de l'Hospitalet de Llobregat. \\[3.5ex]
-    \large Anàlisi dels hàbits de lectura per oci de l'alumnat des de 3r d'ESO fins a 2n de Batxillerat i dels factors relacionats en un centre educatiu de l'Hospitalet de Llobregat.}
-\author{Alejandro Campos Almazán}
-\date{Maig, 2026}
+% \title{Hàbits de lectura en un centre educatiu de l'Hospitalet de Llobregat. \\[3.5ex]
+%     \large Anàlisi dels hàbits de lectura per oci de l'alumnat des de 3r d'ESO fins a 2n de Batxillerat i dels factors relacionats en un centre educatiu de l'Hospitalet de Llobregat.}
+% \author{Alejandro Campos Almazán}
+% \date{Maig, 2026}
 
 \newcommand{\HeaderTitle}{Universitat Oberta de Catalunya -- Treball Final de Màster}
 \newcommand{\ReferencesFile}{references}
@@ -93,6 +93,11 @@
 % \nestedparencite{Freud}{2025}{perinat}
 \newcommand{\nestedparencite}[3]{%
   (#1, #2, citat a \citeauthor{#3}, \citeyear{#3})%
+}
+
+% \nesteddoubleparencite{Freud}{1920}{Erikson}{1960}{perinat}
+\newcommand{\nesteddoubleparencite}[5]{%
+  (#1, #2; #3, #4, citats a \citeauthor{#5}, \citeyear{#5})%
 }
 
 % \nestedparenpagcite{Freud}{2025}{perinat}{p. 33}
@@ -302,12 +307,16 @@
     \vspace{2cm}
     
     % Título
-    {\Huge Hàbits de lectura per oci en un centre educatiu de l'Hospitalet de Llobregat}
+    {\Huge
+    Hàbits de lectura en un centre educatiu de l'Hospitalet de Llobregat\par
+    % \vspace{0.5cm}
+    }
+
     \vspace{1cm}
     
     % Subtítulo
     {\Large
-    Anàlisi dels hàbits de lectura per oci de l'alumnat des de 3r d'ESO fins a 2n de Batxillerat i dels factors relacionats en un centre educatiu de l'Hospitalet de Llobregat.
+    Anàlisi dels hàbits de lectura de l'alumnat des de 3r d'ESO fins a 2n de Batxillerat i dels factors relacionats en un centre educatiu de l'Hospitalet de Llobregat.
     \par}
 
     \vspace{4cm}
@@ -347,7 +356,10 @@
 
 \section{Abstract}
 % =======================================================================
-\textbf{Keywords:}
+
+//WIP: Pendent per l'entrega final.
+
+\textbf{Keywords:} hàbits de lectura, adolescència, context educatiu, dispositius digitals, entorn familiar pro-lector, lectura activitat social.
 
 \newpage
 \tableofcontents
@@ -365,16 +377,93 @@
 \section{Introducció}
 % =======================================================================
 % La introducció ha de presentar l’orientació i les motivacions generals que han conduït al desenvolupament del treball, així com argumentar de manera coherent la pertinència i l’interès de la recerca que es proposa. També ha de contenir l’estructura del treball que es presenta, posant en relleu els apartats més importants que s’hi tractaran. Abans d’escriure la introducció del TFM us recomanem llegir l’apartat «5.1.2 Introducció» del material L’informe d’investigació que us donarà una pauta sobre com fer-la.
+\label{intro}
+
+\subsection{Context}
+
+La lectura és una activitat que ens defineix com a espècie, que ens han permès durant mil·lennis transmetre el coneixement entre persones, generacions i cultures \parencite{shutaleva}. Han estat eines utilitzades globalment per a l'aprenentatge, la creativitat, l'entreteniment, l'expressió d'emocions, la reflexió, la transmissió d'històries i experiències, la preparació d'estratègies, l'organització, el recordatori, etc. La lectura és una activitat que implica tots els tipus de raonament: lògic, crític, creatiu, analític, imaginatiu, empàtic i reflexiu \parencite{chiweta_sm}.
+
+Entre el mite i la realitat, es diu que Alexandre Magne dormia amb una còpia de la Ilíada sota el coixí en les seves campanyes militars \parencite{plutarc}; Juli Cèsar preparava estratègies militars a través de la lectura i l'escriptura mentre la resta de generals descansaven; Cleopatra va créixer entre llibres a la gran biblioteca d'Alexandria \parencite{posteguillo_maldita}; Napoleó viatjava a les seves campanyes militars amb una biblioteca portàtil amb centenars de llibres; Winston Churchill es va negar a reduir el pressupost de cultura dels Estats Units per destinar al finançament de la Segona Guerra Mundial \parencite{posteguillo_tertulia}, entre molts d'altres.
+
+\subsection{Beneficis de la lectura}
+
+Segons estudis recents, la lectura és una activitat que comporta nombrosos beneficis cognitius, emocionals, socials i educatius. Ja des de ben petits, tal com expliquen \textcite{goikoetxea_lectura}, la lectura compartida afavoreix el desenvolupament del llenguatge, la comprensió i el coneixement. La lectura és una activitat que estimula el creixement cerebral, la profunditat emocional i les habilitats comunicatives; alhora que afavoreix la retenció de coneixement, la reflexió, el pensament crític i el coneixement profund \parencite{ataniyazova}. 
+
+Llegir per plaer durant la infància es correlaciona amb una millor memòria, desenvolupament cognitiu, desenvolupament del llenguatge, hàbits de son, habilitats comunicatives i salut mental \parencite{sun_childhood}. Altres estudis com \textcite{billington_reading} conclouen que la pràctica de la lectura per plaer està vinculada a una major autoestima, autoacceptació, creativitat, habilitats socials i empatia. La lectura freqüent s'associa amb un menor risc de deteriorament de les funcions cognitives en persones grans i millors resultats en tots els nivells educatius \parencite{chang_reading}. \textcite{banas_biblio} conclouen que la participació en clubs de lectura es correlaciona amb millors habilitats psicosocials i un major benestar.
+
+D'altra banda, la lectura és considerada una activitat relacionada amb la pràctica de l’atenció plena o \emph{mindfulness}, ja que requereix focalitzar l’atenció de manera sostinguda, reduir les distraccions i estar activament en el moment present per comprendre el text i endinsar-se en la narració \parencite{gorsy}. En aquest sentit, els beneficis associats al cultiu de l’atenció plena s’han relacionat àmpliament amb una millora del benestar emocional, la salut mental i la regulació de les emocions \parencite{baena}.
+
+Finalment, el marc normatiu català actual sustenta que la lectura, com a base d’altres aprenentatges, esdevé un factor fonamental per a l’adquisició i desenvolupament de les competències bàsiques, i que, per tant, la lectura ha de ser una prioritat en els centres i en la tasca de tot docent \parencite{generalitatPLEC}. També subratlla que saber llegir ens permet créixer com a persona, desenvolupar el coneixement i interactuar en la nostra societat.
+
+\subsection{La lectura com activitat sociocultural}
+
+Les pràctiques culturals constitueixen un pilar fonamental del comportament humà; comprenent un ventall ampli d'activitats com costums socials, rituals, tradicions, normes, valors, formes d'expressar-se, etc. \parencite{shutaleva}. Aquestes pràctiques proporcionen un marc per a la interacció social i defineixen la identitat d'una societat, donant lloc a patrons culturals que no són fixes ni immutables, sinó que evolucionen constantment en resposta a canvis socials, polítics, econòmics i tecnològics del context històric \nesteddoubleparencite{Kirillova et al.}{2022}{Hofstede et al.}{2009}{shutaleva}.
+
+La lectura és una pràctica cultural que depèn del context històric concret, però que alhora contribueix a modelar-lo i transformar-lo. Sovint entenem el llenguatge, i per tant la lectura, com a meres eines per transmetre la informació que ja hi és a la nostra ment (metàfora de la conducció; Michel Reddy, 1979, citat a Gil Juárez i Vitores González, 2009). Res més allunyat de la realitat, ja que el llenguatge, i en conseqüència la lectura, construeixen i modelen la interpretació individual i col·lectiva del món \parencite{gil_comu}. <<Els límits del nostre llenguatge són els límits del nostre món>> \nestedparencite{Wittgenstein}{1922}{lanza_wittgenstein}. D'aquesta manera, la lectura és causa i alhora conseqüència del context sociocultural d'una època. 
+
+En aquest estudi analitzarem la lectura des d'un punt de vista transversal, com una activitat que s'integra en el context sociocultural d'un centre de l'Hospitalet de Llobregat, però que alhora contribueix a modelar-lo i transformar-lo. D'aquesta manera, no s'entén la lectura com una activitat aïllada, sinó com una pràctica cultural influenciada per múltiples factors, però que alhora té un paper actiu en la conformació d'aquest context.
+
+\textcite{shutaleva} assenyalen que factors com el nivell d'estudis dels pares, la disponibilitat d'una biblioteca a casa, la implicació paternal en la lectura dels joves i el fet de tenir amb qui compartir les experiències lectores són factors que es correlacionen positivament amb la dedicació a la lectura.
+
+\subsection{Lectura, adolescència i actualitat}
+
+La irrupció en les últimes dècades de les tecnologies digitals està transformant la forma en com les persones accedim a la informació, produïm dades, ens comuniquem, ens relacionem, ens entretenim, etc.
+
+Internet, els buscadors, les plataformes multimèdia, les xarxes socials, les plataformes de vídeos curts, les eines d'IA, entre d'altres ocupen moltes hores en el dia a dia dels joves i adolescents \parencite{shutaleva} ---i també en adults---. Però són aquestes eines competidores directes de l'activitat lectora? No hi ha un consens clar al respecte en la literatura científica existent, ja que alguns estudis conclouen que l'ús de xarxes socials es correlaciona negativament amb el temps dedicat a la lectura de forma significativa \parencite{owusu_sm}, mentre que altres estudis no troben prou significació per sostenir aquesta afirmació \parencite{shutaleva}. 
+
+Parlant amb diferents adolescents del meu entorn i alumnes del centre de pràctiques, he tingut la sensació que una gran majoria no llegeix llibres o còmics per oci mai o quasi mai i que no tenen hàbits de lectura, ni a casa ni a l'escola. Quan els hi he preguntat per què no ho fan, molts d'ells m'han dit que no els agrada, que és avorrit, que prefereixen altres activitats, que no els aporta res o que no tenen temps per això. D'altra banda, molts d'ells dediquen una quantitat considerable d'hores al dia a l'ús d'eines digitals, xarxes socials i plataformes de contingut audiovisual ràpid.
+
+També he observat que molts d'ells presenten dificultats a l'hora de comprendre diferents textos que se'ls proposa, com enunciats d'exercicis, textos informatius, guies de treball, etc. I que no estan habituats i els costa extreure la informació rellevant d'un text o mantenir l'atenció i el fil de la lectura quan aquesta és llarga. 
+
+Tot i que, principalment, he observat i co-impartit assignatures de ciències, he percebut que molts dels errors que acostumen a cometre els alumnes no són per no conèixer els conceptes de l'assignatura, sinó per errors de comprensió dels enunciats, per no llegir amb prou atenció, per no saber extreure la informació rellevant o per no saber interpretar dades o gràfics.
+
+Tanmateix, em fa l'efecte que en l'àmbit educatiu, cada vegada es treballen menys les competències relacionades amb la lectura i la comprensió escrita en general, i que la tendència sembla orientar-se cap a la fragmentació i simplificació de la informació per convertir-la en contingut de comprensió immediata i accessible per a tothom, especialment a través de formats audiovisuals, interactius i ràpids, cognitivament més assequibles.
 
 \newpage
 \section{Definició del problema, preguntes i objectius de la recerca}
 % =======================================================================
 % Aquest apartat del TFM ha de contenir el problema que s’ha detectat i que es vol investigar, la pregunta que serveix de base per al disseny de la investigació i els objectius (general i específics). L’objectiu general de la recerca es desplegarà en un conjunt d’objectius específics prou concrets i operatius (avaluables).
+Partint del context descrit en l'apartat \nameref{intro}, he volgut enfocar la meva investigació en la composició d'una fotografia completa dels hàbits de lectura de l'alumnat de 3r d'ESO fins a 2n de Batxillerat en el meu centre de pràctiques. En concret, es pretén descriure variables com el temps dedicat a la lectura per oci, les preferències temàtiques, els formats més utilitzats, la quantitat de lectures realitzades anualment i la percepció de l’alumnat envers la lectura, així com el grau de seguiment de les lectures obligatòries, l’ús de recursos com resums o eines d’IA generativa i la freqüència d’ús de la biblioteca escolar.
+
+D'altra banda, també es pretén analitzar factors potencialment associats a aquests hàbits, com l’ús de tecnologies digitals i xarxes socials, el consum de continguts audiovisuals, l’entorn familiar i social, la percepció i discurs adolescent sobre la lectura, la participació en activitats lectores compartides, el gust per les lectures obligatòries i la relació amb altres pràctiques d’oci.
+
+D'aquesta manera, la pregunta de recerca que guia aquest estudi és: quins són els hàbits de lectura de l’alumnat de 3r d'ESO fins a 2n de Batxillerat del centre educatiu estudiat i quins factors es troben associats al seu desenvolupament?
+
+En coherència amb aquesta pregunta, l’objectiu general de la recerca és descriure de forma detallada i exhaustiva els hàbits de lectura de l’alumnat de 3r d'ESO fins a 2n de Batxillerat en el centre d'estudi, així com de les possibles variables que hi poden estar relacionades.
+
+Aquest objectiu general es concreta en els següents objectius específics:
+
+\begin{itemize}
+    \item Descriure la freqüència, formats i preferències temàtiques de lectura per oci de l’alumnat.
+    \item Caracteritzar les sessions de lectura de l'alumnat i explorar les visites a la biblioteca per a agafar llibres o còmics en préstec.
+    \item Analitzar el grau de compromís i gust per les lectures obligatòries del centre i la seva relació amb el desenvolupament de l’hàbit lector.
+    \item Analitzar l’ús de les tecnologies digitals i les xarxes socials en relació amb els hàbits lectors.
+    \item Analitzar altres activitats d'oci realitzades per l'alumnat i la seva relació amb els hàbits de lectura per oci.
+    \item Explorar la relació entre els hàbits de lectura de l’alumnat i el seu entorn social i familiar.
+\end{itemize}
+
+A partir d’aquesta diagnosi, es pretén disposar de bases sòlides per a plantejar estratègies educatives que fomentin la motivació, l’interès i el desenvolupament de la lectura en el context acadèmic.
 
 \newpage
 \section{Estat de la qüestió, marc teòric i normatiu}
 % =======================================================================
 % En aquest apartat s’ha d’exposar el marc teòric en el qual es fonamenta la recerca: les teories i conceptes que es troben directament vinculats amb l’estudi i l’estat de la qüestió, és a dir, la presentació breu d’estudis similars, amb els seus resultats més destacats i la connexió amb la recerca que es proposa al TFM. El marc normatiu existent que sustenta la recerca fa referència a les lleis o polítiques públiques educatives (espanyoles i catalanes) i a altres documents normatius del centre, relacionats amb la temàtica de la recerca.
+Analitzant la literatura existent, diversos estudis han analitzat els hàbits de lectura dels joves i com aquests es veuen influenciats per factors tecnològics, socials i familiars. Tanmateix, es poden identificar tant tendències comunes com resultats divergents.
+
+En primer lloc, segons l'Informe de resultados de Hábitos de lectura y compra de libros en España \nestedtextcite{2018}{sanches}, el 44.7\% dels joves entre 15 i 18 anys és lector freqüent, mentre que el 22.7\% és lector ocasional i el 32.6\% es declara no lector. \textcite{sanches} assenyalen que aquestes xifres suggereixen que la lectura s'està convertint en una activitat per obligació per qüestions pràctiques, oblidant la forta relació entre el rendiment acadèmic i el grau de gaudir per la lectura.
+
+D'altra banda, l’estudi de \textcite{shutaleva} conclou que la lectura continua sent una activitat present en l’oci juvenil, tot i la creixent presència de les tecnologies digitals. L’estudi destaca la importància del context familiar, ja que factors com el nivell educatiu dels pares, la disponibilitat de llibres a casa o la implicació parental en la lectura durant la infància es correlacionen positivament amb la dedicació lectora en etapes posteriors. Així mateix, es posa de manifest que les noies tendeixen a compartir més les seves experiències lectores, mentre que no es troben diferències significatives en la quantitat de lectura entre sexes. Aquest estudi també suggereix que el format de lectura predominant continua sent el llibre físic, tot i l’augment progressiu dels formats digitals i els audiollibres. En conjunt, aquests resultats apunten cap a la rellevància del context social i familiar i cultural en la consolidació de l’hàbit lector.
+
+En una línia complementària, \textcite{akande_library} analitzen la relació entre l’ús de xarxes socials i els hàbits de lectura en estudiants de secundària a Nigèria. Els resultats mostren una correlació negativa significativa entre el temps dedicat a les xarxes socials i el temps dedicat a la lectura per oci, suggerint una possible competència entre ambdues activitats. A més, es constata que l’ús del telèfon mòbil és el principal mitjà d’accés a les xarxes socials i que aquestes ocupen una part considerable del temps d’oci dels estudiants. Aquest estudi reforça la idea que els entorns digitals poden tenir un impacte rellevant en la distribució del temps dedicat a activitats lectores.
+
+Tanmateix, l’estudi longitudinal de \textcite{johnsson_bookreading} aporta una perspectiva dels hàbits lectors al llarg de 25 anys. Els resultats mostren que, malgrat l’augment significatiu de l’ús de tecnologies digitals, el temps dedicat a la lectura no ha disminuït de manera proporcional, i fins i tot ha augmentat en determinats grups. En aquest sentit, no es troba una correlació clara entre l’ús de tecnologies i la lectura per oci, la qual cosa qüestiona la idea d’una competència directa entre ambdues activitats. L’estudi sí que identifica una lleugera correlació negativa entre el temps dedicat a veure televisió i la lectura.
+
+
+Una altra conclusió interessant d'aquest estudi és que la lectura s'ha polaritzat lleugerament: s'ha incrementat el nombre d'adolescents que no llegeixen mai per oci, mentre que els que ja llegien han augmentat el temps de lectura. Quant al gènere, els resultats de l'estudi mostren que hi ha molts més nois que no llegeixen mai per oci que noies. Finalment, els autors conclouen que els hàbits de lectura estan més condicionats pel context familiar i social que no pas per l’ús de tecnologies digitals.
+
+Des del marc normatiu català, es destaca la gran importància de la lectura en l'adquisició del coneixement, el desenvolupament personal i la interacció social \parencite{generalitatPLEC}. En aquest sentit, subratlla la necessitat de tenir un PLEC (Pla de Lectura de Centre), per aconseguir una coordinació pedagògica entre els diferents agents educatius que promogui el gust per llegir i ensenyi a l'alumnat a saber llegir des de totes les àrees del currículum.
+
+El centre educatiu en el qual es realitza aquest estudi no disposa encara de PLEC \parencite{generalitatPLEC}. Parlant amb els diferents docents de les assignatures de llengua i literatura, m'han comentat que el centre està en procés de dissenyar-ne un, però que encara està en una fase molt inicial. En aquest sentit, aquest estudi pretén aportar informació rellevant sobre els hàbits de lectura de l'alumnat i els diferents factors associats al seu desenvolupament, per tal de contribuir a la definició d'estratègies educatives que fomentin la lectura en el context acadèmic.
 
 \newpage
 \section{Metodologia}
@@ -383,18 +472,141 @@
 
 \subsection{El context investigat}
 % ---------------------------------------------------
+El present estudi adopta un disseny d'investigació no experimental, de caràcter descriptiu i transversal de tipus estudi de cas. És a dir, la recollida de dades s'ha realitzat en un únic moment temporal, i per tant, els resultats no poden afirmar relacions de causalitat direccional entre les variables analitzades, sinó que són de caràcter principalment descriptiu i d'identificació d'associacions entre variables.
+
+D'altra banda, el disseny de cas no pretén generalitzar els resultats a altres contextos o la població general, sinó que se centra en l'anàlisi exhaustiva i detallada d'un cas concret, en aquest cas, un centre educatiu de l'Hospitalet de Llobregat.
+
+L’enfocament metodològic d'aquesta recerca és mixt de tipus convergent o concurrent, per aquest motiu, s'han recollit de manera paral·lela dades quantitatives i qualitatives. Posteriorment, els resultats d'ambdues aproximacions s'han comparat, contrastat i integrat mitjançant triangulació per interpretar de forma global els hàbits de lectura de l'alumnat i els diferents factors associats al seu desenvolupament.
+
+Per tal de mantenir la coherència d'exhaustivitat, la mostra d'anàlisi quantitativa (alumnes als quals se’ls ha subministrat el qüestionari) s'ha conformat mitjançant la tècnica de mostreig no probabilística per conglomerats, seleccionant com a unitats d’anàlisi els grups-classe corresponents als cursos des de 3r d’ESO fins a 2n de Batxillerat del centre en qüestió.
+
+Després de 3 setmanes de reunions, coordinació i acords amb el centre i els diferents docents implicats, tanquem la recollida de dades quantitatives com un èxit: s'ha subministrat el qüestionari a tots els alumnes de totes les classes d'aquests cursos a excepció d'un grup de 4t d'ESO, que no ha pogut participar per motius organitzatius i de coordinació. En total, s'ha subministrat el qüestionari a 343 alumnes.
+
+No s'ha estès l'estudi a altres cursos (com per exemple, 1r i 2n d'ESO) a causa de les limitacions temporals i de recursos disponibles per a la realització d'aquesta recerca, així com per mantenir la coherència amb els objectius plantejats, que se centren en l'anàlisi dels hàbits de lectura en l'etapa adolescent.
+
+La mostra qualitativa de l’estudi s'ha conformat mitjançant mostreig no probabilístic per conveniència, seleccionant alumnes i professors que, voluntàriament, han acceptat participar en les entrevistes semiestructurades. A partir d'aquest mètode s'han entrevistat 3 docents de les assignatures de Llengua i Literatura Castellana i Catalana i 2 alumnes de 1r i 2n de Batxillerat.
+
 
 \subsection{Tècniques i instruments de recollida de dades}
 % ---------------------------------------------------
 
+\subsubsection{Tècniques i instruments de recollida de dades quantitatives}
+
+Per a la recollida de dades quantitatives s'utilitzarà el mètode d'enquestes, mitjançant l'aplicació d'un qüestionari \emph{ad hoc} dissenyat específicament per aquest estudi, que integra ítems de diferents qüestionaris validats en la literatura existent, adaptats al context i als objectius d'aquesta recerca.
+
+Per a l’anàlisi dels hàbits de lectura i de la influència de l’entorn familiar pro-lector, s’han adaptat ítems dels qüestionaris PIRLS (Progress in International Reading Literacy Study) \parencite{pirls} i HLEQ (Home Literacy Environment Questionnaire) \parencite{hleq}, àmpliament utilitzats per avaluar els hàbits lectors i l’entorn d’alfabetització familiar.
+
+D'altra banda, per analitzar l'ús de les TRIC, s’han adaptat ítems dels qüestionaris EU Kids \parencite{eukids} i ICILS \parencite{icils}, utilitzats a nivell internacional per a l’anàlisi de l’ús de les tecnologies digitals i les xarxes socials.
+
+Finalment, s’inclouen també ítems específics dissenyats per al context concret de l’estudi, com ara analitzar la narrativa i la percepció social sobre la lectura o conèixer les preferències lectores.
+
+El qüestionari està majoritàriament compost per ítems d'autoclassificació estructurats en escales ordinals graduades, especialment escales tipus Likert, escales de freqüència i escales de resposta categòrica ordenada. Així mateix, s'han inclòs també alguns ítems amb escala de mesura nominal (respostes categòriques dicotòmiques: sí / no, masculí / femení).
+
+La via d’administració del qüestionari ha estat en línia, fent ús de la plataforma Google Forms, per al disseny, la distribució i la recollida de dades, que, posteriorment, s'han descarregat en format CSV per tractar-les amb el programari Python3. Per aquest motiu el qüestionari s'ha subministrat durant l’horari lectiu, amb ordinadors i connexió a internet facilitats pel centre educatiu.
+
+\subsubsection{Tècniques i instruments de recollida de dades qualitatives}
+
+Per a la recollida de dades qualitatives, s'ha optat per utilitzar entrevistes semiestructurades amb un grup reduït d'estudiants i professors. Aquest mètode m'ha permès obtenir informació detallada i profunda sobre les percepcions, experiències, discursos i narratives dels participants en relació amb els hàbits de lectura i els factors associats, complementant així els resultats obtinguts a partir de la fase quantitativa.
+
+Aquestes entrevistes semiestructurades s'han portat a terme de manera presencial al centre educatiu, i han estat enregistrades en format d'àudio per facilitar-ne la posterior transcripció i anàlisi.
+
 \subsection{Aspectes ètics}
 % ---------------------------------------------------
+
+En el present estudi s'han garantit els principis ètics fonamentals, com la confidencialitat, l’anonimat i el consentiment informat dels participants. Abans d’iniciar la recollida de dades, s’han explicat de manera clara i detallada els objectius i les finalitats de l’estudi, així com l’ús de les dades i els criteris ètics que se seguirien en el seu tractament. Igualment, s'ha explicat i garantit el caràcter voluntari de la participació, assegurant que els participants poguessin retirar-se en qualsevol moment sense cap conseqüència negativa.
+
+Quant a les dades, s'han recollit de forma anònima i s'han tractat de manera confidencial, garantint que no es pogués identificar cap participant a partir de les respostes proporcionades. Així mateix, la participació en l’estudi no ha comportat cap risc per als participants. Les dades han estat accessibles únicament per l’investigador principal i s'han gestionat de manera completament segura, d’acord amb la normativa vigent en matèria de protecció de dades.
+
+D'igual manera, per a la realització de les entrevistes semiestructurades, s'ha obtingut el consentiment informat dels participants (en el cas dels adults), i el consentiment dels pares o tutors legals en el cas dels menors. Abans de realitzar les entrevistes s'han explicat els objectius de les entrevistes, la voluntarietat de la participació, la possibilitat de retirada en qualsevol moment i la completa confidencialitat de les respostes. També s'ha fet saber l'ús ètic que es faria de les dades recollides, assegurant que l'únic ús que se'n faria seria per a la consecució dels objectius d'aquest estudi i que no es compartiria amb tercers ni es faria públic de cap manera que pogués identificar els participants.
+
+D'altra banda, s'ha procurat que les entrevistes semiestructurades es realitzessin en un entorn còmode i segur per als participants, fomentant un clima de confiança i respecte que permetés una expressió lliure i sincera de les seves opinions i experiències relacionades amb la lectura.
 
 \subsection{Estratègia analítica}
 % ---------------------------------------------------
 
+L’enfocament metodològic és mixt de tipus convergent  o concurrent, en què es recullen de manera paral·lela dades quantitatives i qualitatives. Posteriorment, els resultats d'ambdues aproximacions es comparen, contrasten i s'integren mitjançant triangulació per interpretar de forma global els hàbits de lectura de l'alumnat i els diferents factors associats al seu desenvolupament.
+
+\subsubsection{Estratègia analítica de les dades quantitatives}
+
+En primer lloc, s'han exportat les dades recollides al qüestionari en format CSV. Aquest fitxer serà posteriorment tractat amb el programari Python3, utilitzant principalment les llibreries \emph{pandas}, \emph{scipy}, \emph{numpy} i \emph{matplotlib}.
+
+En una primera fase, s'ha realitzat una anàlisi descriptiva de les dades, amb l'objectiu de conèixer les característiques generals de la mostra i descriure els hàbits de lectura de l'alumnat a partir del temps mitjà setmanal dedicat a la lectura de llibres o còmics per oci i el nombre de llibres o còmics llegits en els últims 12 mesos per oci. També s'han analitzat descriptivament altres variables relacionades amb la lectura, com les preferències temàtiques i de format, les sessions de lectura, les visites a la biblioteca, etc.
+
+\paragraph{Construcció de la variable nombre de pàgines anuals}
+
+Per tal d’obtenir una aproximació quantitativa del volum total de lectura anual de llibres o còmics per oci, s’ha construït una variable discreta derivada que estima el nombre de pàgines llegides de llibres o còmics en els últims 12 mesos per oci. Aquesta variable s’ha calculat a partir de la combinació de dues variables recollides en el qüestionari: el nombre de llibres o còmics llegits en els últims 12 mesos per oci (agrupat en categories ordinals d'interval) i el nombre mitjà de pàgines per llibre (també categoritzat en categories ordinals d'interval).
+
+Per transformar aquestes variables categòriques en una estimació contínua, s’han assignat valors representatius a cada interval mitjançant el punt mitjà de cada categoria. Posteriorment, s’ha calculat el producte entre el nombre estimat de llibres llegits i la mitjana estimada de pàgines per llibre, obtenint així una aproximació del nombre total de pàgines llegides de llibres o còmics en els últims 12 mesos per oci per cada estudiant.
+
+\[
+\text{\emph{Pàgines estimades}} = \text{\emph{Mitjana estimada de llibres}} \cdot \text{\emph{Mitjana estimada de pàgines per llibre}}
+\]
+
+Aquesta aproximació permet disposar d’una variable contínua que sintetitza el volum de lectura, facilitant l’anàlisi quantitativa i la comparació entre grups. Tot i això, s'assumeix la limitació derivada de la utilització de valors intermedis estimats a partir de categories ordinals d'interval.
+
+S'ha calculat la correlació de Spearman entre la variable estimada pàgines anuals de llibres o còmics llegits per oci i el temps mitjà setmanal dedicat a aquesta activitat. Els resultats obtinguts ($\rho =$ .823, p < .001) reforcen l'ús d'aquesta variable com a descriptiu dels hàbits de lectura per oci de llibres o còmics de l'alumnat de la mostra.
+
+\paragraph{Construcció de la variable de classificació segons els hàbits de lectura per oci}
+
+Per tal de sintetitzar els hàbits lectors de llibres o còmics per oci de l’alumnat en una única variable interpretable visual i descriptivament, s’ha construït la variable derivada anomenada \emph{classificació lectora per oci}, que agrupa els participants en tres perfils segons els hàbits de lectura per oci: \emph{no lector / lector molt ocasional}, \emph{lector ocasional} i \emph{lector habitual}. 
+
+La construcció d’aquesta variable de classificació s’ha basat en la combinació de dos indicadors complementaris dels hàbits lectors de llibres o còmics per oci: el temps mitjà setmanal dedicat a aquesta activitat i el volum anual estimat de pàgines llegides. Aquesta aproximació permet integrar tant la freqüència com la intensitat de l’activitat lectora per oci, evitant així dependre exclusivament d’una única mesura parcial del comportament lector.
+
+La categoria de \emph{no lector / lector molt ocasional} s’ha assignat a l’alumnat que no dedica, o dedica poc temps, de mitjana, a la lectura de llibres o còmics per oci ($<$ 30 minuts setmanals), o que presenta un volum anual molt reduït de pàgines estimades llegides de llibres o còmics per oci ($\leq$ 300 pàgines anuals).
+
+\[
+\left.
+\begin{array}{l}
+\text{\emph{Temps de lectura setmanal}} < 30 \text{ minuts} \\\\
+\text{\emph{Pàgines estimades llegides anualment}} \leq 300
+\end{array}
+\right\}
+\textit{ No lector / lector molt ocasional}
+\]
+
+D'altra banda, la categoria de \emph{lector habitual} s’ha reservat als estudiants que combinen una dedicació considerable de temps mitjà de lectura setmanal de llibres o còmics per oci ($\geq$ 1 hora) amb un volum anual considerable de pàgines estimades llegides de llibres o còmics per oci ($\geq$ 1200).
+
+\[
+\left.
+\begin{array}{l}
+\text{\emph{Temps de lectura setmanal}} \geq 1 \text{ hora} \\\\
+\text{\emph{Pàgines estimades llegides anualment}} \geq 1200
+\end{array}
+\right\}
+\textit{ Lector habitual}
+\]
+
+Finalment, la categoria de \emph{lector ocasional} agrupa els casos intermedis que no compleixen cap dels criteris extrems anteriors.
+
+Metodològicament, aquesta estratègia permet construir una variable ordinal simplificada capaç de representar diferents nivells d’hàbits lectors per oci, facilitant la interpretació descriptiva dels resultats i la comparació entre grups. Tot i això, cal considerar que es tracta d’una classificació aproximada basada en llindars operatius definits específicament per a aquesta investigació.
+
+Tanmateix, els resultats obtinguts mostren correlacions positives elevades entre la classificació lectora i els principals indicadors utilitzats per a la seva construcció, tant pel que fa al temps mitjà setmanal dedicat a la lectura per oci ($\rho = .864$, $p < .001$), com al nombre de llibres llegits anualment ($\rho = .776$, $p < .001$), com al nombre estimat de pàgines ($\rho = .787$, $p < .001$). Aquestes associacions suggereixen una elevada coherència interna entre la classificació lectora i les diferents dimensions dels hàbits lectors per oci, aportant evidència addicional de consistència i validesa convergent de la variable construïda.
+
+\paragraph{Anàlisi inferencial}
+
+Finalment, s'ha realitzat una anàlisi inferencial amb la finalitat d’explorar la relació entre les diferents variables estudiades i les variables indicadores d'hàbits de lectura per oci. Per a això, s'han utilitzat diferents proves estadístiques segons el tipus de variables analitzades i la seva distribució. En concret, s'han realitzat proves de correlació de Spearman per analitzar la relació entre variables quantitatives i proves de $\chi^2$ quadrat per analitzar la relació entre variables categòriques.
+
+Finalment, s'ha elaborat un \emph{heatmap} de correlacions d'Spearman entre les variables indicadores d’hàbit lector per oci i la resta de variables analitzades, amb l'objectiu de tenir una referència visual clara i sintètica d'aquestes associacions.
+
+\subsubsection{Estratègia analítica de les dades qualitatives}
+
+A partir dels enregistraments obtinguts en les entrevistes semiestructurades, s'ha portat a terme un procés de transcripció parcial o selectiva, en què s'han transcrit de manera literal exclusivament aquells fragments de les entrevistes més rellevants. Aquest enfocament ha permès optimitzar el procés de neteja i anàlisi de les dades qualitatives sense perdre informació important per als objectius de la recerca.
+
+Finalment, aquestes transcripcions s'han segmentat i categoritzat fent ús d'un sistema de categories que m'ha permès agrupar els diferents fragments amb l’objectiu d'identificar patrons, recurrències, similituds i divergències en els discursos dels diferents participants.
+
+
 \subsection{Planificació i implementació del treball de camp}
 % ---------------------------------------------------
+
+El treball de camp es va planificar entre els mesos d’abril i maig, estructurant-se en diferents fases relacionades amb la coordinació amb el centre, la validació dels instruments, la recollida de dades i la preparació de l’anàlisi quantitativa i qualitativa.
+
+En una primera fase, es van establir les dates per a l’administració dels qüestionaris als diferents cursos d’ESO i Batxillerat, coordinant amb els responsables de departament i els diferents tutors la compatibilitat amb el calendari escolar i l’accés als ordinadors necessaris per respondre el qüestionari en línia.
+
+Paral·lelament, es van mantenir reunions amb el professorat de llengua i literatura amb l’objectiu de validar el qüestionari i les entrevistes semiestructurades, així com recollir suggeriments de millora sobre els instruments de recollida de dades. Durant aquesta fase també es van acordar les entrevistes amb el professorat participant i es van facilitar els corresponents consentiments informats.
+
+Pel que fa a la recollida de dades qualitatives, es va seleccionar la mostra d’alumnes participants en les entrevistes semiestructurades, es va coordinar amb ells i els seus tutors les hores en les quals es realitzarien aquestes entrevistes i es van gestionar els consentiments informats per part dels pares o tutors legals.
+
+Finalment, entre finals d’abril i principis de maig, es van administrar els qüestionaris als diferents grups participants i es van realitzar les entrevistes semiestructurades a alumnat i professorat, deixant les dades preparades per a la seva posterior anàlisi i triangulació.
 
 \newpage
 \section{Resultats del procés d'anàlisi}
@@ -413,7 +625,7 @@ Per tal de facilitar la lectura i comprensió dels resultats obtinguts, s'han ag
     \item Lectura per oci, noves tecnologies i xarxes socials.
     \item Lectura per oci i altres activitats d'oci.
     \item Lectura per oci i entorn familiar pro-lector.
-    \item Heatmap de correlacions entre les variables indicadores d’hàbits lectors per oci i la resta de variables analitzades.
+    \item \emph{Heatmap} de correlacions entre les variables indicadores d’hàbits lectors per oci i la resta de variables analitzades.
 \end{enumerate}
 
 \subsection{Característiques generals de la mostra}
@@ -497,7 +709,7 @@ La prova $\chi^2$ d’independència confirma aquestes diferències mitjançant 
 \subsubsection{Resultats temps mitjà de lectura setmanal i llibres o còmics llegits en els últims 12 mesos per oci per curs} \label{sec:lec_curs}
 Quant al curs acadèmic, no s’observa una tendència clara o consistent de variació en els hàbits de lectura per oci entre els diferents nivells educatius (\autoref{fig:temps_curs} i \autoref{fig:llibres_curs}), a diferència del que s’ha observat amb el gènere. Tanmateix, 4t d’ESO destaca per concentrar els percentatges més elevats d’alumnat amb una menor dedicació a la lectura per oci, tant en termes de temps mitjà setmanal, com de nombre de llibres llegits. En concret, és el curs amb una major proporció d’estudiants que no dedica cap temps setmanal, de mitjana, a la lectura per oci (59.5\%) i que no ha llegit cap llibre o còmic durant els darrers 12 mesos (41.9\%), així com l’únic curs en què no s’observa alumnat en les categories de més de 3 hores setmanals de lectura, 11-15 llibres o còmics i més de 15 llibres o còmics.
 
-En canvi, 3r d’ESO mostra una distribució més equilibrada entre categories, amb presència en tots els nivells de lectura, incloent-hi percentatges rellevants en les categories més elevades (11.8\% en la categoria de 3 hores o més de lectura setmanal i 10.9\% en més de 15 llibres o còmics en els últims 12 mesos). 
+En canvi, 3r d’ESO mostra una distribució més equilibrada entre categories, amb presència en tots els nivells de lectura, incloent-hi percentatges rellevants en les categories més elevades (11.8\% en la categoria de 3 hores o més de lectura setmanal i 10.9\% en més de 15 llibres o còmics llegits per oci en els últims 12 mesos). 
 
 Finalment, els cursos de batxillerat presenten una heterogeneïtat més elevada: mentre que 1r de Batxillerat destaca per una distribució més concentrada en categories intermèdies, 2n de Batxillerat mostra una certa polarització, amb presència tant en nivells baixos com en nivells alts de lectura per oci.
 
@@ -534,20 +746,6 @@ Respecte a l’itinerari de batxillerat, no s’observen diferències rellevants
 
 \subsection{Nombre estimat de pàgines anuals llegides per oci per grups} \label{sec:pagines_grups}
 % ---------------------------------------------------
-
-\subsubsection{Construcció de la variable contínua estimada nombre de pàgines anuals llegides per oci}
-Per tal d’obtenir una aproximació quantitativa del volum total de lectura anual de llibres o còmics per oci, s’ha construït una variable derivada que estima el nombre de pàgines llegides en els últims 12 mesos per oci. Aquesta variable s’ha calculat a partir de la combinació de dues variables recollides en el qüestionari: el nombre de llibres o còmics llegits en els últims 12 mesos per oci (agrupat en categories ordinals d'interval) i el nombre mitjà de pàgines per llibre (també categoritzat en categories ordinals d'interval).
-
-Per transformar aquestes variables categòriques en una estimació contínua, s’han assignat valors representatius a cada interval mitjançant el punt mitjà de cada categoria. Posteriorment, s’ha calculat el producte entre el nombre estimat de llibres llegits i la mitjana estimada de pàgines per llibre, obtenint així una aproximació del nombre total de pàgines llegides de llibres o còmics en els últims 12 mesos per oci per cada estudiant.
-
-\[
-\text{\emph{Pàgines estimades}} = \text{\emph{Mitjana estimada de llibres}} \cdot \text{\emph{Mitjana estimada de pàgines per llibre}}
-\]
-
-Aquesta aproximació permet disposar d’una variable contínua que sintetitza el volum de lectura, facilitant l’anàlisi quantitativa i la comparació entre grups. Tot i això, s'assumeix la limitació derivada de la utilització de valors intermedis estimats a partir de categories ordinals d'interval.
-
-S'ha calculat la correlació de Pearson entre la variable estimada pàgines anuals de llibres o còmics llegits per oci i el temps mitjà setmanal dedicat a aquesta activitat. Els resultats obtinguts ($\rho =$ .823, p < .001) reforcen l'ús d'aquesta variable com a descriptiu dels hàbits de lectura per oci de llibres o còmics de l'alumnat de la mostra.
-
 \subsubsection{Resultats generals de pàgines anuals estimades llegides per oci}
 Pel que fa a la distribució de la variable de pàgines estimades llegides anualment de llibres o còmics per oci (\autoref{tab:estadistiques_descriptives}), s’observa una forta asimetria positiva, deguda, com s’ha evidenciat anteriorment, a l’elevada proporció d’alumnes que no ha llegit cap llibre o còmic per oci durant els darrers 12 mesos. Aquest fet es reflecteix en la discrepància notable entre la mitjana ($\bar{x}$ = 1190.60 pàgines) i la mediana ($Q_2$ = 300 pàgines), indicant que la major part de l’alumnat ha llegit molt poques pàgines de llibres o còmics per oci aquest últim any, mentre que un petit grup d’estudiants ha llegit un volum considerable.
 
@@ -556,7 +754,7 @@ Aquesta asimetria es posa també de manifest en la gran quantitat d'\emph{outlie
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{pictures/3_pagines_boxplot.png}
-    \caption{Boxplot de la variable nombre de pàgines estimades llegides de llibres o còmics en els últims 12 mesos.}
+    \caption{Boxplot de la variable nombre de pàgines estimades llegides de llibres o còmics per oci en els últims 12 mesos.}
     \label{fig:pagines_boxplot}
 \end{figure}
 
@@ -577,7 +775,7 @@ $\max(x)$ & 12600 \\
 \hline
 \end{tabular}
 \vspace{0.5em}
-\caption{Estadístics de la variable nombre de pàgines estimades llegides de llibres o còmics en els últims 12 mesos.}
+\caption{Estadístics de la variable nombre de pàgines estimades llegides de llibres o còmics per oci en els últims 12 mesos.}
 \label{tab:estadistiques_descriptives}
 \end{table}
 
@@ -593,7 +791,7 @@ Per ambdós gèneres es manté la forta asimetria positiva, deguda a la gran dif
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{pictures/3_pagines_boxplot_genere.png}
-    \caption{Boxplots de la variable nombre de pàgines estimades llegides de llibres o còmics en els últims 12 mesos en funció del gènere.}
+    \caption{Boxplots de la variable nombre de pàgines estimades llegides de llibres o còmics per oci en els últims 12 mesos en funció del gènere.}
     \label{fig:pagines_boxplot_genere}
 \end{figure}
 
@@ -646,43 +844,6 @@ $\max(x)$ & 12600 & 3600 & 8100 & 12600 \\
 
 \subsection{Classificació lectora per oci}
 % ---------------------------------------------------
-
-\subsubsection{Construcció de la variable de classificació segons els hàbits de lectura per oci}
-Per tal de sintetitzar els hàbits lectors de llibres o còmics per oci de l’alumnat en una única variable interpretable visual i descriptivament, s’ha construït la variable derivada anomenada \emph{classificació lectora per oci}, que agrupa els participants en tres perfils segons els hàbits de lectura per oci: \emph{no lector / lector molt ocasional}, \emph{lector ocasional} i \emph{lector habitual}. 
-
-La construcció d’aquesta variable de classificació s’ha basat en la combinació de dos indicadors complementaris dels hàbits lectors de llibres o còmics per oci: el temps mitjà setmanal dedicat a aquesta activitat i el volum anual estimat de pàgines llegides. Aquesta aproximació permet integrar tant la freqüència com la intensitat de l’activitat lectora per oci, evitant així dependre exclusivament d’una única mesura parcial del comportament lector.
-
-La categoria de \emph{no lector / lector molt ocasional} s’ha assignat a l’alumnat que no dedica, o dedica poc temps, de mitjana, a la lectura de llibres o còmics per oci ($<$ 30 minuts setmanals), o que presenta un volum anual molt reduït de pàgines estimades llegides de llibres o còmics per oci ($\leq$ 300 pàgines anuals).
-
-\[
-\left.
-\begin{array}{l}
-\text{\emph{Temps de lectura setmanal}} < 30 \text{ minuts} \\\\
-\text{\emph{Pàgines estimades llegides anualment}} \leq 300
-\end{array}
-\right\}
-\textit{ No lector / lector molt ocasional}
-\]
-
-D'altra banda, la categoria de \emph{lector habitual} s’ha reservat als estudiants que combinen una dedicació considerable de temps mitjà de lectura setmanal de llibres o còmics per oci ($\geq$ 1 hora) amb un volum anual considerable de pàgines estimades llegides de llibres o còmics per oci ($\geq$ 1200).
-
-\[
-\left.
-\begin{array}{l}
-\text{\emph{Temps de lectura setmanal}} \geq 1 \text{ hora} \\\\
-\text{\emph{Pàgines estimades llegides anualment}} \geq 1200
-\end{array}
-\right\}
-\textit{ Lector habitual}
-\]
-
-Finalment, la categoria de \emph{lector ocasional} agrupa els casos intermedis que no compleixen cap dels criteris extrems anteriors.
-
-Metodològicament, aquesta estratègia permet construir una variable ordinal simplificada capaç de representar diferents nivells d’hàbits lectors per oci, facilitant la interpretació descriptiva dels resultats i la comparació entre grups. Tot i això, cal considerar que es tracta d’una classificació aproximada basada en llindars operatius definits específicament per a aquesta investigació.
-
-Tanmateix, els resultats obtinguts mostren correlacions positives elevades entre la classificació lectora i els principals indicadors utilitzats per a la seva construcció, tant pel que fa al temps mitjà setmanal dedicat a la lectura per oci ($\rho = .864$, $p < .001$), com al nombre de llibres llegits anualment ($\rho = .776$, $p < .001$), com al nombre estimat de pàgines ($\rho = .787$, $p < .001$). Aquestes associacions suggereixen una elevada coherència interna entre la classificació lectora i les diferents dimensions dels hàbits lectors per oci, aportant evidència addicional de consistència i validesa convergent de la variable construïda.
-
-\subsubsection{Resultats de la variable de classificació lectora per oci}
 
 La distribució de la variable \emph{classificació lectora per oci} (\autoref{fig:classificacio}) mostra que la major part de l’alumnat es concentra en la categoria de \emph{no lector / lector molt ocasional} (69.1\%), mentre que només un 17.2\% pertany a la categoria \emph{lector habitual}. Aquest patró és coherent amb els resultats descriptius presentats en l'apartat \nameref{sec:results_gen}, que evidencien una elevada proporció d’alumnes amb nivells baixos o nuls de lectura de llibres o còmics per oci.
 
@@ -818,11 +979,11 @@ Tanmateix, aquestes correlacions positives perden completament la significació 
 
 \subsection{Lectura per oci i visites a la biblioteca}
 % ---------------------------------------------------
-En relació amb les visites a la biblioteca per agafar llibres o còmics en préstec per oci durant l’últim any (\autoref{fig:tipologia_biblio}), els resultats mostren una baixa freqüència general d’aquesta activitat per part de l’alumnat. En concret, el 67.3\% declara no haver anat cap vegada a la biblioteca amb aquesta finalitat durant l’últim any, mentre que només una petita proporció d’alumnes (11.7\%) hi ha anat més de tres vegades.
+En relació amb les visites a la biblioteca per agafar llibres o còmics en préstec durant l’últim any (\autoref{fig:tipologia_biblio}), els resultats mostren una baixa freqüència general d’aquesta activitat per part de l’alumnat. En concret, el 67.3\% declara no haver anat cap vegada a la biblioteca amb aquesta finalitat durant l’últim any, mentre que només una petita proporció d’alumnes (11.7\%) hi ha anat més de tres vegades.
 
-Tanmateix, s’observen diferències rellevants en funció de la classificació lectora (\autoref{fig:tipologia_biblio_class}). Els lectors habituals presenten una proporció més elevada d’alumnes que ha visitat la biblioteca més de tres vegades durant l’últim any per agafar llibres o còmics en préstec per oci (21.7\%), respecte dels lectors ocasionals (17\%) i dels no lectors o lectors molt ocasionals (6.8\%). D’altra banda, els no lectors o lectors molt ocasionals concentren la proporció més elevada d’alumnat que no ha visitat la biblioteca cap vegada durant l’últim any amb aquesta finalitat (75.9\%), davant del 47.5\% dels lectors habituals i del 48.9\% dels lectors ocasionals.
+Tanmateix, s’observen diferències rellevants en funció de la classificació lectora (\autoref{fig:tipologia_biblio_class}). Els lectors habituals presenten una proporció més elevada d’alumnes que ha visitat la biblioteca més de tres vegades durant l’últim any per agafar llibres o còmics en préstec (21.7\%), respecte dels lectors ocasionals (17\%) i dels no lectors o lectors molt ocasionals (6.8\%). D’altra banda, els no lectors o lectors molt ocasionals concentren la proporció més elevada d’alumnat que no ha visitat la biblioteca cap vegada durant l’últim any amb aquesta finalitat (75.9\%), davant del 47.5\% dels lectors habituals i del 48.9\% dels lectors ocasionals.
 
-Aquest patró es veu reforçat per les correlacions positives febles-moderades observades entre la freqüència de visites a la biblioteca per agafar llibres o còmics en préstec per oci durant l’últim any, i, tant el temps mitjà setmanal dedicat a la lectura per oci ($\rho = .367$, $p < .001$) com el nombre de llibres llegits anualment per oci ($\rho = .394$, $p < .001$), suggerint que una major vinculació amb la biblioteca s’associa amb hàbits lectors per oci més consolidats.
+Aquest patró es veu reforçat per les correlacions positives febles-moderades observades entre la freqüència de visites a la biblioteca per agafar llibres o còmics en préstec durant l’últim any, i, tant el temps mitjà setmanal dedicat a la lectura per oci ($\rho = .367$, $p < .001$) com el nombre de llibres llegits anualment per oci ($\rho = .394$, $p < .001$), suggerint que una major vinculació amb la biblioteca s’associa amb hàbits lectors per oci més consolidats.
 
 En canvi, en relació amb la freqüència de visites a la biblioteca amb pares o tutors legals durant la infància i adolescència, les correlacions observades amb el temps mitjà setmanal dedicat a la lectura per oci i amb el nombre de llibres llegits anualment per oci són molt febles ($\rho = .148$, $p = .006$ i $\rho = .117$, $p = .030$ respectivament). Això indica que la freqüència de visites a la biblioteca amb pares o tutors legals durant la infància i adolescència gairebé no presenta relació amb els hàbits lectors actuals de l’alumnat del centre.
 
@@ -1088,7 +1249,7 @@ Les correlacions observades respecte d'aquesta qüestió són positives febles, 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{pictures/13_heatmap.png}
-    \caption{Heatmap de correlacions entre les variables indicadores d'hàbits lectors per oci i la resta de variables analitzades.}
+    \caption{\emph{Heatmap} de correlacions entre les variables indicadores d'hàbits lectors per oci i la resta de variables analitzades.}
     \label{fig:heatmap_correlacions}
 \end{figure}
 
@@ -1168,7 +1329,7 @@ Un altre aspecte interessant és que la presència de normes clares a casa sobre
 % =======================================================================
 L'objectiu d'aquesta recerca era realitzar una anàlisi descriptiva complerta sobre els hàbits de lectura per oci de l'alumnat del centre, així com sobre la relació d'aquests amb diferents factors personals, socials, contextuals i familiars. 
 
-Els resultats obtinguts han permès la consecució d'aquests objectius, construint una fotografia global i exhaustiva dels hàbits de lectura per oci de l'alumnat del centre i dels diferents factors que els influeixen. En termes generals, s’observa que la lectura de llibres o còmics per oci és una activitat poc freqüent en la major part de l'alumnat, amb una distribució clarament asimètrica. La majoria dels estudiants presenta nivells inexistents o molt baixos de lectura habitual de llibres o còmics per oci, mentre que un grup reduït, però clarament consolidat de lectors habituals presenta nivells de lectura de llibres o còmics molt superiors a la resta de la mostra.
+Els resultats obtinguts han permès la consecució d'aquests objectius, construint una fotografia global i exhaustiva dels hàbits de lectura per oci de l'alumnat del centre i dels diferents factors que es troben associats al seu desenvolupament?. En termes generals, s’observa que la lectura de llibres o còmics per oci és una activitat poc freqüent en la major part de l'alumnat, amb una distribució clarament asimètrica. La majoria dels estudiants presenta nivells inexistents o molt baixos de lectura habitual de llibres o còmics per oci, mentre que un grup reduït, però clarament consolidat de lectors habituals presenta nivells de lectura de llibres o còmics molt superiors a la resta de la mostra.
 
 Pel que fa als factors analitzats, el gènere es confirma com una variable significativa associada als hàbits lectors, amb nivells de lectura més elevats en les noies que en els nois. Tanmateix, aquesta relació presenta una magnitud baixa, fet que indica que, tot i la seva significació estadística, el gènere no constitueix per si sol un factor determinant dels hàbits lectors.
 
@@ -1202,9 +1363,71 @@ Els altres factors analitzats no mostren relacions estadísticament significativ
 \newpage
 \appendix
 
-\section{Anexe Guio Entrevista}
-This is Annex A.
+\section{Entrevista Semiestructurada Docents}
+% =======================================================================
+\begin{enumerate}
+    \item[] \hspace{-\leftmargin}\textbf{Bloc 0: Experiència docent}
+    \item Quines matèries imparteixes actualment?
+    \item Llegeixes per oci habitualment? [Llegeix per oci xxxx?]
+    \item [] \hspace{-\leftmargin}\textbf{Bloc 1: Hàbits de lectura per oci de l’alumnat}
+    \item Creus que els alumnes del centre llegeixen habitualment per oci? Com creus que són els seus hàbits lectors?
+    \item Que creus que influeix més en els hàbits lectors dels alumnes del centre?
+    \item Quina és la teva percepció sobre la tendència dels hàbits lectors?
+    \item Quins factors consideres que estan afavorint més aquesta tendència?
+    \item [] \hspace{-\leftmargin}\textbf{Bloc 2: Hàbits de lectura obligatòria de l’alumnat}
+    \item En quin grau perceps que es llegeixen les lectures obligatòries de l’escola? Quins factors consideres que afavoreixen aquest fet?
+    \item Quina incidència creus que té l’ús de resums d’internet o IA generativa en la realització de treballs o exàmens associats a les lectures obligatòries?
+    \item En quin grau perceps que les lectures obligatòries de l’escola són interessants pels alumnes? Creus que s’adapten als seus gustos?
+    \item [] \hspace{-\leftmargin}\textbf{Bloc 3: Percepció de la narrativa social de l’alumnat sobre la lectura}
+    \item Quina percepció creus que tenen els alumnes sobre la lectura? Per què?
+    \item Quins estereotips i prejudicis creus que tenen els adolescents sobre la lectura? Per què?
+    \item Creus que els alumnes parlen o comparteixen sovint opinions sobre lectura entre ells?
+    \item Quina influència creus que tenen les narratives, els discursos, els estereotips i els prejudicis en els hàbits de lectura dels alumnes?
+    \item [] \hspace{-\leftmargin}\textbf{Bloc 4: Influència de les TRIC en els hàbits de lectura de l’alumnat}
+    \item Quines oportunitats i quins riscos consideres que aporten les noves tecnologies als hàbits de lectura?
+    \item Creus que l’ús de xarxes socials, plataformes de vídeos curts i plataformes de contingut audiovisual competeixen amb el temps que dediquen els alumnes a llegir?
+    \item [] \hspace{-\leftmargin}\textbf{Bloc 5: Entorn familiar pro-lector}
+    \item Quina influència creus que té un entorn familiar en els hàbits de lectura dels alumnes?
+    \item Quan habitualment creus que les famílies durant la infància i l’adolescència dels alumnes creen un entorn que afavoreix els hàbits de lectura?
+    \item [] \hspace{-\leftmargin}\textbf{Bloc 6: Hàbits de lectura de l’alumnat i centre}
+    \item Com creus que, a nivell de centre, dintre dels marges del sistema educatiu, es podria treballar per afavorir els hàbits de lectura durant la infància i l’adolescència?
+\end{enumerate}
 
+Moltes gràcies per participar.
+
+\section{Entrevista Semiestructurada Alumnes}
+
+\begin{enumerate}
+    \item [] \hspace{-\leftmargin}\textbf{Bloc 0: Introducció}
+    \item Quin curs estàs estudiant actualment?
+    \item [] \hspace{-\leftmargin}\textbf{Bloc 1: Hàbits de lectura per oci de l’alumnat}
+    \item T’agrada llegir?
+    \item Llegeixes habitualment per oci?
+    \item Quant llegeixes habitualment?
+    \item Què t’agrada llegir?
+    \item [] \hspace{-\leftmargin}\textbf{Bloc 2: Hàbits de lectura obligatòria de l’alumnat}
+    \item T’agraden les lectures obligatòries de l’escola? Per què?
+    \item Creus que, en general, agraden les lectures obligatòries de l’escola als alumnes?
+    \item Com acostumes a preparar les lectures obligatòries (llegir-les, resums, vídeos, IA…)?
+    \item Han influït les eines d’IA generativa en com et prepares els exàmens o treballs relacionats amb les lectures obligatòries?
+    \item [] \hspace{-\leftmargin}\textbf{Bloc 3: Percepció de la narrativa social de l’alumnat sobre la lectura}
+    \item Quina percepció creus que tenen els nois i noies de la teva edat sobre la lectura? Per què?
+    \item Creus que la percepció, els estereotips i els prejudicis al voltant de la lectura en nois i noies de la teva edat afecten al temps que dediques habitualment a llegir?
+    \item Comparteixes opinions sobre lectura amb els teus amics i amigues? Creus que això afecta al temps que dediques habitualment a llegir?
+    \item [] \hspace{-\leftmargin}\textbf{Bloc 4: Influència de les TRIC en els hàbits de lectura de l’alumnat}
+    \item Creus que les noves tecnologies influeixen positivament o negativament en el temps que dediques habitualment a la lectura per oci?
+    \item Quantes hores aproximadament passes al dia en xarxes socials o plataformes com YouTube, TikTok, Netflix, Twitch o similars?
+    \item Creus que aquestes plataformes influeixen en el temps que dediques a llegir?
+    \item[] \hspace{-\leftmargin}\textbf{Bloc 5: Hàbits de lectura de l’alumnat i sistema educatiu}
+    \item Com creus que es podria fomentar la lectura des de l’escola?
+\end{enumerate}
+
+Moltes gràcies per participar.
+
+\section{Qüestionari}
+
+// WIP: Adjuntar el qüestionari.
+// WIP: Biblioteca factor importante no destacado suficiente. 
 \end{document}
 
 % =======================================================================
