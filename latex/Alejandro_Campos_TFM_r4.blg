@@ -1,0 +1,19 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is 'Alejandro_Campos_TFM_r4.blg'
+[82] biber:340> INFO - === Mon May 18, 2026, 23:00:41
+[98] Biber.pm:419> INFO - Reading 'Alejandro_Campos_TFM_r4.bcf'
+[169] Biber.pm:979> INFO - Found 24 citekeys in bib section 0
+[187] Biber.pm:4419> INFO - Processing section 0
+[196] Biber.pm:4610> INFO - Looking for bibtex file 'references' for section 0
+[198] bibtex.pm:1713> INFO - LaTeX decoding ...
+[215] bibtex.pm:1519> INFO - Found BibTeX data source 'references'
+[383] UCollate.pm:68> INFO - Overriding locale 'ca-AD' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[384] UCollate.pm:68> INFO - Overriding locale 'ca-AD' defaults 'variable = shifted' with 'variable = non-ignorable'
+[384] Biber.pm:4239> INFO - Sorting list 'apa/apasortcite//global/global' of type 'entry' with template 'apa' and locale 'ca-AD'
+[434] UCollate.pm:68> INFO - Overriding locale 'ca-AD' defaults 'variable = shifted' with 'variable = non-ignorable'
+[434] UCollate.pm:68> INFO - Overriding locale 'ca-AD' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[434] Biber.pm:4239> INFO - Sorting list 'apa/global//global/global' of type 'entry' with template 'apa' and locale 'ca-AD'
+[466] bbl.pm:660> INFO - Writing 'Alejandro_Campos_TFM_r4.bbl' with encoding 'UTF-8'
+[487] bbl.pm:763> INFO - Output to Alejandro_Campos_TFM_r4.bbl
+[488] Biber.pm:131> WARN - legacy year field 's.d.' in entry 'generalitatPLEC' is not an integer - this will probably not sort properly.
+[488] Biber.pm:133> INFO - WARNINGS: 1
