@@ -14,7 +14,7 @@ import tfm_methods as tmt
 #
 #########################################################################################
 # Create statistics df from csv
-csv_name = "forms-habits-lectura-compartit"
+csv_name = "forms_habits_lectura"
 
 # Verbosity
 verbose, tags = tmt.parse_arguments()
