@@ -3098,11 +3098,10 @@
     <bcf:citekey order="37" intorder="1">johnsson_bookreading</bcf:citekey>
     <bcf:citekey order="38" intorder="1">johnsson_bookreading</bcf:citekey>
     <bcf:citekey order="39" intorder="1">generalitatPLEC</bcf:citekey>
-    <bcf:citekey order="40" intorder="1">generalitatPLEC</bcf:citekey>
-    <bcf:citekey order="41" intorder="1">pirls</bcf:citekey>
-    <bcf:citekey order="42" intorder="1">hleq</bcf:citekey>
-    <bcf:citekey order="43" intorder="1">eukids</bcf:citekey>
-    <bcf:citekey order="44" intorder="1">icils</bcf:citekey>
+    <bcf:citekey order="40" intorder="1">pirls</bcf:citekey>
+    <bcf:citekey order="41" intorder="1">hleq</bcf:citekey>
+    <bcf:citekey order="42" intorder="1">eukids</bcf:citekey>
+    <bcf:citekey order="43" intorder="1">icils</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="apa">
