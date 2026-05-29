@@ -740,7 +740,11 @@ if len(tags) > 0 and 3 in tags:
     print(df[df["Curs"] == "1r de Batxillerat."]["p5_6_pagines_num"].describe())
     print("------------- 2n de Batxillerat -------------")
     print(df[df["Curs"] == "2n de Batxillerat."]["p5_6_pagines_num"].describe())
-
+    print("\n============================ Itinerari ============================")
+    print("------------- Ciències Socials. -------------")
+    print(df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències Socials."]["p5_6_pagines_num"].describe())
+    print("------------- Ciències i Tecnologia -------------")
+    print(df[df["Itinerari (només si estàs cursant Batxillerat)"] == "Ciències i Tecnologia."]["p5_6_pagines_num"].describe())
     # # Plot
     # tmt.plot_descriptive_hists(
     #     df=df,
