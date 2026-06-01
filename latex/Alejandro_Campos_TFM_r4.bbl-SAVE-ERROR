@@ -56,6 +56,35 @@
       \verb 10.4314/iijikm.v9i1.5
       \endverb
     \endentry
+    \entry{arnett}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=a86c11a86f46fb6c1daddfe0ffea0af4}{%
+           family={Arnett},
+           familyi={A\bibinitperiod},
+           given={Jeffrey\bibnamedelima Jensen},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Pearson Prentice Hall}%
+      }
+      \strng{namehash}{a86c11a86f46fb6c1daddfe0ffea0af4}
+      \strng{fullhash}{a86c11a86f46fb6c1daddfe0ffea0af4}
+      \strng{bibnamehash}{a86c11a86f46fb6c1daddfe0ffea0af4}
+      \strng{authorbibnamehash}{a86c11a86f46fb6c1daddfe0ffea0af4}
+      \strng{authornamehash}{a86c11a86f46fb6c1daddfe0ffea0af4}
+      \strng{authorfullhash}{a86c11a86f46fb6c1daddfe0ffea0af4}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3}
+      \field{title}{Adolescencia y adultez emergente: Un enfoque sociocultural}
+      \field{year}{2008}
+    \endentry
     \entry{ataniyazova}{article}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=69615a06f234d301278f688d04696d88}{%
@@ -1007,6 +1036,35 @@
       \verb{doi}
       \verb 10.4314/iijikm.v9i1.5
       \endverb
+    \endentry
+    \entry{arnett}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=a86c11a86f46fb6c1daddfe0ffea0af4}{%
+           family={Arnett},
+           familyi={A\bibinitperiod},
+           given={Jeffrey\bibnamedelima Jensen},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Pearson Prentice Hall}%
+      }
+      \strng{namehash}{a86c11a86f46fb6c1daddfe0ffea0af4}
+      \strng{fullhash}{a86c11a86f46fb6c1daddfe0ffea0af4}
+      \strng{bibnamehash}{a86c11a86f46fb6c1daddfe0ffea0af4}
+      \strng{authorbibnamehash}{a86c11a86f46fb6c1daddfe0ffea0af4}
+      \strng{authornamehash}{a86c11a86f46fb6c1daddfe0ffea0af4}
+      \strng{authorfullhash}{a86c11a86f46fb6c1daddfe0ffea0af4}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3}
+      \field{title}{Adolescencia y adultez emergente: Un enfoque sociocultural}
+      \field{year}{2008}
     \endentry
     \entry{ataniyazova}{article}{}
       \name{author}{1}{}{%

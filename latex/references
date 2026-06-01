@@ -165,6 +165,24 @@
   doi = {10.1504/IJSMILE.2016.079493}
 }
 
+@book{berger,
+  author    = {Berger, Kathleen Stassen},
+  title     = {Psicología del desarrollo: Infancia y adolescencia},
+  year      = {2016},
+  edition   = {9},
+  publisher = {Editorial Médica Panamericana},
+  address   = {Madrid},
+  isbn      = {9788498357806}
+}
+
+@book{arnett,
+  author    = {Arnett, Jeffrey Jensen},
+  year      = {2008},
+  title     = {Adolescencia y adultez emergente: Un enfoque sociocultural},
+  edition   = {3},
+  publisher = {Pearson Prentice Hall}
+}
+
 @book{sanches,
   author    = {Sànchez-Garcia, Sandra and Maldonado-Lozano, Manuel Jesús and utiérrez-Zornoza, Myriam},
   year      = {2024},
