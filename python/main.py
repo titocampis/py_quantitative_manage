@@ -2078,6 +2078,38 @@ if len(tags) > 0 and (12 in tags or 13 in tags):
         figure_path="../latex/pictures/12_familia_normes"
     )
 
+    # Plot normes clares ------------------
+    tmt.plot_descriptive_combined_hists(
+        df[df["classificacio_lectora"] == "No lector / Lector molt ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector habitual"].copy(),
+        groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
+        var="Durant la teva infància i adolescència, amb quina freqüència heu realitzat sessions de lectura conjunta a casa?",
+        title="Distribució de l'alumnat segons freqüència de lectura conjunta a casa per class. lectora",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        colors=["blue", "orange", "green"],
+        sort=sort_freq,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/12_familia_lectura_conjunta"
+    )
+
+    # Plot normes clares ------------------
+    tmt.plot_descriptive_combined_hists(
+        df[df["classificacio_lectora"] == "No lector / Lector molt ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector ocasional"].copy(),
+        df[df["classificacio_lectora"] == "Lector habitual"].copy(),
+        groups=["No lector / Lector molt ocasional", "Lector ocasional", "Lector habitual"],
+        var="Durant la teva infància i adolescència, amb quina freqüència has vist als teus pares o tutors legals llegint llibres o còmics per oci?",
+        title="Distribució de l'alumnat segons freqüència de lectura dels pares a casa per class. lectora",
+        xlabel="",
+        ylabel="Percentatge d'alumnes (%)",
+        colors=["blue", "orange", "green"],
+        sort=sort_freq,
+        save_figures=save_figures,
+        figure_path="../latex/pictures/12_familia_lectura_pares"
+    )
+
     # Plot parlar pares literatura ------------------
     tmt.plot_descriptive_combined_hists(
         df[df["classificacio_lectora"] == "No lector / Lector molt ocasional"].copy(),
