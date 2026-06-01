@@ -207,19 +207,19 @@
 \newcommand{\sectiononumber}[1]{%
   \section*{#1}
   \phantomsection
-  \addcontentsline{toc}{section}{#1}
+%   \addcontentsline{toc}{section}{#1}
 }
 
 \newcommand{\subsectiononumber}[1]{%
   \subsection*{#1}
   \phantomsection
-  \addcontentsline{toc}{subsection}{#1}
+%   \addcontentsline{toc}{subsection}{#1}
 }
 
 \newcommand{\subsubsectiononumber}[1]{%
   \subsubsection*{#1}
   \phantomsection
-  \addcontentsline{toc}{subsubsection}{#1}
+%   \addcontentsline{toc}{subsubsection}{#1}
 }
 % =======================================================================
 % / No number sections
@@ -362,12 +362,50 @@
 \newpage
 % =======================================================================
 
-\section{Abstract}
+\subsectiononumber{Resum}
 % =======================================================================
 
-//WIP: Pendent per l'entrega final.
+En el present estudi s’analitzen els hàbits lectors de llibres o còmics per oci de l’alumnat adolescent d’un centre educatiu, així com els factors personals, familiars, socials, educatius i tecnològics associats. L’estudi combina una aproximació quantitativa, basada en un qüestionari \emph{ad hoc}, amb una aproximació qualitativa a partir de les percepcions d’alumnat i professorat, amb l’objectiu d’obtenir una visió integrada dels hàbits lectors per oci dels alumnes adolescents del centre.
 
-\textbf{Keywords:} hàbits de lectura, adolescència, context educatiu, dispositius digitals, entorn familiar pro-lector, lectura activitat social.
+Els resultats mostren que els hàbits lectors per oci són, en general, baixos, amb una distribució clarament asimètrica en què una minoria d’alumnes concentra una part important del volum de lectura. En relació amb el gènere, les noies presenten clarament hàbits lectors més elevats que els nois; tanmateix, aquesta variable per si sola no és determinant per explicar els hàbits lectors dels adolescents.
+
+S’ha observat que la lectura per oci és una activitat considerablement social, ja que variables com compartir opinions sobre lectures —ja sigui amb el grup d’iguals, amb la família o a través de xarxes socials— es correlacionen positivament amb els hàbits lectors per oci.
+
+Pel que fa a les noves tecnologies, les plataformes de contingut audiovisual i les xarxes socials, no s’han trobat resultats prou consistents per afirmar l’existència d’una competència temporal directa amb la lectura per oci. Més aviat, la relació observada apunta a una possible fragmentació de l’atenció que aquest tipus de consum digital pot generar, i a com aquesta pot afectar la pràctica lectora.
+
+Quant a les lectures obligatòries del centre, es detecta una baixa valoració general i una relació feble amb els hàbits lectors per oci, fet que suggereix una certa desconnexió entre la lectura acadèmica i la lectura per oci.
+
+Finalment, els resultats apunten a un paper moderat de l’entorn familiar en el desenvolupament dels hàbits lectors de l’alumnat del centre, principalment a través de la disponibilitat de llibres a casa i de la freqüència amb què es comparteixen opinions o recomanacions sobre lectures. Tot i això, aquesta associació és menor en comparació amb factors personals i socials.
+
+En conjunt, l’estudi suggereix que els hàbits lectors de l’alumnat adolescent del centre s’associen a una combinació de factors personals, socials, contextuals i familiars, amb un pes destacat de les interaccions socials i del sentiment de pertinença a un grup o comunitat lectora.
+\\[4ex]
+\textbf{Paraules Clau:} hàbits de lectura, adolescència, factors associats, context educatiu, noves tecnologies, entorn familiar pro-lector, activitat social.
+
+\newpage
+\subsectiononumber{Abstract}
+% =======================================================================
+This study analyzes leisure reading habits of books and comics among adolescent students in an educational center, as well as the personal, family, social, educational, and technological factors associated with them. The research combines a quantitative approach, based on an \emph{ad hoc} questionnaire, with a qualitative approach based on the perceptions of students and teachers, with the aim of obtaining an integrated understanding of the adolescent students leisure reading habits at this particular school.
+
+The results show that leisure reading habits are generally low, with a clear asymmetry in which a minority of students account for a large share of total reading volume. Regarding gender, girls clearly show higher levels of leisure reading than boys; however, this variable alone is not sufficient to explain the adolescent reading habits.
+
+Reading for leisure is shown to be a highly social activity, as variables such as sharing opinions about reading ---whether with peers, family, or through social media--- are positively associated with leisure reading habits.
+
+About new technologies, audiovisual platforms, and social media, no consistent evidence has been found to support the existence of a direct time-based competition with leisure reading. Rather, the observed relationship points to a possible fragmentation of the attention generated by this kind of digital consumption, which may in turn affect reading practices.
+
+With regard to mandatory school readings, a generally low rating has been observed, as well as a weak association with leisure reading habits, suggesting a disconnect between academic reading and leisure reading.
+
+Finally, the results point to a moderate role of the family environment in the development of students’ reading habits, mainly through the availability of books at home and the frequency of sharing opinions or recommendations about reading. However, this association is weaker compared to personal and social factors.
+\\[4ex]
+\textbf{Keywords:} reading habits, adolescence, associated factors, educational context, new technologies, pro-reading family environment, social activity.
+
+\newpage
+\subsectiononumber{Agraïments}
+% =======================================================================
+// WIP
+
+Finalment, també vull agraïr a tots els amics, familiars i professors de l'escola que, d'una manera o altra, m'han donat suport o ajudat durant tot el procés de realització d'aquest estudi, ja sigui a través de converses, recomanacions, idees, habilitació de moments i espais, o participació.
+
+Gràcies a tots i totes per la vostra ajuda, suport i companyia, sense vosaltres aquest estudi no hauria estat possible.
 
 \newpage
 \tableofcontents
@@ -695,7 +733,7 @@ Pel que fa a la distribució de la variable de pàgines estimades llegides anual
 \hline
 \textbf{Estadístics} & \textbf{Valor} \\
 \hline
-$n$ & 343 \\
+$N$ & 343 \\
 $\bar{x}$ & 1190.60 \\
 $s$ & 2143.86 \\
 $\min(x)$ & 0 \\
@@ -706,7 +744,7 @@ $\max(x)$ & 12600 \\
 \hline
 \end{tabular}
 \vspace{0.5em}
-\caption{Estadístics de la variable nombre de pàgines estimades llegides de llibres o còmics per oci en els últims 12 mesos.}
+\caption{Estadístics de la variable nombre de pàgines estimades llegides de llibres o còmics per oci en els últims 12 mesos del conjunt mostral.}
 \label{tab:estadistiques_descriptives}
 \end{table}
 
