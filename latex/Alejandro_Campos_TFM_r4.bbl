@@ -728,39 +728,6 @@
       \verb 10.1080/0300443042000302663
       \endverb
     \endentry
-    \entry{owusu_sm}{article}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=5d6d7621b7ab16579ab683c1046b2bc8}{%
-           family={Owusu-Acheaw},
-           familyi={O\bibinithyphendelim A\bibinitperiod},
-           given={M.},
-           giveni={M\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{5d6d7621b7ab16579ab683c1046b2bc8}
-      \strng{fullhash}{5d6d7621b7ab16579ab683c1046b2bc8}
-      \strng{bibnamehash}{5d6d7621b7ab16579ab683c1046b2bc8}
-      \strng{authorbibnamehash}{5d6d7621b7ab16579ab683c1046b2bc8}
-      \strng{authornamehash}{5d6d7621b7ab16579ab683c1046b2bc8}
-      \strng{authorfullhash}{5d6d7621b7ab16579ab683c1046b2bc8}
-      \field{sortinit}{O}
-      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{International Journal of Social Media and Interactive Learning Environments}
-      \field{number}{3}
-      \field{title}{Social media usage and its impact on reading habits: A study of Koforidua Polytechnic students}
-      \field{volume}{4}
-      \field{year}{2016}
-      \field{pages}{211\bibrangedash 222}
-      \range{pages}{12}
-      \verb{doi}
-      \verb 10.1504/IJSMILE.2016.079493
-      \endverb
-    \endentry
     \entry{plutarc}{inbook}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=450c0aa16dff6d30edb2619d6715a8d3}{%
@@ -1740,39 +1707,6 @@
       \range{pages}{18}
       \verb{doi}
       \verb 10.1080/0300443042000302663
-      \endverb
-    \endentry
-    \entry{owusu_sm}{article}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=5d6d7621b7ab16579ab683c1046b2bc8}{%
-           family={Owusu-Acheaw},
-           familyi={O\bibinithyphendelim A\bibinitperiod},
-           given={M.},
-           giveni={M\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{5d6d7621b7ab16579ab683c1046b2bc8}
-      \strng{fullhash}{5d6d7621b7ab16579ab683c1046b2bc8}
-      \strng{bibnamehash}{5d6d7621b7ab16579ab683c1046b2bc8}
-      \strng{authorbibnamehash}{5d6d7621b7ab16579ab683c1046b2bc8}
-      \strng{authornamehash}{5d6d7621b7ab16579ab683c1046b2bc8}
-      \strng{authorfullhash}{5d6d7621b7ab16579ab683c1046b2bc8}
-      \field{sortinit}{O}
-      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \true{uniqueprimaryauthor}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{International Journal of Social Media and Interactive Learning Environments}
-      \field{number}{3}
-      \field{title}{Social media usage and its impact on reading habits: A study of Koforidua Polytechnic students}
-      \field{volume}{4}
-      \field{year}{2016}
-      \field{pages}{211\bibrangedash 222}
-      \range{pages}{12}
-      \verb{doi}
-      \verb 10.1504/IJSMILE.2016.079493
       \endverb
     \endentry
     \entry{plutarc}{inbook}{}
