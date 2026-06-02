@@ -220,6 +220,39 @@
       \verb 10.1111/josh.13428
       \endverb
     \endentry
+    \entry{berger}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=74d4ded82838f222fac3c316e70762f8}{%
+           family={Berger},
+           familyi={B\bibinitperiod},
+           given={Kathleen\bibnamedelima Stassen},
+           giveni={K\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Madrid}%
+      }
+      \list{publisher}{1}{%
+        {Editorial Médica Panamericana}%
+      }
+      \strng{namehash}{74d4ded82838f222fac3c316e70762f8}
+      \strng{fullhash}{74d4ded82838f222fac3c316e70762f8}
+      \strng{bibnamehash}{74d4ded82838f222fac3c316e70762f8}
+      \strng{authorbibnamehash}{74d4ded82838f222fac3c316e70762f8}
+      \strng{authornamehash}{74d4ded82838f222fac3c316e70762f8}
+      \strng{authorfullhash}{74d4ded82838f222fac3c316e70762f8}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{9}
+      \field{isbn}{9788498357806}
+      \field{title}{Psicología del desarrollo: Infancia y adolescencia}
+      \field{year}{2016}
+    \endentry
     \entry{billington_reading}{misc}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=2ac356aab0f8da0f8d68d11b0010e259}{%
@@ -1200,6 +1233,39 @@
       \verb{doi}
       \verb 10.1111/josh.13428
       \endverb
+    \endentry
+    \entry{berger}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=74d4ded82838f222fac3c316e70762f8}{%
+           family={Berger},
+           familyi={B\bibinitperiod},
+           given={Kathleen\bibnamedelima Stassen},
+           giveni={K\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Madrid}%
+      }
+      \list{publisher}{1}{%
+        {Editorial Médica Panamericana}%
+      }
+      \strng{namehash}{74d4ded82838f222fac3c316e70762f8}
+      \strng{fullhash}{74d4ded82838f222fac3c316e70762f8}
+      \strng{bibnamehash}{74d4ded82838f222fac3c316e70762f8}
+      \strng{authorbibnamehash}{74d4ded82838f222fac3c316e70762f8}
+      \strng{authornamehash}{74d4ded82838f222fac3c316e70762f8}
+      \strng{authorfullhash}{74d4ded82838f222fac3c316e70762f8}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{9}
+      \field{isbn}{9788498357806}
+      \field{title}{Psicología del desarrollo: Infancia y adolescencia}
+      \field{year}{2016}
     \endentry
     \entry{billington_reading}{misc}{}
       \name{author}{1}{}{%
