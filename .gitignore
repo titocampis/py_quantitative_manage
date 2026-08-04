@@ -37,6 +37,12 @@ test.py
 *.synctex.gz
 *.toc
 *.out
+*.bbl
+*.lof
+*.lot
+*.blg
+*.brf
+*.bcf
 *Zone.Identifier
 
 # Custom 
